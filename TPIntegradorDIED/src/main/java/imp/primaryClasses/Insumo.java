@@ -4,11 +4,10 @@ import imp.enumerators.UM;
 
 public abstract class Insumo {
 		
-		String descripcion;
-		UM unidadMedida;
-		double costoUnitario;
-		double cantidad;
-		
+		protected String descripcion;
+		protected UM unidadMedida;
+		protected double costoUnitario;
+		protected double cantidad;
 		
 		
 		public Insumo(String descripcion, UM unidadMedida, double costoUnitario, double cantidad) {
