@@ -1,4 +1,4 @@
-package imp.dominio;
+package imp.domain;
 
 /**
  * Hello world!
