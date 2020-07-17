@@ -3,12 +3,14 @@ package imp.primaryClasses;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import imp.DAOs.DAOCamion;
 
 public class Camion {
 	
+		private int id;
 		private String patente;
 		private double kmRecorridos;
 		private String marca;
@@ -21,7 +23,7 @@ public class Camion {
 			return patente;
 		}
 		
-		public void setPatente(String patente) {
+		private void setPatente(String patente) {
 			this.patente = patente;
 		}
 		
@@ -29,7 +31,7 @@ public class Camion {
 			return kmRecorridos;
 		}
 		
-		public void setKmRecorridos(double kmRecorridos) {
+		private void setKmRecorridos(double kmRecorridos) {
 			this.kmRecorridos = kmRecorridos;
 		}
 		
@@ -37,7 +39,7 @@ public class Camion {
 			return marca;
 		}
 		
-		public void setMarca(String marca) {
+		private void setMarca(String marca) {
 			this.marca = marca;
 		}
 		
@@ -45,7 +47,7 @@ public class Camion {
 			return modelo;
 		}
 		
-		public void setModelo(String modelo) {
+		private void setModelo(String modelo) {
 			this.modelo = modelo;
 		}
 		
@@ -53,7 +55,7 @@ public class Camion {
 			return costoKm;
 		}
 		
-		public void setCostoKm(double costoKm) {
+		private void setCostoKm(double costoKm) {
 			this.costoKm = costoKm;
 		}
 		
@@ -61,7 +63,7 @@ public class Camion {
 			return costoHora;
 		}
 		
-		public void setCostoHora(double costoHora) {
+		private void setCostoHora(double costoHora) {
 			this.costoHora = costoHora;
 		}
 		
@@ -69,11 +71,20 @@ public class Camion {
 			return fechacompra;
 		}
 		
-		public void setFechacompra(Date fechacompra) {
+		private void setFechacompra(Date fechacompra) {
 			this.fechacompra = fechacompra;
 		}
+
+		public double getId() {
+			return id;
+		}
 		
-		public Camion(String patente, double kmRecorridos, String marca, String modelo, double costoKm,
+		private void setId(int id) {
+			// TODO Auto-generated method stub
+			this.id= id;
+		}
+		
+		private Camion(String patente, double kmRecorridos, String marca, String modelo, double costoKm,
 				double costoHora, Date fechacompra) {
 			super();
 			setPatente(patente);
@@ -85,6 +96,35 @@ public class Camion {
 			setModelo(modelo);
 		}
 		
+		private Camion(int id, String patente, double kmRecorridos, String marca, String modelo, double costoKm,
+				double costoHora, Date fechacompra) {
+			super();
+			setId(id);
+			setPatente(patente);
+			setCostoHora(costoHora);
+			setCostoKm(costoKm);
+			setFechacompra(fechacompra);
+			setKmRecorridos(kmRecorridos);
+			setMarca(marca);
+			setModelo(modelo);
+		}
+		
+
+		public Camion AltaCamion(String patente, double kmRecorridos, String marca, String modelo, double costoKm,
+				double costoHora, Date fechacompra) {
+			ArrayList<Camion> lista = buscarCamion(patente, null, null, null, null, null, null);
+			if(lista.size() > 0) {
+				
+				return null;
+			}
+			else {
+				Camion c1 = new Camion(patente, kmRecorridos, marca, modelo, costoKm, costoHora, fechacompra);
+				DAOCamion.GuardarCamion(c1);
+				return c1;
+			}
+			
+			
+		}
 		
 		public void EditarCamion(String patente, String costoHora, String costoKm, String fechacompra, String kmRecorridos, String marca, String modelo) {
 			
@@ -129,6 +169,8 @@ public class Camion {
 				setModelo(modelo);				
 			}
 			
+			
+			DAOCamion.actualizarCamion(this);
 		}
 
 		
@@ -138,7 +180,8 @@ public class Camion {
 		
 		}
 		
-		public void buscarCamion(String patente, String costoHora, String costoKm, String fechacompra, String kmRecorridos, String marca, String modelo) {
+		
+		public ArrayList<Camion> buscarCamion(String patente, String costoHora, String costoKm, String fechacompra, String kmRecorridos, String marca, String modelo) {
 			Date fechaCompra = null;
 			try {
 				
@@ -152,8 +195,10 @@ public class Camion {
 			
 			Camion camion = new Camion( patente, Double.parseDouble(kmRecorridos),  marca,  modelo, Double.parseDouble(costoKm), Double.parseDouble(costoHora), fechaCompra);
 			
-			DAOCamion.BuscarCamion(camion);
 			
+			ArrayList<Camion> listaCamiones = DAOCamion.BuscarCamion(camion);
+			
+			return listaCamiones;
 		}
 		
 		
