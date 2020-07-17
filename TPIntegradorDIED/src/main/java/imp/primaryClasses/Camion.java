@@ -79,6 +79,13 @@ public class Camion {
 			setMarca(marca);
 			setModelo(modelo);
 		}
+		
+		
+		public void EditarCamion() {
+			
+			
+			
+		}
 
 		
 		
