@@ -1,6 +1,11 @@
 package imp.primaryClasses;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import imp.DAOs.DAOCamion;
 
 public class Camion {
 	
@@ -81,13 +86,75 @@ public class Camion {
 		}
 		
 		
-		public void EditarCamion() {
+		public void EditarCamion(String patente, String costoHora, String costoKm, String fechacompra, String kmRecorridos, String marca, String modelo) {
 			
+			if(patente != null && patente != "") {
+				setPatente(patente);
+				
+			}
+			if(costoHora != null && costoHora != "") {
+				setCostoHora(Double.parseDouble(costoHora));
+				
+			}
+			if(costoKm != null && costoKm != "") {
+				setCostoKm(Double.parseDouble(costoKm));
+				
+			}
+			if(fechacompra != null && fechacompra != "") {
+				Date fechaCompra = null;
+				
+				try {
+					
+					fechaCompra = new SimpleDateFormat("dd/MM/yyyy").parse(fechacompra);
+					
+					setFechacompra(fechaCompra);
+				
+				}catch (ParseException e) {
+
+					//e.printStackTrace();
+				}
+				
+			}
 			
+			if(kmRecorridos != null && kmRecorridos != "") {
+				setKmRecorridos(Double.parseDouble(kmRecorridos));
+				
+			}
+			
+			if(marca != null && marca != "") {
+				setMarca(marca);				
+			}
+			
+			if(modelo != null && modelo != "") {
+				setModelo(modelo);				
+			}
 			
 		}
 
 		
+		public void BajaCamion() {
+			
+			DAOCamion.EliminarCamion(this);
+		
+		}
+		
+		public void buscarCamion(String patente, String costoHora, String costoKm, String fechacompra, String kmRecorridos, String marca, String modelo) {
+			Date fechaCompra = null;
+			try {
+				
+				fechaCompra = new SimpleDateFormat("dd/MM/yyyy").parse(fechacompra);
+				
+			
+			}catch (ParseException e) {
+
+				//e.printStackTrace();
+			}
+			
+			Camion camion = new Camion( patente, Double.parseDouble(kmRecorridos),  marca,  modelo, Double.parseDouble(costoKm), Double.parseDouble(costoHora), fechaCompra);
+			
+			DAOCamion.BuscarCamion(camion);
+			
+		}
 		
 		
 }
