@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import imp.gestores.GestorPantallas;
-import imp.interfaces.MenuPrincipal;
 import imp.managers.DBManager;
 
 /**
