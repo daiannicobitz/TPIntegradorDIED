@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import imp.DAOs.DAOCamion;
+import imp.DTOs.CamionDTO;
 
 public class Camion {
 	
@@ -109,23 +110,36 @@ public class Camion {
 			setModelo(modelo);
 		}
 		
-
-		public Camion AltaCamion(String patente, double kmRecorridos, String marca, String modelo, double costoKm,
-				double costoHora, Date fechacompra) {
-			ArrayList<Camion> lista = buscarCamion(patente, null, null, null, null, null, null);
+		//AltaCamion retorna un arreglo de dos objetos, el primero es el camion y el segundo es un string que dice 
+		//si ese camion ya existía o no y fue creado ahora
+		public Object[] AltaCamion(String patente, double kmRecorridos, String marca, String modelo, double costoKm, double costoHora, Date fechacompra) {
+		
+			Object retorno[] = new Object[2];
+				
+		ArrayList<Camion> lista = BuscarCamion(patente, null, null, null, null, null, null);
+		
 			if(lista.size() > 0) {
 				
-				return null;
-			}
-			else {
+				Camion c1 = lista.get(0);
+				retorno[0] = c1;
+				retorno[1] = "existe";
+				return retorno;
+			
+			} else {
+				
 				Camion c1 = new Camion(patente, kmRecorridos, marca, modelo, costoKm, costoHora, fechacompra);
 				DAOCamion.GuardarCamion(c1);
-				return c1;
+				retorno[0] = c1;
+				retorno[1] = "creado";
+				return retorno;
+				
 			}
 			
 			
 		}
 		
+		//EditarCamion recibe todos los campos posibles a editar de un camion y evalua cual de todos se quieren 
+		//modificar, al final se llama al DAO y se actualiza en la base de datos
 		public void EditarCamion(String patente, String costoHora, String costoKm, String fechacompra, String kmRecorridos, String marca, String modelo) {
 			
 			if(patente != null && patente != "") {
@@ -173,27 +187,29 @@ public class Camion {
 			DAOCamion.actualizarCamion(this);
 		}
 
-		
+		//BajaCamion llama al DAO y elimina al camion de la base de datos
 		public void BajaCamion() {
 			
 			DAOCamion.EliminarCamion(this);
 		
 		}
 		
-		
-		public ArrayList<Camion> buscarCamion(String patente, String costoHora, String costoKm, String fechacompra, String kmRecorridos, String marca, String modelo) {
+		//BuscarCamion recibe todos los atributos posibles de busqueda y crea un camionDTO con esos atributos, 
+		//luego llama al DAO y busca el camion en la BDD, la busqueda retorna un ArrayList con todos los camiones que se 
+		//encontraron
+		public ArrayList<Camion> BuscarCamion(String patente, String costoHora, String costoKm, String fechacompra, String kmRecorridos, String marca, String modelo) {
+			
 			Date fechaCompra = null;
 			try {
 				
 				fechaCompra = new SimpleDateFormat("dd/MM/yyyy").parse(fechacompra);
 				
-			
 			}catch (ParseException e) {
 
 				//e.printStackTrace();
 			}
 			
-			Camion camion = new Camion( patente, Double.parseDouble(kmRecorridos),  marca,  modelo, Double.parseDouble(costoKm), Double.parseDouble(costoHora), fechaCompra);
+			CamionDTO camion = new CamionDTO( patente, kmRecorridos,  marca,  modelo, costoKm, costoHora, fechaCompra);
 			
 			
 			ArrayList<Camion> listaCamiones = DAOCamion.BuscarCamion(camion);

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import imp.DTOs.CamionDTO;
 import imp.managers.DBManager;
 import imp.primaryClasses.Camion;
 
@@ -30,7 +31,7 @@ public class DAOCamion {
 		
 	}
 	
-	public static ArrayList<Camion> BuscarCamion(Camion camion) {
+	public static ArrayList<Camion> BuscarCamion(CamionDTO camion) {
 	
 		
 		return null;
