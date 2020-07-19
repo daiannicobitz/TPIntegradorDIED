@@ -122,7 +122,7 @@ public class MenuPrincipalFrame extends JFrame {
 	ModificarCamion panel_modificarCamion = new ModificarCamion();
 	contenedor_camion.add(panel_modificarCamion, "modificarCamion");
 	
-	JPanel panel_buscarCamion = new JPanel();
+	BuscarCamion panel_buscarCamion = new BuscarCamion();
 	contenedor_camion.add(panel_buscarCamion, "buscarCamion");
 	panel_camion.setLayout(gl_panel_camion);
 	
@@ -173,6 +173,11 @@ public class MenuPrincipalFrame extends JFrame {
 	btn_modificarCamion.addActionListener(e -> {
 		 c = (CardLayout)(contenedor_camion.getLayout());
 		c.show(contenedor_camion, "modificarCamion");
+		
+	});
+	btn_buscarCamion.addActionListener(e -> {
+		 c = (CardLayout)(contenedor_camion.getLayout());
+		c.show(contenedor_camion, "buscarCamion");
 		
 	});
 	

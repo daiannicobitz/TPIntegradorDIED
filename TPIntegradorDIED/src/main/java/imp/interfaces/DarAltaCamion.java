@@ -10,9 +10,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import imp.enumerators.Marca;
 
 import java.awt.Component;
+import java.awt.Font;
 
 public class DarAltaCamion extends JPanel {
-	private JTextField txt_modelo;
+	
 	
 	public DarAltaCamion() {
 		setBackground(new Color(255, 255, 204));
@@ -31,7 +32,7 @@ public class DarAltaCamion extends JPanel {
 		JLabel lbl_modelo = new JLabel("MODELO");
 		lbl_modelo.setBounds(464, 123, 91, 14);
 		
-		txt_modelo = new JTextField();
+		JTextField txt_modelo = new JTextField();
 		txt_modelo.setBounds(595, 120, 168, 20);
 		txt_modelo.setColumns(10);
 		
@@ -61,6 +62,7 @@ public class DarAltaCamion extends JPanel {
 		
 		JFormattedTextField formattedTextField = new JFormattedTextField();
 		formattedTextField.setBounds(595, 42, 168, 20);
+		
 		setLayout(null);
 		add(lbl_patente);
 		add(lbl_kmR);
@@ -77,6 +79,13 @@ public class DarAltaCamion extends JPanel {
 		add(txt_modelo);
 		add(formattedTextField);
 		
+		JButton btn_aceptar = new JButton("ACEPTAR");
+		btn_aceptar.setBounds(529, 397, 98, 23);
+		add(btn_aceptar);
+		
+		JButton btn_cancelar = new JButton("CANCELAR");
+		btn_cancelar.setBounds(637, 397, 98, 23);
+		add(btn_cancelar);
 		
 	}
 }

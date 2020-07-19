@@ -16,7 +16,7 @@ import imp.managers.DBManager;
 public class App 
 {
     public static void main( String[] args )
-    {
+    {/*
     try {
 
 			DBManager dbm = DBManager.getInstance();
@@ -35,7 +35,7 @@ public class App
 			JOptionPane.showMessageDialog(null, "No Hay Conexión con la Base de Datos.", "Error", JOptionPane.WARNING_MESSAGE);
 			//e.printStackTrace();
 		}
-   	
+  */ 	
     	EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
