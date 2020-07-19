@@ -12,14 +12,14 @@ public abstract class Insumo {
 		protected double cantidad;
 		
 		
-		public Insumo(String descripcion, UM unidadMedida, double costoUnitario, double cantidad) {
+		public Insumo(int id, String descripcion, UM unidadMedida, double costoUnitario, double cantidad) {
 			super();
+			this.id=id;
 			this.descripcion = descripcion;
 			this.unidadMedida = unidadMedida;
 			this.costoUnitario = costoUnitario;
 			this.cantidad = cantidad;
 		}
-		
 		
 		public final int getId() {
 			return id;
