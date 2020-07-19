@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import imp.managers.DBManager;
+import imp.gestores.DBManager;
 import imp.primaryClasses.Insumo;
 
 public class DAOInsumo {
