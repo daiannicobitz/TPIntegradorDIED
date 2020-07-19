@@ -6,8 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import imp.gestores.DBManager;
 import imp.enumerators.UM;
-import imp.managers.DBManager;
+import imp.gestores.DBManager;
 import imp.primaryClasses.Insumo;
 import imp.primaryClasses.InsumoGeneral;
 import imp.primaryClasses.InsumoLiquido;

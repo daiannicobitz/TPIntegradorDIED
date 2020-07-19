@@ -22,6 +22,62 @@ public class CamionDTO {
 		this.costoHora = costoHora;
 		this.fechacompra = fechacompra;
 	}
+
+	public String getPatente() {
+		return patente;
+	}
+
+	public void setPatente(String patente) {
+		this.patente = patente;
+	}
+
+	public String getKmRecorridos() {
+		return kmRecorridos;
+	}
+
+	public void setKmRecorridos(String kmRecorridos) {
+		this.kmRecorridos = kmRecorridos;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public String getCostoKm() {
+		return costoKm;
+	}
+
+	public void setCostoKm(String costoKm) {
+		this.costoKm = costoKm;
+	}
+
+	public String getCostoHora() {
+		return costoHora;
+	}
+
+	public void setCostoHora(String costoHora) {
+		this.costoHora = costoHora;
+	}
+
+	public Date getFechacompra() {
+		return fechacompra;
+	}
+
+	public void setFechacompra(Date fechacompra) {
+		this.fechacompra = fechacompra;
+	}
 	
 	
 	

@@ -97,7 +97,7 @@ public class Camion {
 			setModelo(modelo);
 		}
 		
-		private Camion(int id, String patente, double kmRecorridos, String marca, String modelo, double costoKm,
+		public Camion(int id, String patente, double kmRecorridos, String marca, String modelo, double costoKm,
 				double costoHora, Date fechacompra) {
 			super();
 			setId(id);
