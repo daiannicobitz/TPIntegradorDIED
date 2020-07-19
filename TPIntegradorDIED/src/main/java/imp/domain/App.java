@@ -17,7 +17,7 @@ public class App
 {
     public static void main( String[] args )
     {
-    	try {
+    try {
 
 			DBManager dbm = DBManager.getInstance();
 			Connection con = dbm.getConn();
@@ -47,12 +47,8 @@ public class App
         });
     	
 		
-        imprimeMensaje("Hello World!");
         
         
     }
     
-    private static void imprimeMensaje(String msg) {
-    	System.out.println( msg );
-    }
 }
