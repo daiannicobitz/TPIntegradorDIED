@@ -1,19 +1,20 @@
 package imp.DTOs;
 
-import java.util.Date;
+
 
 public class CamionDTO {
-
+	private String id;
 	private String patente;
 	private String kmRecorridos;
 	private String marca;
 	private String modelo;
 	private String costoKm;
 	private String costoHora;
-	private Date fechacompra;
+	private String fechacompra;
 	
-	public CamionDTO( String patente, String kmRecorridos, String marca, String modelo, String costoKm, String costoHora, Date fechacompra) {
+	public CamionDTO( String id, String patente, String kmRecorridos, String marca, String modelo, String costoKm, String costoHora, String fechacompra) {
 		super();
+		this.id= id;
 		this.patente = patente;
 		this.kmRecorridos = kmRecorridos;
 		this.marca = marca;
@@ -23,6 +24,10 @@ public class CamionDTO {
 		this.fechacompra = fechacompra;
 	}
 
+	public String getId() {
+		return id;
+	}
+	
 	public String getPatente() {
 		return patente;
 	}
@@ -71,11 +76,11 @@ public class CamionDTO {
 		this.costoHora = costoHora;
 	}
 
-	public Date getFechacompra() {
+	public String getFechacompra() {
 		return fechacompra;
 	}
 
-	public void setFechacompra(Date fechacompra) {
+	public void setFechacompra(String fechacompra) {
 		this.fechacompra = fechacompra;
 	}
 	

@@ -1,10 +1,9 @@
 package imp.primaryClasses;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
+
 import java.util.ArrayList;
-import java.util.Date;
 
 import imp.DAOs.DAOCamion;
 import imp.DTOs.CamionDTO;
@@ -18,7 +17,7 @@ public class Camion {
 		private String modelo;
 		private double costoKm;
 		private double costoHora;
-		private Date fechacompra;
+		private String fechacompra;
 		
 		public String getPatente() {
 			return patente;
@@ -68,15 +67,15 @@ public class Camion {
 			this.costoHora = costoHora;
 		}
 		
-		public Date getFechacompra() {
+		public String getFechacompra() {
 			return fechacompra;
 		}
 		
-		private void setFechacompra(Date fechacompra) {
+		private void setFechacompra(String fechacompra) {
 			this.fechacompra = fechacompra;
 		}
 
-		public double getId() {
+		public int getId() {
 			return id;
 		}
 		
@@ -86,7 +85,7 @@ public class Camion {
 		}
 		
 		private Camion(String patente, double kmRecorridos, String marca, String modelo, double costoKm,
-				double costoHora, Date fechacompra) {
+				double costoHora, String fechacompra) {
 			super();
 			setPatente(patente);
 			setCostoHora(costoHora);
@@ -98,7 +97,7 @@ public class Camion {
 		}
 		
 		public Camion(int id, String patente, double kmRecorridos, String marca, String modelo, double costoKm,
-				double costoHora, Date fechacompra) {
+				double costoHora, String fechacompra) {
 			super();
 			setId(id);
 			setPatente(patente);
@@ -112,7 +111,7 @@ public class Camion {
 		
 		//AltaCamion retorna un arreglo de dos objetos, el primero es el camion y el segundo es un string que dice 
 		//si ese camion ya existía o no y fue creado ahora
-		public Object[] AltaCamion(String patente, double kmRecorridos, String marca, String modelo, double costoKm, double costoHora, Date fechacompra) {
+		public Object[] AltaCamion(String patente, double kmRecorridos, String marca, String modelo, double costoKm, double costoHora, String fechacompra) {
 		
 			Object retorno[] = new Object[2];
 				
@@ -155,19 +154,8 @@ public class Camion {
 				
 			}
 			if(fechacompra != null && fechacompra != "") {
-				Date fechaCompra = null;
-				
-				try {
+					setFechacompra(fechacompra);
 					
-					fechaCompra = new SimpleDateFormat("dd/MM/yyyy").parse(fechacompra);
-					
-					setFechacompra(fechaCompra);
-				
-				}catch (ParseException e) {
-
-					//e.printStackTrace();
-				}
-				
 			}
 			
 			if(kmRecorridos != null && kmRecorridos != "") {
@@ -184,7 +172,14 @@ public class Camion {
 			}
 			
 			
-			DAOCamion.actualizarCamion(this);
+			DAOCamion.actualizarCamion(this.CrearDTOCamion());
+		}
+
+		private CamionDTO CrearDTOCamion() {
+			
+			CamionDTO camion = new CamionDTO(Integer.toString(this.getId()), this.getPatente(), Double.toString(this.getKmRecorridos()), this.getMarca(), this.getModelo(), Double.toString(this.getCostoKm()), Double.toString(this.getCostoHora()), this.getFechacompra());
+			
+			return camion;
 		}
 
 		//BajaCamion llama al DAO y elimina al camion de la base de datos
@@ -199,17 +194,8 @@ public class Camion {
 		//encontraron
 		public ArrayList<Camion> BuscarCamion(String patente, String costoHora, String costoKm, String fechacompra, String kmRecorridos, String marca, String modelo) {
 			
-			Date fechaCompra = null;
-			try {
-				
-				fechaCompra = new SimpleDateFormat("dd/MM/yyyy").parse(fechacompra);
-				
-			}catch (ParseException e) {
-
-				//e.printStackTrace();
-			}
 			
-			CamionDTO camion = new CamionDTO( patente, kmRecorridos,  marca,  modelo, costoKm, costoHora, fechaCompra);
+			CamionDTO camion = new CamionDTO(null, patente, kmRecorridos,  marca,  modelo, costoKm, costoHora, fechacompra);
 			
 			
 			ArrayList<Camion> listaCamiones = DAOCamion.BuscarCamion(camion);
