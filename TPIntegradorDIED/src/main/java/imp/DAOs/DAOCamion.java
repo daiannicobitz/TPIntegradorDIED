@@ -287,10 +287,8 @@ public class DAOCamion {
 				e.printStackTrace();
 			}
 		}	
-		
-		
+			
 	}
-	
 	
 	public static void actualizarCamion(CamionDTO camion) {
 

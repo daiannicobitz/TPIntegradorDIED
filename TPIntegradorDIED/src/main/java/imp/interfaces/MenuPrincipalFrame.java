@@ -28,27 +28,30 @@ public class MenuPrincipalFrame extends JFrame {
 	
 	
 	JMenuBar menuBar = new JMenuBar();
-	menuBar.setBackground(UIManager.getColor("CheckBox.focus"));
+	menuBar.setBackground(new Color(255, 204, 153));
 	setJMenuBar(menuBar);
-	
 	JMenuItem menu_planta = new JMenuItem("PLANTA");
+	//JMenuItem menu_planta = new JMenuItem("PLANTA");
 	menu_planta.setFont(new Font("Segoe UI", Font.BOLD, 12));
-	menu_planta.setBackground(SystemColor.info);
+	menu_planta.setForeground(Color.BLACK);
+	menu_planta.setBackground(new Color(90, 158, 101));
 	menuBar.add(menu_planta);
 	
 	JMenuItem menu_camion = new JMenuItem("CAMION");
 	menu_camion.setFont(new Font("Segoe UI", Font.BOLD, 12));
 	menu_camion.setForeground(Color.BLACK);
-	menu_camion.setBackground(SystemColor.info);
+	menu_camion.setBackground(new Color(90, 158, 101));
 	menuBar.add(menu_camion);
 	
 	JMenuItem menu_insumos = new JMenuItem("INSUMOS");
-	menu_insumos.setBackground(SystemColor.info);
+	menu_insumos.setBackground(new Color(90, 158, 101));
+	menu_insumos.setForeground(Color.BLACK);
 	menu_insumos.setFont(new Font("Segoe UI", Font.BOLD, 12));
 	menuBar.add(menu_insumos);
 	
-	JMenuItem menu_ordenP = new JMenuItem("ORDEN PEDIDO ");
-	menu_ordenP.setBackground(SystemColor.info);
+	JMenuItem menu_ordenP = new JMenuItem("ORDEN PEDIDO");
+	menu_ordenP.setBackground(new Color(90, 158, 101));
+	menu_ordenP.setForeground(Color.BLACK);
 	menu_ordenP.setFont(new Font("Segoe UI", Font.BOLD, 12));
 	menuBar.add(menu_ordenP);
 	
@@ -57,20 +60,44 @@ public class MenuPrincipalFrame extends JFrame {
 	panelPrincipal.setLayout(new CardLayout(0, 0));
 	
 	JPanel panel_planta = new JPanel();
-	panel_planta.setBackground(new Color(255, 204, 153));
+	panel_planta.setBackground(new Color(187, 238, 110));
 	panelPrincipal.add(panel_planta, "planta");
 	
 	JPanel panel_camion = new JPanel();
-	panel_camion.setBackground(new Color(255, 204, 153));
+	panel_camion.setBackground(new Color(187, 238, 110));
 	panelPrincipal.add(panel_camion, "camion");
 	
 	JButton btn_altaCamion = new JButton("DAR DE ALTA UN CAMION");
+	btn_altaCamion.setFont(new Font("Montserrat", Font.ITALIC, 11));
+	btn_altaCamion.setBorderPainted(false);
+	btn_altaCamion.setFocusPainted(false);
+	btn_altaCamion.setContentAreaFilled(true);
+	btn_altaCamion.setForeground(new Color(0, 0, 0));
+	btn_altaCamion.setBackground(new Color(80, 165, 94));
 	
 	JButton btn_bajaCamion = new JButton("DAR DE BAJA UN CAMION");
+	btn_bajaCamion.setFont(new Font("Montserrat", Font.ITALIC, 11));
+	btn_bajaCamion.setBorderPainted(false);
+	btn_bajaCamion.setFocusPainted(false);
+	btn_bajaCamion.setContentAreaFilled(true);
+	btn_bajaCamion.setForeground(new Color(0, 0, 0));
+	btn_bajaCamion.setBackground(new Color(80, 165, 94));
 	
-	JButton btn_modificarCamion = new JButton("EDITAR INFOMRACION DE UN CAMION ");
+	JButton btn_modificarCamion = new JButton("EDITAR DATOS DE UN CAMION ");
+	btn_modificarCamion.setFont(new Font("Montserrat", Font.ITALIC, 11));
+	btn_modificarCamion.setBorderPainted(false);
+	btn_modificarCamion.setFocusPainted(false);
+	btn_modificarCamion.setContentAreaFilled(true);
+	btn_modificarCamion.setForeground(new Color(0, 0, 0));
+	btn_modificarCamion.setBackground(new Color(80, 165, 94));
 	
 	JButton btn_buscarCamion = new JButton("BUSCAR UN CAMION");
+	btn_buscarCamion.setFont(new Font("Montserrat", Font.ITALIC, 11));
+	btn_buscarCamion.setBorderPainted(false);
+	btn_buscarCamion.setFocusPainted(false);
+	btn_buscarCamion.setContentAreaFilled(true);
+	btn_buscarCamion.setForeground(new Color(0, 0, 0));
+	btn_buscarCamion.setBackground(new Color(80, 165, 94));
 	
 	JPanel contenedor_camion = new JPanel();
 	GroupLayout gl_panel_camion = new GroupLayout(panel_camion);
@@ -109,7 +136,7 @@ public class MenuPrincipalFrame extends JFrame {
 	
 	JPanel inicio_camion = new JPanel();
 	contenedor_camion.add(inicio_camion);
-	inicio_camion.setBackground(new Color(255, 204, 153));
+	inicio_camion.setBackground(new Color(187, 238, 110));
 	
 	
 	
@@ -127,11 +154,11 @@ public class MenuPrincipalFrame extends JFrame {
 	panel_camion.setLayout(gl_panel_camion);
 	
 	JPanel panel_insumos = new JPanel();
-	panel_insumos.setBackground(new Color(255, 204, 153));
+	panel_insumos.setBackground(new Color(187, 238, 110));
 	panelPrincipal.add(panel_insumos, "insumos");
 	
 	JPanel panel_ordenP = new JPanel();
-	panel_ordenP.setBackground(new Color(255, 204, 153));
+	panel_ordenP.setBackground(new Color(187, 238, 110));
 	panelPrincipal.add(panel_ordenP, "ordenP");
 	
 	//---------- ACCIONES
@@ -180,8 +207,6 @@ public class MenuPrincipalFrame extends JFrame {
 		c.show(contenedor_camion, "buscarCamion");
 		
 	});
-	
-	
 	
 	
 	addWindowListener(new java.awt.event.WindowAdapter() {
