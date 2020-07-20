@@ -36,7 +36,7 @@ public class App
 			JOptionPane.showMessageDialog(null, "No Hay Conexión con la Base de Datos.", "Error", JOptionPane.WARNING_MESSAGE);
 			//e.printStackTrace();
 		}
-   	
+  
     	EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
