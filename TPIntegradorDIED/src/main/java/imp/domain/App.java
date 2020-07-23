@@ -6,9 +6,8 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 import imp.gestores.DBManager;
-import imp.interfaces.MenuPrincipal;
+import imp.interfaces.MenuPrincipalFrame;
 import imp.gestores.GestorPantallas;
-import imp.managers.DBManager;
 
 
 /**
@@ -20,7 +19,7 @@ public class App
     public static void main( String[] args )
     {
     try {
-
+    	
 			DBManager dbm = DBManager.getInstance();
 			Connection con = dbm.getConn();
 			JOptionPane.showMessageDialog(null, "Base de datos conectada.", "Conexión establecida", JOptionPane.INFORMATION_MESSAGE);
