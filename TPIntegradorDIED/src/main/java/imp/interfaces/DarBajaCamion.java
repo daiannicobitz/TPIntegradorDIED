@@ -1,6 +1,7 @@
 package imp.interfaces;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,7 +11,7 @@ import imp.enumerators.Marca;
 public class DarBajaCamion extends JPanel {
 	
 	public DarBajaCamion () {
-setBackground(new Color(255,255, 204));
+setBackground(new Color(118, 203, 117));
 		
 		JLabel lbl_patente = new JLabel("PATENTE");
 		lbl_patente.setBounds(110, 45, 60, 14);
@@ -89,7 +90,13 @@ setBackground(new Color(255,255, 204));
 		scrollPane.setViewportView(tabla_camion);
 		
 		JButton btn_eliminar = new JButton("ELIMINAR CAMION");
-		btn_eliminar.setBounds(623, 434, 189, 23);
+		btn_eliminar.setBounds(623, 423, 189, 40);
+		btn_eliminar.setFont(new Font("Montserrat", Font.ITALIC, 11));
+		btn_eliminar.setBorderPainted(false);
+		btn_eliminar.setFocusPainted(false);
+		btn_eliminar.setContentAreaFilled(true);
+		btn_eliminar.setForeground(new Color(0, 0, 0));
+		btn_eliminar.setBackground(new Color(80, 165, 94));
 		add(btn_eliminar);
 		
 		

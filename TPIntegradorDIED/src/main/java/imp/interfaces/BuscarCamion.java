@@ -12,7 +12,7 @@ public class BuscarCamion extends JPanel {
 	
 
 	public BuscarCamion() {
-		setBackground(new Color(255,255, 204));
+		setBackground(new Color(118, 203, 117));
 		
 		JLabel lbl_patente = new JLabel("PATENTE");
 		lbl_patente.setBounds(110, 45, 60, 14);
@@ -91,11 +91,23 @@ public class BuscarCamion extends JPanel {
 		scrollPane.setViewportView(tabla_camion);
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
-		btn_aceptar.setBounds(623, 434, 98, 23);
+		btn_aceptar.setBounds(623, 423, 98, 40);
+		btn_aceptar.setFont(new Font("Montserrat", Font.ITALIC, 11));
+		btn_aceptar.setBorderPainted(false);
+		btn_aceptar.setFocusPainted(false);
+		btn_aceptar.setContentAreaFilled(true);
+		btn_aceptar.setForeground(new Color(0, 0, 0));
+		btn_aceptar.setBackground(new Color(80, 165, 94));
 		add(btn_aceptar);
 		
 		JButton btn_cancelar = new JButton("CANCELAR");
-		btn_cancelar.setBounds(731, 434, 98, 23);
+		btn_cancelar.setBounds(731, 423, 98, 40);
+		btn_cancelar.setFont(new Font("Montserrat", Font.ITALIC, 11));
+		btn_cancelar.setBorderPainted(false);
+		btn_cancelar.setFocusPainted(false);
+		btn_cancelar.setContentAreaFilled(true);
+		btn_cancelar.setForeground(new Color(0, 0, 0));
+		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
 		
 		

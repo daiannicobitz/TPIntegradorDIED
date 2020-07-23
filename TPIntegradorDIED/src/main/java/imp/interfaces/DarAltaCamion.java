@@ -7,16 +7,28 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JSpinnerDateEditor;
+
 import imp.enumerators.Marca;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class DarAltaCamion extends JPanel {
 	
 	
 	public DarAltaCamion() {
-		setBackground(new Color(255, 255, 204));
+		setBackground(new Color(118, 203, 117));
 		
 		JLabel lbl_patente = new JLabel("PATENTE");
 		lbl_patente.setBounds(125, 45, 60, 14);
@@ -39,6 +51,25 @@ public class DarAltaCamion extends JPanel {
 		JFormattedTextField ftxt_patente = new JFormattedTextField();
 		ftxt_patente.setBounds(246, 42, 160, 20);
 		
+		ftxt_patente.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int max = 10;
+				char c = e.getKeyChar();
+				if((c < '0' || c > '9') &&(c < 'a' || c > 'z') &&(c < 'A' || c > 'Z')) e.consume();
+				else if(ftxt_patente.getText().length() > max+1) {
+					e.consume();
+					String shortened = ftxt_patente.getText().substring(0,max);
+					ftxt_patente.setText(shortened);
+				}else if(ftxt_patente.getText().length() >max) {
+					e.consume();
+				}
+			}
+		});
+		
+		
+		
 		JSpinner spinner_kmR = new JSpinner();
 		spinner_kmR.setBounds(246, 205, 160, 20);
 		
@@ -51,17 +82,69 @@ public class DarAltaCamion extends JPanel {
 		JFormattedTextField ftxt_costoKm = new JFormattedTextField();
 		ftxt_costoKm.setBounds(595, 205, 168, 20);
 		
+		ftxt_costoKm.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int max = 10;
+				char c = e.getKeyChar();
+				if((c < '0' || c > '9')&& (c != '.')) e.consume();
+				else if(ftxt_costoKm.getText().length() > max+1) {
+					e.consume();
+					String shortened = ftxt_costoKm.getText().substring(0,max);
+					ftxt_costoKm.setText(shortened);
+				}else if(ftxt_costoKm.getText().length() >max) {
+					e.consume();
+				}
+			}
+		});
+		
 		JLabel lbl_costoHora = new JLabel("COSTO POR HORA");
 		lbl_costoHora.setBounds(125, 289, 125, 14);
 		
 		JFormattedTextField ftxt_costoHora = new JFormattedTextField();
 		ftxt_costoHora.setBounds(246, 286, 160, 20);
+		ftxt_costoHora.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int max = 10;
+				char c = e.getKeyChar();
+				if((c < '0' || c > '9') && (c != '.')) e.consume();
+				else if(ftxt_costoHora.getText().length() > max+1) {
+					e.consume();
+					String shortened = ftxt_costoHora.getText().substring(0,max);
+					ftxt_costoHora.setText(shortened);
+				}else if(ftxt_costoHora.getText().length() >max) {
+					e.consume();
+				}
+			}
+		});
 		
 		JLabel lblNewLabel = new JLabel("FECHA COMPRA");
 		lblNewLabel.setBounds(464, 45, 111, 14);
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(595, 42, 168, 20);
+		JDateChooser fecha_compra = new JDateChooser("dd/MM/yyyy", "##/##/####", '_');
+		fecha_compra.setDateFormatString("dd/MM/yyyy");
+		
+		LocalDateTime now = LocalDateTime.now();  
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		Date nowdate = Date.from(now.atZone(defaultZoneId).toInstant());
+		fecha_compra.setDate(nowdate);
+		Date inicio= null;
+		try {
+			inicio=new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1980");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		fecha_compra.setSelectableDateRange(inicio, nowdate);
+
+		
+		
+		
+		fecha_compra.setBounds(595, 42, 168, 20);
 		
 		setLayout(null);
 		add(lbl_patente);
@@ -77,14 +160,26 @@ public class DarAltaCamion extends JPanel {
 		add(lbl_costoKm);
 		add(ftxt_costoKm);
 		add(txt_modelo);
-		add(formattedTextField);
+		add(fecha_compra);
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
-		btn_aceptar.setBounds(529, 397, 98, 23);
+		btn_aceptar.setBounds(529, 397, 98, 40);
+		btn_aceptar.setFont(new Font("Montserrat", Font.ITALIC, 11));
+		btn_aceptar.setBorderPainted(false);
+		btn_aceptar.setFocusPainted(false);
+		btn_aceptar.setContentAreaFilled(true);
+		btn_aceptar.setForeground(new Color(0, 0, 0));
+		btn_aceptar.setBackground(new Color(80, 165, 94));
 		add(btn_aceptar);
 		
 		JButton btn_cancelar = new JButton("CANCELAR");
-		btn_cancelar.setBounds(637, 397, 98, 23);
+		btn_cancelar.setBounds(637, 397, 98, 40);
+		btn_cancelar.setFont(new Font("Montserrat", Font.ITALIC, 11));
+		btn_cancelar.setBorderPainted(false);
+		btn_cancelar.setFocusPainted(false);
+		btn_cancelar.setContentAreaFilled(true);
+		btn_cancelar.setForeground(new Color(0, 0, 0));
+		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
 		
 	}
