@@ -13,49 +13,49 @@ public class ModificarCamion extends JPanel {
 setBackground(new Color(118, 203, 117));
 		
 		JLabel lbl_patente = new JLabel("PATENTE");
-		lbl_patente.setBounds(125, 45, 60, 14);
+		lbl_patente.setBounds(125, 106, 60, 14);
 		
 		JLabel lbl_marca = new JLabel("MARCA");
-		lbl_marca.setBounds(125, 123, 60, 14);
+		lbl_marca.setBounds(125, 173, 60, 14);
 		
 		JComboBox combo_marca = new JComboBox();
-		combo_marca.setBounds(246, 120, 160, 20);
+		combo_marca.setBounds(246, 170, 160, 20);
 		combo_marca.setModel(new DefaultComboBoxModel(Marca.values()));
 		
 		
 		JLabel lbl_modelo = new JLabel("MODELO");
-		lbl_modelo.setBounds(464, 123, 91, 14);
+		lbl_modelo.setBounds(464, 173, 91, 14);
 		
 		JTextField txt_modelo = new JTextField();
-		txt_modelo.setBounds(595, 120, 168, 20);
+		txt_modelo.setBounds(595, 167, 168, 20);
 		txt_modelo.setColumns(10);
 		
 		JFormattedTextField ftxt_patente = new JFormattedTextField();
-		ftxt_patente.setBounds(246, 42, 160, 20);
+		ftxt_patente.setBounds(246, 103, 160, 20);
 		
 		JSpinner spinner_kmR = new JSpinner();
-		spinner_kmR.setBounds(246, 205, 160, 20);
+		spinner_kmR.setBounds(246, 231, 160, 20);
 		
 		JLabel lbl_kmR = new JLabel("KM RECORRIDOS");
-		lbl_kmR.setBounds(125, 208, 135, 14);
+		lbl_kmR.setBounds(125, 234, 135, 14);
 		
 		JLabel lbl_costoKm = new JLabel("COSTO POR KM");
-		lbl_costoKm.setBounds(464, 208, 108, 14);
+		lbl_costoKm.setBounds(464, 234, 108, 14);
 		
 		JFormattedTextField ftxt_costoKm = new JFormattedTextField();
-		ftxt_costoKm.setBounds(595, 205, 168, 20);
+		ftxt_costoKm.setBounds(595, 231, 168, 20);
 		
 		JLabel lbl_costoHora = new JLabel("COSTO POR HORA");
-		lbl_costoHora.setBounds(125, 289, 125, 14);
+		lbl_costoHora.setBounds(125, 300, 125, 14);
 		
 		JFormattedTextField ftxt_costoHora = new JFormattedTextField();
-		ftxt_costoHora.setBounds(246, 286, 160, 20);
+		ftxt_costoHora.setBounds(246, 297, 160, 20);
 		
 		JLabel lblNewLabel = new JLabel("FECHA COMPRA");
-		lblNewLabel.setBounds(464, 45, 111, 14);
+		lblNewLabel.setBounds(461, 106, 111, 14);
 		
 		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(595, 42, 168, 20);
+		formattedTextField.setBounds(595, 103, 168, 20);
 		
 		setLayout(null);
 		add(lbl_patente);
@@ -92,5 +92,21 @@ setBackground(new Color(118, 203, 117));
 		btn_cancelar.setForeground(new Color(0, 0, 0));
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
+		
+		JButton btn_buscarCamion = new JButton("BUSCAR CAMION A EDITAR");
+		btn_buscarCamion.setForeground(Color.BLACK);
+		btn_buscarCamion.setFont(new Font("Dialog", Font.ITALIC, 11));
+		btn_buscarCamion.setFocusPainted(false);
+		btn_buscarCamion.setContentAreaFilled(true);
+		btn_buscarCamion.setBorderPainted(false);
+		btn_buscarCamion.setBackground(new Color(80, 165, 94));
+		btn_buscarCamion.setBounds(125, 19, 281, 40);
+		
+		btn_buscarCamion.addActionListener(e -> {
+			
+			PopUpBuscarCamion buscar_camion = new PopUpBuscarCamion();
+		});
+		
+		add(btn_buscarCamion);
 	}
 }

@@ -116,6 +116,20 @@ setBackground(new Color(118, 203, 117));
 		add(ftxt_costoKm);
 		add(txt_modelo);
 		add(formattedTextField);
+		
+		JButton btn_buscar = new JButton("BUSCAR CAMION");
+		btn_buscar.setForeground(Color.BLACK);
+		btn_buscar.setFont(new Font("Dialog", Font.ITALIC, 11));
+		btn_buscar.setFocusPainted(false);
+		btn_buscar.setContentAreaFilled(true);
+		btn_buscar.setBorderPainted(false);
+		btn_buscar.setBackground(new Color(80, 165, 94));
+		btn_buscar.setBounds(661, 168, 168, 28);
+		
+		btn_buscar.addActionListener(e -> {
+			//TO-DO  implementar  la busqueda 
+		});
+		
+		add(btn_buscar);
 	}
-
 }

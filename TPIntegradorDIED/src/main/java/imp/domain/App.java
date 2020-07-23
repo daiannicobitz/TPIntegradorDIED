@@ -6,10 +6,7 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 import imp.gestores.DBManager;
-<<<<<<< HEAD
 import imp.interfaces.MenuPrincipalFrame;
-=======
->>>>>>> 01d448a4fb113927ac35fad47c43d0e6d0aab3ab
 import imp.gestores.GestorPantallas;
 
 
@@ -21,8 +18,8 @@ public class App
 {
     public static void main( String[] args )
     {
+  /*
     try {
-    	
 			DBManager dbm = DBManager.getInstance();
 			Connection con = dbm.getConn();
 			JOptionPane.showMessageDialog(null, "Base de datos conectada.", "Conexión establecida", JOptionPane.INFORMATION_MESSAGE);
@@ -40,6 +37,8 @@ public class App
 			//e.printStackTrace();
 		}
   
+  */
+    	
     	EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
