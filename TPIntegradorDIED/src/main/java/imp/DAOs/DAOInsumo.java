@@ -8,22 +8,20 @@ import java.util.ArrayList;
 
 import imp.gestores.DBManager;
 import imp.enumerators.UM;
-import imp.gestores.DBManager;
 import imp.primaryClasses.Insumo;
 import imp.primaryClasses.InsumoGeneral;
 import imp.primaryClasses.InsumoLiquido;
 
 public class DAOInsumo {
 	
-	public static void EliminarInsumo(Insumo insumo) {
+	public static void EliminarInsumo(int idInsumo) {
 
-//		hecho por daian
 		
 		DBManager dbm = DBManager.getInstance();
 		Connection con = dbm.getConn();
 		
 		try {
-			String consulta = "delete from insumo where id_insumo = '" + insumo.getId() +"'" ;
+			String consulta = "delete from insumo where id_insumo = '" + idInsumo +"'" ;
 
 			Statement st = con.createStatement();
 			int nro = st.executeUpdate(consulta);
@@ -38,7 +36,6 @@ public class DAOInsumo {
 	
 	public static void AltaInsumo(Insumo insumo) {
 		
-//		hecho por daian
 		
 		DBManager dbm = DBManager.getInstance();
 		Connection con = dbm.getConn();
@@ -51,9 +48,10 @@ public class DAOInsumo {
 							+ "'"+((InsumoGeneral) insumo).getPeso()+"','"+insumo.getUnidadMedida().toString()+"')";
 				
 			} else {
+
 				consulta = "insert into insumo(cantidad,costo_unitario,densidad,descripcion,peso,unidad_medida) "
 						+ "values ('"+insumo.getCantidad()+"','"+insumo.getCostoUnitario()+"','"+((InsumoLiquido) insumo).getDensidad()+"',"
-						+ "'"+insumo.getDescripcion()+"',null,'"+insumo.getUnidadMedida().toString()+"')";
+						+ "'"+insumo.getDescripcion()+"','"+((InsumoLiquido) insumo).getPeso()+"','"+insumo.getUnidadMedida().toString()+"')";
 			}
 			Statement st = con.createStatement();
 			int nro = st.executeUpdate(consulta);
@@ -69,9 +67,7 @@ public class DAOInsumo {
 	
 	public static void EditarInsumo(Insumo insumo) {
 		
-//		hecho por daian
-//		este metodo es similar al de alta, nomas que busca por id en la bdd y actualiza TODAS las 
-//		columnas
+//		este metodo es similar al de alta, nomas que busca por id en la bdd y actualiza TODAS las columnas
 		
 		DBManager dbm = DBManager.getInstance();
 		Connection con = dbm.getConn();
@@ -88,7 +84,8 @@ public class DAOInsumo {
 				consulta = "update insumo"
 						+ "SET cantidad = '"+insumo.getCantidad()+"', costo_unitario = '"+insumo.getCostoUnitario()+"', "
 						+ "densidad = '"+((InsumoLiquido) insumo).getDensidad()+"',descripcion = '"+insumo.getDescripcion()+"',"
-						+ "unidad_medida = '"+insumo.getUnidadMedida().toString()+"' where id_insumo = '"+insumo.getId()+"'";
+						+ "peso = '"+((InsumoGeneral) insumo).getPeso()+"', unidad_medida = '"+insumo.getUnidadMedida().toString()+"' "
+						+ "where id_insumo = '"+insumo.getId()+"'";
 			}
 			Statement st = con.createStatement();
 			int nro = st.executeUpdate(consulta);
@@ -105,7 +102,7 @@ public class DAOInsumo {
 		
 //		Este metodo devuelve una lista con todos los insumos que hay guardados en la base de datos.
 
-//		HAY QUE PROBARLO, hecho por daian	
+//		HAY QUE PROBARLO
 		
 		DBManager dbm = DBManager.getInstance();
 		Connection con = dbm.getConn();
@@ -127,6 +124,7 @@ public class DAOInsumo {
 						tablaInsumo.getDouble("cantidad"), tablaInsumo.getDouble("peso"));
 						listaInsumos.add(insumo);
 				}else {
+					
 					InsumoLiquido insumo = new InsumoLiquido(tablaInsumo.getInt("id_insumo"),tablaInsumo.getString("descripcion"), 
 					UM.valueOf(tablaInsumo.getString("unidad_medida")), tablaInsumo.getDouble("costo_unitario"), 
 					tablaInsumo.getDouble("cantidad"), tablaInsumo.getDouble("densidad"));

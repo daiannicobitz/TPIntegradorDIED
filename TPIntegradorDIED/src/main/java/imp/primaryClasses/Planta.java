@@ -11,7 +11,6 @@ public class Planta {
 	private int id;
 	private String nombre;
 	private TipoPlanta tipo;
-	private Queue<Camion> listaCamiones;
 	private ArrayList<Stock> listaStock;
 		
 		
@@ -29,14 +28,6 @@ public class Planta {
 	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	
-	public Queue<Camion> getListaCamiones() {
-		return this.listaCamiones;
-	}
-	
-	public void setListaCamiones(Queue<Camion> listaCamiones) {
-		this.listaCamiones = listaCamiones;
 	}
 	
 	public ArrayList<Stock> getListaStock() {
@@ -59,8 +50,7 @@ public class Planta {
 			super();
 			this.setId(id);
 			this.setNombre(nombre);
-			this.setTipo(tipo); 
-			this.listaCamiones = new LinkedList<Camion>();
+			this.setTipo(tipo);
 			this.listaStock = new ArrayList<Stock>();
 		}
 
