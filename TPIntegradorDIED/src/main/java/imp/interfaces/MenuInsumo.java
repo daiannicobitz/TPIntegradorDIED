@@ -84,9 +84,9 @@ public class MenuInsumo extends JPanel {
 	);
 	contenedor_insumo.setLayout(new CardLayout(0, 0));
 	
-	JPanel inicio_camion = new JPanel();
-	contenedor_insumo.add(inicio_camion);
-	inicio_camion.setBackground(new Color(187, 238, 110));
+	JPanel inicio_insumo = new JPanel();
+	contenedor_insumo.add(inicio_insumo);
+	inicio_insumo.setBackground(new Color(187, 238, 110));
 	
 	
 	
