@@ -22,45 +22,46 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 import imp.enumerators.Marca;
+import imp.enumerators.UM;
 
 public class DarAltaInsumo extends JPanel {
 	
 	public DarAltaInsumo() {
 		setBackground(new Color(118, 203, 117));
 		
-		JLabel lbl_patente = new JLabel("PATENTE");
-		lbl_patente.setBounds(125, 45, 60, 14);
+		JLabel lbl_descripcion = new JLabel("DESCRIPCION");
+		lbl_descripcion.setBounds(125, 60, 91, 14);
 		
-		JLabel lbl_marca = new JLabel("MARCA");
-		lbl_marca.setBounds(125, 123, 60, 14);
+		JLabel lbl_unidadMedida = new JLabel("UNIDAD DE MEDIDA");
+		lbl_unidadMedida.setBounds(125, 123, 111, 14);
 		
-		JComboBox combo_marca = new JComboBox();
-		combo_marca.setBounds(246, 120, 160, 20);
-		combo_marca.setModel(new DefaultComboBoxModel(Marca.values()));
+		JComboBox combo_medidas = new JComboBox();
+		combo_medidas.setBounds(265, 120, 160, 20);
+		combo_medidas.setModel(new DefaultComboBoxModel(UM.values()));
 		
 		
-		JLabel lbl_modelo = new JLabel("MODELO");
-		lbl_modelo.setBounds(464, 123, 91, 14);
+		JLabel lbl_peso = new JLabel("PESO");
+		lbl_peso.setBounds(519, 208, 91, 14);
 		
-		JTextField txt_modelo = new JTextField();
-		txt_modelo.setBounds(595, 120, 168, 20);
-		txt_modelo.setColumns(10);
+		JTextField txt_peso = new JTextField();
+		txt_peso.setBounds(657, 205, 168, 20);
+		txt_peso.setColumns(10);
 		
-		JFormattedTextField ftxt_patente = new JFormattedTextField();
-		ftxt_patente.setBounds(246, 42, 160, 20);
+		JFormattedTextField ftxt_descripcion = new JFormattedTextField();
+		ftxt_descripcion.setBounds(265, 45, 560, 45);
 		
-		ftxt_patente.addKeyListener(new KeyAdapter() {
+		ftxt_descripcion.addKeyListener(new KeyAdapter() {
 			
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int max = 10;
 				char c = e.getKeyChar();
 				if((c < '0' || c > '9') &&(c < 'a' || c > 'z') &&(c < 'A' || c > 'Z')) e.consume();
-				else if(ftxt_patente.getText().length() > max+1) {
+				else if(ftxt_descripcion.getText().length() > max+1) {
 					e.consume();
-					String shortened = ftxt_patente.getText().substring(0,max);
-					ftxt_patente.setText(shortened);
-				}else if(ftxt_patente.getText().length() >max) {
+					String shortened = ftxt_descripcion.getText().substring(0,max);
+					ftxt_descripcion.setText(shortened);
+				}else if(ftxt_descripcion.getText().length() >max) {
 					e.consume();
 				}
 			}
@@ -68,97 +69,71 @@ public class DarAltaInsumo extends JPanel {
 		
 		
 		
-		JSpinner spinner_kmR = new JSpinner();
-		spinner_kmR.setBounds(246, 205, 160, 20);
+		JSpinner spinner_cantidad = new JSpinner();
+		spinner_cantidad.setBounds(265, 205, 160, 20);
 		
-		JLabel lbl_kmR = new JLabel("KM RECORRIDOS");
-		lbl_kmR.setBounds(125, 208, 135, 14);
+		JLabel lbl_cantidad = new JLabel("CANTIDAD");
+		lbl_cantidad.setBounds(125, 208, 135, 14);
 		
-		JLabel lbl_costoKm = new JLabel("COSTO POR KM");
-		lbl_costoKm.setBounds(464, 208, 108, 14);
+		JLabel lbl_costoUnitario = new JLabel("COSTO UNITARIO");
+		lbl_costoUnitario.setBounds(519, 123, 108, 14);
 		
-		JFormattedTextField ftxt_costoKm = new JFormattedTextField();
-		ftxt_costoKm.setBounds(595, 205, 168, 20);
+		JFormattedTextField ftxt_costoUnitario = new JFormattedTextField();
+		ftxt_costoUnitario.setBounds(657, 120, 168, 20);
 		
-		ftxt_costoKm.addKeyListener(new KeyAdapter() {
+		ftxt_costoUnitario.addKeyListener(new KeyAdapter() {
 			
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int max = 10;
 				char c = e.getKeyChar();
 				if((c < '0' || c > '9')&& (c != '.')) e.consume();
-				else if(ftxt_costoKm.getText().length() > max+1) {
+				else if(ftxt_costoUnitario.getText().length() > max+1) {
 					e.consume();
-					String shortened = ftxt_costoKm.getText().substring(0,max);
-					ftxt_costoKm.setText(shortened);
-				}else if(ftxt_costoKm.getText().length() >max) {
+					String shortened = ftxt_costoUnitario.getText().substring(0,max);
+					ftxt_costoUnitario.setText(shortened);
+				}else if(ftxt_costoUnitario.getText().length() >max) {
 					e.consume();
 				}
 			}
 		});
 		
-		JLabel lbl_costoHora = new JLabel("COSTO POR HORA");
-		lbl_costoHora.setBounds(125, 289, 125, 14);
+		JLabel lbl_densidad = new JLabel("DENSIDAD");
+		lbl_densidad.setBounds(125, 289, 125, 14);
 		
-		JFormattedTextField ftxt_costoHora = new JFormattedTextField();
-		ftxt_costoHora.setBounds(246, 286, 160, 20);
-		ftxt_costoHora.addKeyListener(new KeyAdapter() {
+		JFormattedTextField ftxt_densidad = new JFormattedTextField();
+		ftxt_densidad.setBounds(265, 286, 160, 20);
+		ftxt_densidad.addKeyListener(new KeyAdapter() {
 			
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int max = 10;
 				char c = e.getKeyChar();
 				if((c < '0' || c > '9') && (c != '.')) e.consume();
-				else if(ftxt_costoHora.getText().length() > max+1) {
+				else if(ftxt_densidad.getText().length() > max+1) {
 					e.consume();
-					String shortened = ftxt_costoHora.getText().substring(0,max);
-					ftxt_costoHora.setText(shortened);
-				}else if(ftxt_costoHora.getText().length() >max) {
+					String shortened = ftxt_densidad.getText().substring(0,max);
+					ftxt_densidad.setText(shortened);
+				}else if(ftxt_densidad.getText().length() >max) {
 					e.consume();
 				}
 			}
 		});
 		
-		JLabel lblNewLabel = new JLabel("FECHA COMPRA");
-		lblNewLabel.setBounds(464, 45, 111, 14);
-		
-		JDateChooser fecha_compra = new JDateChooser("dd/MM/yyyy", "##/##/####", '_');
-		fecha_compra.setDateFormatString("dd/MM/yyyy");
-		
-		LocalDateTime now = LocalDateTime.now();  
-		ZoneId defaultZoneId = ZoneId.systemDefault();
-		Date nowdate = Date.from(now.atZone(defaultZoneId).toInstant());
-		fecha_compra.setDate(nowdate);
-		Date inicio= null;
-		try {
-			inicio=new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1980");
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		fecha_compra.setSelectableDateRange(inicio, nowdate);
-
-		
-		
-		
-		fecha_compra.setBounds(595, 42, 168, 20);
 		
 		setLayout(null);
-		add(lbl_patente);
-		add(lbl_kmR);
-		add(lbl_marca);
-		add(lbl_costoHora);
-		add(ftxt_costoHora);
-		add(ftxt_patente);
-		add(combo_marca);
-		add(spinner_kmR);
-		add(lblNewLabel);
-		add(lbl_modelo);
-		add(lbl_costoKm);
-		add(ftxt_costoKm);
-		add(txt_modelo);
-		add(fecha_compra);
+		add(lbl_descripcion);
+		add(lbl_cantidad);
+		add(lbl_unidadMedida);
+		add(lbl_densidad);
+		add(ftxt_densidad);
+		add(ftxt_descripcion);
+		add(combo_medidas);
+		add(spinner_cantidad);
+		add(lbl_peso);
+		add(lbl_costoUnitario);
+		add(ftxt_costoUnitario);
+		add(txt_peso);
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
 		btn_aceptar.setBounds(529, 397, 98, 40);

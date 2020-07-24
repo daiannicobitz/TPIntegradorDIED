@@ -93,11 +93,11 @@ public class MenuInsumo extends JPanel {
 	DarAltaInsumo panel_altaInsumo = new DarAltaInsumo();
 	contenedor_insumo.add(panel_altaInsumo, "altaInsumo");
 	
-	DarBajaInsumo panel_bajaCamion = new DarBajaInsumo();
-	contenedor_insumo.add(panel_bajaCamion, "bajaInsumo");
+	DarBajaInsumo panel_bajaInsumo = new DarBajaInsumo();
+	contenedor_insumo.add(panel_bajaInsumo, "bajaInsumo");
 	
-	ModificarInsumo panel_modificarCamion = new ModificarInsumo();
-	contenedor_insumo.add(panel_modificarCamion, "modificarInsumos");
+	ModificarInsumo panel_modificarInsumo = new ModificarInsumo();
+	contenedor_insumo.add(panel_modificarInsumo, "modificarInsumo");
 	
 	BuscarInsumos panel_buscarInsumos = new BuscarInsumos();
 	contenedor_insumo.add(panel_buscarInsumos, "buscarInsumos");
@@ -118,6 +118,7 @@ public class MenuInsumo extends JPanel {
 	});
 	
 	btn_modificarInsumo.addActionListener(e -> {
+		
 		 c = (CardLayout)(contenedor_insumo.getLayout());
 		c.show(contenedor_insumo, "modificarInsumo");
 		

@@ -12,6 +12,8 @@ import imp.enumerators.Marca;
 public class PopUpBuscarCamion extends JFrame{
 	
 	public PopUpBuscarCamion (){
+		
+		
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);

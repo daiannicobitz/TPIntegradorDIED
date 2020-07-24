@@ -11,7 +11,7 @@ import imp.enumerators.Marca;
 public class DarBajaCamion extends JPanel {
 	
 	public DarBajaCamion () {
-setBackground(new Color(118, 203, 117));
+		setBackground(new Color(118, 203, 117));
 		
 		JLabel lbl_patente = new JLabel("PATENTE");
 		lbl_patente.setBounds(110, 45, 60, 14);
