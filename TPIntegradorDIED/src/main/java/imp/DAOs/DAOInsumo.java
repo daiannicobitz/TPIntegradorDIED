@@ -16,7 +16,6 @@ public class DAOInsumo {
 	
 	public static void EliminarInsumo(int idInsumo) {
 
-		
 		DBManager dbm = DBManager.getInstance();
 		Connection con = dbm.getConn();
 		
