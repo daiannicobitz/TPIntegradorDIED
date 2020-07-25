@@ -65,12 +65,20 @@ public class BuscarInsumos extends JPanel {
 		btn_buscar.setContentAreaFilled(true);
 		btn_buscar.setBorderPainted(false);
 		btn_buscar.setBackground(new Color(80, 165, 94));
-		btn_buscar.setBounds(371, 29, 227, 34);
+		btn_buscar.setBounds(574, 29, 227, 34);
 		
 		btn_buscar.addActionListener(e -> {
 			//TO-DO  implementar  la busqueda 
 		});
 		
 		add(btn_buscar);
+		
+		JLabel lbl_planta = new JLabel("PLANTA");
+		lbl_planta.setBounds(66, 40, 46, 14);
+		add(lbl_planta);
+		
+		JComboBox combo_plantas = new JComboBox();
+		combo_plantas.setBounds(134, 36, 168, 22);
+		add(combo_plantas);
 	}
 }
