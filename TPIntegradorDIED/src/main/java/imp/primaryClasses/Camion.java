@@ -109,30 +109,33 @@ public class Camion {
 			setModelo(modelo);
 		}
 		
+		public Camion() {
+			
+		};
 		//AltaCamion retorna un arreglo de dos objetos, el primero es el camion y el segundo es un string que dice 
 		//si ese camion ya existía o no y fue creado ahora
-		public Object[] AltaCamion(String patente, double kmRecorridos, String marca, String modelo, double costoKm, double costoHora, String fechacompra) {
+		public Camion AltaCamion(String patente, double kmRecorridos, String marca, String modelo, double costoKm, double costoHora, String fechacompra) {
 		
-			Object retorno[] = new Object[2];
+			//Object retorno[] = new Object[2];
 				
-		ArrayList<Camion> lista = BuscarCamion(patente, null, null, null, null, null, null);
+		//ArrayList<Camion> lista = BuscarCamion(patente, "", "", "", "", "", "");
 		
-			if(lista.size() > 0) {
+			//if(!lista.isEmpty()) {
 				
-				Camion c1 = lista.get(0);
-				retorno[0] = c1;
-				retorno[1] = "existe";
-				return retorno;
+				//Camion c1 = lista.get(0);
+				//retorno[0] = c1;
+				//retorno[1] = "existe";
+				//return retorno;
 			
-			} else {
+			//} else {
 				
 				Camion c1 = new Camion(patente, kmRecorridos, marca, modelo, costoKm, costoHora, fechacompra);
 				DAOCamion.GuardarCamion(c1);
-				retorno[0] = c1;
-				retorno[1] = "creado";
-				return retorno;
+				//retorno[0] = c1;
+				//retorno[1] = "creado";
+				return c1;
 				
-			}
+			//}
 			
 			
 		}

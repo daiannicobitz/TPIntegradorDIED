@@ -17,12 +17,14 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import imp.primaryClasses.*;
 
 public class DarAltaCamion extends JPanel {
 	
@@ -170,6 +172,24 @@ public class DarAltaCamion extends JPanel {
 		btn_aceptar.setContentAreaFilled(true);
 		btn_aceptar.setForeground(new Color(0, 0, 0));
 		btn_aceptar.setBackground(new Color(80, 165, 94));
+		btn_aceptar.addActionListener(e -> {
+			
+			//verificar que todos los campos esten completos.
+		Camion c1 = new Camion();
+
+		Date date = fecha_compra.getDate(); 
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+		String strDate = dateFormat.format(date);
+		
+	    Camion retorno = c1.AltaCamion(ftxt_patente.getText(), Double.parseDouble(spinner_kmR.getValue().toString()), combo_marca.getSelectedItem().toString(), txt_modelo.getText(), Double.parseDouble(ftxt_costoKm.getText()), Double.parseDouble(ftxt_costoHora.getText()), strDate);
+				//crear un popup indicando que ya existe un camion con esa patente
+	    c1 = retorno;
+				
+			
+
+			
+			
+		});
 		add(btn_aceptar);
 		
 		JButton btn_cancelar = new JButton("CANCELAR");

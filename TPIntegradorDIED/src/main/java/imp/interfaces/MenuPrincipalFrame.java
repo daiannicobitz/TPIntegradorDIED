@@ -71,7 +71,7 @@ public class MenuPrincipalFrame extends JFrame {
 	MenuInsumo panel_insumos = new MenuInsumo();
 	panelPrincipal.add(panel_insumos, "insumos");
 	
-	JPanel panel_ordenP = new JPanel();
+	MenuOrdenPedido panel_ordenP = new MenuOrdenPedido();
 	panel_ordenP.setBackground(new Color(187, 238, 110));
 	panelPrincipal.add(panel_ordenP, "ordenP");
 	

@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import imp.DTOs.CamionDTO;
 import imp.gestores.DBManager;
@@ -21,7 +24,7 @@ public class DAOCamion {
 		Connection con = dbm.getConn();
 		
 		try {
-			String Consulta = "delete from camion where patente = " + camion.getPatente();
+			String Consulta = "delete from `CAMION` where patente = " + camion.getPatente();
 
 			Statement st = con.createStatement();
 			int nro = st.executeUpdate(Consulta);
@@ -43,77 +46,77 @@ public class DAOCamion {
 	private static String ArmarConsultaBuscar(CamionDTO camion) {
 		
 
-		String retorno = "select * from camion ";
+		String retorno = "select * from `CAMION` ";
 		
 		if(AtributosNoNulos(camion)) {
 			retorno = retorno + "where ";
 			
-			if(NoEsNulo(camion.getPatente()) && retorno.equalsIgnoreCase("select * from camion where")) {
+			if(NoEsNulo(camion.getPatente()) && retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "patente LIKE `%" + camion.getPatente() + "%` ";
+				retorno = retorno + " `PATENTE` LIKE `%" + camion.getPatente() + "%` ";
 				
 			} 
-			else if(NoEsNulo(camion.getPatente()) && !retorno.equalsIgnoreCase("select * from camion where")) {
+			else if(NoEsNulo(camion.getPatente()) && !retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "and patente LIKE `%" + camion.getPatente() + "%` ";
+				retorno = retorno + "and `PATENTE` LIKE `%" + camion.getPatente() + "%` ";
 			}
-			if(NoEsNulo(camion.getCostoHora()) && retorno.equalsIgnoreCase("select * from camion where")) {
+			if(NoEsNulo(camion.getCostoHora()) && retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "costo_hora LIKE `%" + camion.getCostoHora() + "%` ";
+				retorno = retorno + " `COSTO_HORA` LIKE `%" + camion.getCostoHora() + "%` ";
 			
 			} 
-			else if(NoEsNulo(camion.getCostoHora()) && !retorno.equalsIgnoreCase("select * from camion where")) {
+			else if(NoEsNulo(camion.getCostoHora()) && !retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "and costo_hora LIKE `%" + camion.getCostoHora() + "%` ";
+				retorno = retorno + "and `COSTO_HORA` LIKE `%" + camion.getCostoHora() + "%` ";
 			
 			}
-			if(NoEsNulo(camion.getCostoKm()) && retorno.equalsIgnoreCase("select * from camion where")) {
+			if(NoEsNulo(camion.getCostoKm()) && retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "costo_km LIKE `%" + camion.getCostoKm() + "%` ";
+				retorno = retorno + " `COSTO_KM` LIKE `%" + camion.getCostoKm() + "%` ";
 			
 			}
-			else if(NoEsNulo(camion.getCostoKm()) && !retorno.equalsIgnoreCase("select * from camion where")) {
+			else if(NoEsNulo(camion.getCostoKm()) && !retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "and costo_km LIKE `%" + camion.getCostoKm() + "%` ";
+				retorno = retorno + "and `COSTO_KM` LIKE `%" + camion.getCostoKm() + "%` ";
 			
 			}
-			if(NoEsNulo(camion.getMarca()) && retorno.equalsIgnoreCase("select * from camion where")) {
+			if(NoEsNulo(camion.getMarca()) && retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "marca LIKE `%" + camion.getMarca() + "%` ";
+				retorno = retorno + " `MARCA` LIKE `%" + camion.getMarca() + "%` ";
 			
 			}
-			else if(NoEsNulo(camion.getMarca()) && !retorno.equalsIgnoreCase("select * from camion where")) {
+			else if(NoEsNulo(camion.getMarca()) && !retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "and marca LIKE `%" + camion.getMarca() + "%` ";
+				retorno = retorno + "and `MARCA` LIKE `%" + camion.getMarca() + "%` ";
 			
 			}
-			if(NoEsNulo(camion.getModelo()) && retorno.equalsIgnoreCase("select * from camion where")) {
+			if(NoEsNulo(camion.getModelo()) && retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "modelo LIKE `%" + camion.getModelo() + "%` ";
+				retorno = retorno + " `MODELO` LIKE `%" + camion.getModelo() + "%` ";
 			
 			}
-			else if(NoEsNulo(camion.getModelo()) && !retorno.equalsIgnoreCase("select * from camion where")) {
+			else if(NoEsNulo(camion.getModelo()) && !retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "and modelo LIKE `%" + camion.getModelo() + "%` ";
+				retorno = retorno + "and `MODELO` LIKE `%" + camion.getModelo() + "%` ";
 			
 			}
-			if(NoEsNulo(camion.getKmRecorridos()) && retorno.equalsIgnoreCase("select * from camion where")) {
+			if(NoEsNulo(camion.getKmRecorridos()) && retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "km_recorridos LIKE `%" + camion.getKmRecorridos() + "%` ";
+				retorno = retorno + " `KM_RECORRIDOS` LIKE `%" + camion.getKmRecorridos() + "%` ";
 			
 			}
-			else if(NoEsNulo(camion.getKmRecorridos()) && !retorno.equalsIgnoreCase("select * from camion where")) {
+			else if(NoEsNulo(camion.getKmRecorridos()) && !retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "and km_recorridos LIKE `%" + camion.getKmRecorridos() + "%` ";
+				retorno = retorno + "and `KM_RECORRIDOS` LIKE `%" + camion.getKmRecorridos() + "%` ";
 			
 			}
-			if(NoEsNulo(camion.getFechacompra()) && retorno.equalsIgnoreCase("select * from camion where")) {
+			if(NoEsNulo(camion.getFechacompra()) && retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "fecha_compra LIKE `%" + camion.getFechacompra() + "%`";
+				retorno = retorno + " `FECHA_COMPRA` LIKE `%" + camion.getFechacompra() + "%`";
 			}
-			else if(NoEsNulo(camion.getFechacompra()) && !retorno.equalsIgnoreCase("select * from camion where")) {
+			else if(NoEsNulo(camion.getFechacompra()) && !retorno.equalsIgnoreCase("select * from `CAMION` where")) {
 				
-				retorno = retorno + "and fecha_compra LIKE `%" + camion.getFechacompra() + "%`";
+				retorno = retorno + "and `FECHA_COMPRA` LIKE `%" + camion.getFechacompra() + "%`";
 			}
 			
 		}
@@ -127,72 +130,72 @@ public class DAOCamion {
 		String retorno = null;
 		
 		if(AtributosNoNulos(camion)) {
-			retorno = "update camion set";
+			retorno = "update `CAMION` set";
 			
-			if(NoEsNulo(camion.getPatente()) && retorno.equalsIgnoreCase("update camion")) {
+			if(NoEsNulo(camion.getPatente()) && retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + "patente = `" + camion.getPatente() + "` ";
 				
 			} 
-			else if(NoEsNulo(camion.getPatente()) && !retorno.equalsIgnoreCase("update camion")) {
+			else if(NoEsNulo(camion.getPatente()) && !retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + ", patente = `" + camion.getPatente() + "` ";
 			}
-			if(NoEsNulo(camion.getCostoHora()) && retorno.equalsIgnoreCase("update camion")) {
+			if(NoEsNulo(camion.getCostoHora()) && retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + "costo_hora = `" + camion.getCostoHora() + "` ";
 			
 			} 
-			else if(NoEsNulo(camion.getCostoHora()) && !retorno.equalsIgnoreCase("update camion")) {
+			else if(NoEsNulo(camion.getCostoHora()) && !retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + ", costo_hora = `" + camion.getCostoHora() + "` ";
 			
 			}
-			if(NoEsNulo(camion.getCostoKm()) && retorno.equalsIgnoreCase("update camion")) {
+			if(NoEsNulo(camion.getCostoKm()) && retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + "costo_km = `" + camion.getCostoKm() + "` ";
 			
 			}
-			else if(NoEsNulo(camion.getCostoKm()) && !retorno.equalsIgnoreCase("update camion")) {
+			else if(NoEsNulo(camion.getCostoKm()) && !retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + ", costo_km = `" + camion.getCostoKm() + "` ";
 			
 			}
-			if(NoEsNulo(camion.getMarca()) && retorno.equalsIgnoreCase("update camion")) {
+			if(NoEsNulo(camion.getMarca()) && retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + "marca = `" + camion.getMarca() + "` ";
 			
 			}
-			else if(NoEsNulo(camion.getMarca()) && !retorno.equalsIgnoreCase("update camion")) {
+			else if(NoEsNulo(camion.getMarca()) && !retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + ", marca = `" + camion.getMarca() + "` ";
 			
 			}
-			if(NoEsNulo(camion.getModelo()) && retorno.equalsIgnoreCase("update camion")) {
+			if(NoEsNulo(camion.getModelo()) && retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + "modelo = `" + camion.getModelo() + "` ";
 			
 			}
-			else if(NoEsNulo(camion.getModelo()) && !retorno.equalsIgnoreCase("update camion")) {
+			else if(NoEsNulo(camion.getModelo()) && !retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + ", modelo = `" + camion.getModelo() + "` ";
 			
 			}
-			if(NoEsNulo(camion.getKmRecorridos()) && retorno.equalsIgnoreCase("update camion")) {
+			if(NoEsNulo(camion.getKmRecorridos()) && retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + "km_recorridos = `" + camion.getKmRecorridos() + "` ";
 			
 			}
-			else if(NoEsNulo(camion.getKmRecorridos()) && !retorno.equalsIgnoreCase("update camion")) {
+			else if(NoEsNulo(camion.getKmRecorridos()) && !retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + ", km_recorridos = `" + camion.getKmRecorridos() + "` ";
 			
 			}
-			if(NoEsNulo(camion.getFechacompra()) && retorno.equalsIgnoreCase("update camion")) {
+			if(NoEsNulo(camion.getFechacompra()) && retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + "fecha_compra = `" + camion.getFechacompra() + "`";
 			}
-			else if(NoEsNulo(camion.getFechacompra()) && !retorno.equalsIgnoreCase("update camion")) {
+			else if(NoEsNulo(camion.getFechacompra()) && !retorno.equalsIgnoreCase("update `CAMION`")) {
 				
 				retorno = retorno + ", fecha_compra = `" + camion.getFechacompra() + "`";
 			}
@@ -254,7 +257,7 @@ public class DAOCamion {
 			}
 		}
 		
-		return null;
+		return Camiones;
 	}
 	
 	
@@ -264,22 +267,28 @@ public class DAOCamion {
 		DBManager dbm = DBManager.getInstance();
 		Connection con = dbm.getConn();
 		try {
-			PreparedStatement st = con.prepareStatement("insert into camion (patente, km_recorridos, marca, modelo, costo_km, costo_hora, fecha_compra) values (?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement st = con.prepareStatement("insert into `CAMION` (patente, km_recorridos, marca, modelo, costo_km, costo_hora, fecha_compra) values (?, ?, ?, ?, ?, ?, ?)");
 			st.setString(1, c1.getPatente());
 			st.setDouble(2, c1.getKmRecorridos());
 			st.setString(3, c1.getMarca());
 			st.setString(4, c1.getModelo());
-			st.setDouble(4, c1.getCostoKm());
+			st.setDouble(5, c1.getCostoKm());
 			st.setDouble(6, c1.getCostoHora());
 			st.setString(7, c1.getFechacompra());
 		
 			st.executeUpdate();
 			st.close();
-		
+			JOptionPane.showMessageDialog(null, "El camión fue guardado exitosamente.", "Estado camión.", JOptionPane.INFORMATION_MESSAGE);
+			
+		}catch(SQLIntegrityConstraintViolationException e) {
+			JOptionPane.showMessageDialog(null, "Error, Ya existe un camion con la patente: " + c1.getPatente() , "Estado camión.", JOptionPane.INFORMATION_MESSAGE);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Ocurrio un error inesperado" , "Estado camión.", JOptionPane.INFORMATION_MESSAGE);
+			
 			e.printStackTrace();
-		} finally {
+		}finally {
 			try {
 				con.close();
 			} catch (SQLException e) {
