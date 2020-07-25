@@ -144,5 +144,20 @@ public class DAOInsumo {
 		return listaInsumos;
 	}
 	
+	public static ArrayList<Insumo> buscarInsumoConFiltro(String descripcion, Double costo){
+		
+//		Este metodo busca todos los insumos que coincidan con la descripcion o el costo ingresado por pantalla.
+//		En caso de ser null los dos campos, devuelve la lita completa con todos los insumos.
+		
+		if(descripcion.isEmpty()) {
+			if(costo == null) {
+				
+			}
+		}
+	
+		
+		return null;
+		
+	}
 
 }

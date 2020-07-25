@@ -32,11 +32,11 @@ public class GestorInsumo {
 	public static void editarInsumo(InsumoDTO insumodto) {
 
 		if(insumodto.getDensidad()==null) {
-			DAOInsumo.AltaInsumo(new InsumoGeneral(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
+			DAOInsumo.EditarInsumo(new InsumoGeneral(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
 				Double.parseDouble(insumodto.getCostoUnitario()), Double.parseDouble(insumodto.getCantidad()),
 				Double.parseDouble(insumodto.getPeso())));
 		}else {
-			DAOInsumo.AltaInsumo(new InsumoLiquido(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
+			DAOInsumo.EditarInsumo(new InsumoLiquido(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
 					Double.parseDouble(insumodto.getCostoUnitario()), Double.parseDouble(insumodto.getCantidad()),
 					Double.parseDouble(insumodto.getDensidad())));
 		}

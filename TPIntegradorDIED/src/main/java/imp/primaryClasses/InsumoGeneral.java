@@ -19,5 +19,7 @@ public class InsumoGeneral extends Insumo {
 		this.peso=peso;
 	}
 
-	
+	public double pesoPorUnidad() {
+		return this.peso;
+	}
 }

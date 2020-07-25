@@ -33,7 +33,10 @@ public class InsumoLiquido extends Insumo {
 			this.peso=this.getDensidad();
 		}
 	}
-
+	
+	public double pesoPorUnidad() {
+		return this.peso;
+	}
 
 
 }

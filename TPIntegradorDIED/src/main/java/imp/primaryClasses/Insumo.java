@@ -60,4 +60,6 @@ public abstract class Insumo {
 		public final void setCantidad(double cantidad) {
 			this.cantidad = cantidad;
 		}
+		
+		public abstract double pesoPorUnidad();
 }
