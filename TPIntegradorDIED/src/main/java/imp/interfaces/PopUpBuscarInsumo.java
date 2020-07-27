@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -18,15 +19,18 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import imp.DTOs.InsumoDTO;
+import imp.DTOs.InsumoDTOFiltro;
 import imp.enumerators.Marca;
 import imp.enumerators.UM;
+import imp.gestores.GestorInsumo;
 
 public class PopUpBuscarInsumo extends JFrame {
 	
+	private ArrayList<InsumoDTO> listaInsumosBuscados = new ArrayList<InsumoDTO>(); //esta definido aca para poder mostrarlo en el Jtable
 	
 	public PopUpBuscarInsumo (){
 		
-
 		
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -138,7 +142,10 @@ public class PopUpBuscarInsumo extends JFrame {
 		btn_aceptar.setBackground(new Color(80, 165, 94));
 		panel_buscarInsumo.add(btn_aceptar);
 		
-		
+		btn_aceptar.addActionListener(e -> {
+			//TO-DO  implementar  ACEPTAR
+			//este boton deberia volver a la pantalla anterior con el objeto insumoDTO seleccionado
+		});
 		
 		JButton btn_buscar = new JButton("BUSCAR INSUMO");
 		btn_buscar.setForeground(Color.BLACK);
@@ -150,7 +157,8 @@ public class PopUpBuscarInsumo extends JFrame {
 		btn_buscar.setBounds(556, 168, 168, 28);
 		
 		btn_buscar.addActionListener(e -> {
-			//TO-DO  implementar  la busqueda 
+			InsumoDTOFiltro insumoFiltro = new InsumoDTOFiltro(ftxt_descripcion.getText(), combo_medidas.getSelectedItem().toString(),ftxt_costoUnitario.getText());
+			listaInsumosBuscados= GestorInsumo.buscarInsumosConFiltro(insumoFiltro);
 		});
 		
 		panel_buscarInsumo.add(btn_buscar);

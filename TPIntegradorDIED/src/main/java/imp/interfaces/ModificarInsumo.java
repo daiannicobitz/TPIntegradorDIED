@@ -139,6 +139,10 @@ public class ModificarInsumo extends JPanel {
 		btn_aceptar.setBackground(new Color(80, 165, 94));
 		add(btn_aceptar);
 		
+		btn_aceptar.addActionListener(e -> {
+			//TO-DO  implementar  la busqueda 
+		});
+		
 		JButton btn_cancelar = new JButton("CANCELAR");
 		btn_cancelar.setBounds(661, 372, 98, 40);
 		btn_cancelar.setFont(new Font("Montserrat", Font.ITALIC, 11));
@@ -148,6 +152,10 @@ public class ModificarInsumo extends JPanel {
 		btn_cancelar.setForeground(new Color(0, 0, 0));
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
+		
+		btn_cancelar.addActionListener(e -> {
+			//TO-DO  implementar  la busqueda 
+		});
 		
 		JButton btn_buscarInsumo = new JButton("BUSCAR INSUMO A EDITAR");
 		btn_buscarInsumo.setForeground(Color.BLACK);

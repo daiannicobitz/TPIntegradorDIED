@@ -20,8 +20,7 @@ public class DAOInsumo {
 		Connection con = dbm.getConn();
 		
 		try {
-			String consulta = "delete from insumo where id_insumo = '" + idInsumo +"'" ;
-
+			String consulta = "delete from INSUMO where id_insumo = '" + idInsumo +"'" ;
 			Statement st = con.createStatement();
 			int nro = st.executeUpdate(consulta);
 			
@@ -42,13 +41,13 @@ public class DAOInsumo {
 		
 		try {
 			if(insumo instanceof InsumoGeneral) {
-				consulta = "insert into insumo(cantidad,costo_unitario,densidad,descripcion,peso,unidad_medida) "
+				consulta = "insert into INSUMO(cantidad,costo_unitario,densidad,descripcion,peso,unidad_medida) "
 					+ "values ('"+insumo.getCantidad()+"','"+insumo.getCostoUnitario()+"',null,'"+insumo.getDescripcion()+"',"
 							+ "'"+((InsumoGeneral) insumo).getPeso()+"','"+insumo.getUnidadMedida().toString()+"')";
 				
 			} else {
 
-				consulta = "insert into insumo(cantidad,costo_unitario,densidad,descripcion,peso,unidad_medida) "
+				consulta = "insert into INSUMO(cantidad,costo_unitario,densidad,descripcion,peso,unidad_medida) "
 						+ "values ('"+insumo.getCantidad()+"','"+insumo.getCostoUnitario()+"','"+((InsumoLiquido) insumo).getDensidad()+"',"
 						+ "'"+insumo.getDescripcion()+"','"+((InsumoLiquido) insumo).getPeso()+"','"+insumo.getUnidadMedida().toString()+"')";
 			}
@@ -109,7 +108,7 @@ public class DAOInsumo {
 		
 		ArrayList<Insumo> listaInsumos=new ArrayList<Insumo>();
 		
-		String consulta = "select * from insumo";
+		String consulta = "select * from INSUMO";
 		
 		Statement st;
 		try {
@@ -130,10 +129,10 @@ public class DAOInsumo {
 					listaInsumos.add(insumo);
 				}
 				
-				st.close();
-				con.close();
-				
 			}
+			
+			st.close();
+			con.close();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -143,20 +142,62 @@ public class DAOInsumo {
 		return listaInsumos;
 	}
 	
-	public static ArrayList<Insumo> buscarInsumoConFiltro(String descripcion, Double costo){
+
+	public static ArrayList<Insumo> buscarInsumosConFiltros(String descripcion, UM unidadMedida, double costoUnitario) {
+//		Este metodo busca todos los insumos que sus atributos coincidan con los parametros.
 		
-//		Este metodo busca todos los insumos que coincidan con la descripcion o el costo ingresado por pantalla.
-//		En caso de ser null los dos campos, devuelve la lita completa con todos los insumos.
 		
-		if(descripcion.isEmpty()) {
-			if(costo == null) {
+		DBManager dbm = DBManager.getInstance();
+		Connection con = dbm.getConn();
+		ResultSet tablaInsumo=null;
+		ArrayList<Insumo> listaInsumos=new ArrayList<Insumo>();
+		Statement st;
+		
+		try {
+			st = con.createStatement();
+			
+			if(costoUnitario == -1.0) {
+				if(unidadMedida.toString().equals("SELECCIONE_UNIDAD")) {
+					tablaInsumo = st.executeQuery("select * from INSUMO where  descripcion LIKE '%"+descripcion+"%'");
+				}else {
+						tablaInsumo = st.executeQuery("select * from INSUMO where  descripcion LIKE '%"+descripcion+"%' "
+									+ "and unidad_medida like '%"+unidadMedida.toString()+"%'");
+				}
+			}else {
+				if(unidadMedida.toString().equals("SELECCIONE_UNIDAD")) {
+					tablaInsumo = st.executeQuery("select * from INSUMO where  descripcion LIKE '%"+descripcion+"%' "
+							+ "and costo_unitario='"+costoUnitario+"'");
+				}else {
+				tablaInsumo = st.executeQuery("select * from INSUMO where  descripcion LIKE '%"+descripcion+"%' "
+						+ "and unidad_medida like '%"+unidadMedida.toString()+"%' and costo_unitario='"+costoUnitario+"'");
+				}
+			}
+			
+			while(tablaInsumo.next()) {
+				if(tablaInsumo.getString("densidad").equals("null")) {
+				InsumoGeneral insumo = new InsumoGeneral(tablaInsumo.getInt("id_insumo"),tablaInsumo.getString("descripcion"), 
+						UM.valueOf(tablaInsumo.getString("unidad_medida")), tablaInsumo.getDouble("costo_unitario"), 
+						tablaInsumo.getDouble("cantidad"), tablaInsumo.getDouble("peso"));
+						listaInsumos.add(insumo);
+				}else {
+					
+					InsumoLiquido insumo = new InsumoLiquido(tablaInsumo.getInt("id_insumo"),tablaInsumo.getString("descripcion"), 
+					UM.valueOf(tablaInsumo.getString("unidad_medida")), tablaInsumo.getDouble("costo_unitario"), 
+					tablaInsumo.getDouble("cantidad"), tablaInsumo.getDouble("densidad"));
+					listaInsumos.add(insumo);
+				}
 				
 			}
+			
+			st.close();
+			con.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	
 		
-		return null;
-		
+		return listaInsumos;
 	}
 
 }

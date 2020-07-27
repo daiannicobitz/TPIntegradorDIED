@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -17,10 +18,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import imp.DTOs.InsumoDTO;
+import imp.DTOs.InsumoDTOFiltro;
 import imp.enumerators.Marca;
 import imp.enumerators.UM;
+import imp.gestores.GestorInsumo;
 
 public class DarBajaInsumo extends JPanel {
+	
+	private ArrayList<InsumoDTO> listaInsumosBuscados = new ArrayList<InsumoDTO>(); //esta definido aca para poder mostrarlo en el Jtable
 
 	public DarBajaInsumo() {
 		setBackground(new Color(118, 203, 117));
@@ -93,10 +99,10 @@ public class DarBajaInsumo extends JPanel {
 		scrollPane.setBounds(125, 210, 702, 190);
 		add(scrollPane);
 		
-		JTable tabla_camion = new JTable();
-		tabla_camion.setBounds(42, 313, 626, -132);
+		JTable tabla_insumo = new JTable();
+		tabla_insumo.setBounds(42, 313, 626, -132);
 		
-		DefaultTableModel model_tabla_camion = new DefaultTableModel(
+		DefaultTableModel model_tabla_insumo = new DefaultTableModel(
 				new Object[][] {},
 				new String[] {
 						"Id", "Descripcion", "Unidad Medida", "Costo Unitario", "Cantidad", "Peso", "Densidad"
@@ -111,10 +117,10 @@ public class DarBajaInsumo extends JPanel {
 			}
 		};
 	
-		tabla_camion.setModel(model_tabla_camion);
-		tabla_camion.getTableHeader().setReorderingAllowed(false);
-		tabla_camion.getTableHeader().setResizingAllowed(false);
-		scrollPane.setViewportView(tabla_camion);
+		tabla_insumo.setModel(model_tabla_insumo);
+		tabla_insumo.getTableHeader().setReorderingAllowed(false);
+		tabla_insumo.getTableHeader().setResizingAllowed(false);
+		scrollPane.setViewportView(tabla_insumo);
 		
 		JButton btn_eliminar = new JButton("ELIMINAR INSUMO");
 		btn_eliminar.setBounds(636, 411, 189, 40);
@@ -126,7 +132,10 @@ public class DarBajaInsumo extends JPanel {
 		btn_eliminar.setBackground(new Color(80, 165, 94));
 		add(btn_eliminar);
 		
-		
+		btn_eliminar.addActionListener(e -> {
+			int posicionSeleccionadaTablaInsumo=tabla_insumo.getSelectedRow();
+			GestorInsumo.eliminarInsumo(listaInsumosBuscados.get(posicionSeleccionadaTablaInsumo));
+		});
 		
 		JButton btn_buscar = new JButton("BUSCAR INSUMO");
 		btn_buscar.setForeground(Color.BLACK);
@@ -136,11 +145,15 @@ public class DarBajaInsumo extends JPanel {
 		btn_buscar.setBorderPainted(false);
 		btn_buscar.setBackground(new Color(80, 165, 94));
 		btn_buscar.setBounds(657, 168, 168, 28);
+		add(btn_buscar);
 		
 		btn_buscar.addActionListener(e -> {
-			//TO-DO  implementar  la busqueda 
+			
+			InsumoDTOFiltro insumoFiltro = new InsumoDTOFiltro(ftxt_descripcion.getText(), combo_medidas.getSelectedItem().toString(),ftxt_costoUnitario.getText());
+			listaInsumosBuscados= GestorInsumo.buscarInsumosConFiltro(insumoFiltro);
+			
 		});
 		
-		add(btn_buscar);
+		
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -17,11 +18,16 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import imp.DTOs.InsumoDTO;
 import imp.enumerators.UM;
+import imp.gestores.GestorInsumo;
 
 public class BuscarInsumos extends JPanel {
-
-	public BuscarInsumos() {
+	
+	private ArrayList<InsumoDTO> listaInsumosBuscados = new ArrayList<InsumoDTO>(); //esta definido aca para poder mostrarlo en el Jtable
+	
+	public BuscarInsumos() {	
+		
 		setBackground(new Color(118, 203, 117));
 		
 		
@@ -68,7 +74,9 @@ public class BuscarInsumos extends JPanel {
 		btn_buscar.setBounds(574, 29, 227, 34);
 		
 		btn_buscar.addActionListener(e -> {
-			//TO-DO  implementar  la busqueda 
+			
+			listaInsumosBuscados=GestorInsumo.visualizarTodosLosInsumos();
+			
 		});
 		
 		add(btn_buscar);
