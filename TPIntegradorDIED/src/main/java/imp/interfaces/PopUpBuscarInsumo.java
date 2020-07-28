@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -11,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -18,15 +20,19 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import imp.DTOs.InsumoDTO;
+import imp.DTOs.InsumoDTOFiltro;
 import imp.enumerators.Marca;
 import imp.enumerators.UM;
+import imp.gestores.GestorInsumo;
 
 public class PopUpBuscarInsumo extends JFrame {
 	
+	private ArrayList<InsumoDTO> listaInsumosBuscados = new ArrayList<InsumoDTO>(); //esta definido aca para poder mostrarlo en el Jtable
+	private InsumoDTO insumoDTOSelect;
 	
-	public PopUpBuscarInsumo (){
+	public PopUpBuscarInsumo (ModificarInsumo ventanaAnterior){
 		
-
 		
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -105,13 +111,15 @@ public class PopUpBuscarInsumo extends JFrame {
 		scrollPane.setBounds(32, 210, 722, 190);
 		panel_buscarInsumo.add(scrollPane);
 		
-		JTable tabla_camion = new JTable();
-		tabla_camion.setBounds(42, 313, 626, -132);
+		JTable tabla_insumo = new JTable();
+		tabla_insumo.setBounds(42, 313, 626, -132);
 		
-		DefaultTableModel model_tabla_camion = new DefaultTableModel(
-				new Object[][] {},
+		DefaultTableModel model_tabla_insumo = new DefaultTableModel(
+				new Object[][] {
+					{null, null, null, null, null, null},
+				},
 				new String[] {
-						"Id", "Descripcion", "Unidad Medida", "Costo Unitario", "Cantidad", "Peso", "Densidad"
+						"Descripcion", "Unidad Medida", "Costo Unitario", "Cantidad", "Peso", "Densidad"
 				}
 				){
 
@@ -123,10 +131,10 @@ public class PopUpBuscarInsumo extends JFrame {
 			}
 		};
 	
-		tabla_camion.setModel(model_tabla_camion);
-		tabla_camion.getTableHeader().setReorderingAllowed(false);
-		tabla_camion.getTableHeader().setResizingAllowed(false);
-		scrollPane.setViewportView(tabla_camion);
+		tabla_insumo.setModel(model_tabla_insumo);
+		tabla_insumo.getTableHeader().setReorderingAllowed(false);
+		tabla_insumo.getTableHeader().setResizingAllowed(false);
+		scrollPane.setViewportView(tabla_insumo);
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
 		btn_aceptar.setBounds(278, 409, 189, 40);
@@ -138,7 +146,37 @@ public class PopUpBuscarInsumo extends JFrame {
 		btn_aceptar.setBackground(new Color(80, 165, 94));
 		panel_buscarInsumo.add(btn_aceptar);
 		
-		
+		btn_aceptar.addActionListener(e -> {
+			try {
+			insumoDTOSelect=listaInsumosBuscados.get(tabla_insumo.getSelectedRow());
+
+			if(insumoDTOSelect.getDensidad().equals("-")) {
+				((JFormattedTextField) ventanaAnterior.getComponent(4)).setValue("");
+				((JFormattedTextField) ventanaAnterior.getComponent(4)).setEnabled(false);
+				((JFormattedTextField) ventanaAnterior.getComponent(5)).setValue(insumoDTOSelect.getDescripcion());
+				((JComboBox) ventanaAnterior.getComponent(6)).setSelectedItem(UM.valueOf(insumoDTOSelect.getUnidadMedida()));;
+				((JSpinner) ventanaAnterior.getComponent(7)).setValue(Double.parseDouble(insumoDTOSelect.getCantidad()));
+				((JFormattedTextField) ventanaAnterior.getComponent(10)).setValue(insumoDTOSelect.getCostoUnitario());
+				((JFormattedTextField) ventanaAnterior.getComponent(11)).setValue(insumoDTOSelect.getPeso());
+			}else {
+				((JFormattedTextField) ventanaAnterior.getComponent(4)).setEnabled(true);
+				((JFormattedTextField) ventanaAnterior.getComponent(4)).setValue(insumoDTOSelect.getDensidad());
+				((JFormattedTextField) ventanaAnterior.getComponent(5)).setValue(insumoDTOSelect.getDescripcion());
+				((JComboBox) ventanaAnterior.getComponent(6)).setSelectedItem(UM.valueOf(insumoDTOSelect.getUnidadMedida()));
+				((JSpinner) ventanaAnterior.getComponent(7)).setValue(Double.parseDouble(insumoDTOSelect.getCantidad()));
+				((JFormattedTextField) ventanaAnterior.getComponent(10)).setValue(insumoDTOSelect.getCostoUnitario());
+				((JFormattedTextField) ventanaAnterior.getComponent(11)).setValue("");
+				((JFormattedTextField) ventanaAnterior.getComponent(11)).setEnabled(false);
+			}
+			
+			ventanaAnterior.setInsumoDTO(insumoDTOSelect);
+			
+			this.setVisible(false);
+			}catch (IndexOutOfBoundsException e1) {
+				JOptionPane.showMessageDialog(null, "Usted todavia no ha seleccionado un insumo de la tabla.",
+						"ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
+			}
+		});
 		
 		JButton btn_buscar = new JButton("BUSCAR INSUMO");
 		btn_buscar.setForeground(Color.BLACK);
@@ -150,12 +188,47 @@ public class PopUpBuscarInsumo extends JFrame {
 		btn_buscar.setBounds(556, 168, 168, 28);
 		
 		btn_buscar.addActionListener(e -> {
-			//TO-DO  implementar  la busqueda 
+			InsumoDTOFiltro insumoFiltro = new InsumoDTOFiltro(ftxt_descripcion.getText(), combo_medidas.getSelectedItem().toString(),ftxt_costoUnitario.getText());
+			listaInsumosBuscados= GestorInsumo.buscarInsumosConFiltro(insumoFiltro);
+			
+			int cantInsumo=listaInsumosBuscados.size();
+			int fila=0;
+			
+			Object[][] listaMuestra = new Object[cantInsumo][6];
+			
+			for(InsumoDTO c:listaInsumosBuscados) {
+
+				listaMuestra[fila][0] = c.getDescripcion();
+				listaMuestra[fila][1] = c.getUnidadMedida();
+				listaMuestra[fila][2] = c.getCostoUnitario();
+				listaMuestra[fila][3] = c.getCantidad();
+				listaMuestra[fila][4] = c.getPeso();
+				listaMuestra[fila][5] = c.getDensidad();
+				fila++;
+			}
+			
+			DefaultTableModel modelo = new DefaultTableModel(listaMuestra,new String[] {"Descripcion", "Unidad Medida", "Costo Unitario", "Cantidad", "Peso", "Densidad"}) {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public boolean isCellEditable(int i, int i1) {
+					return false;
+				}
+			};
+			tabla_insumo.setModel(modelo);
+			
 		});
 		
 		panel_buscarInsumo.add(btn_buscar);
 		
 		getContentPane().add(panel_buscarInsumo);
+		
+		
+	}
+
+	public InsumoDTO getInsumoSeleccionado() {
+		return this.insumoDTOSelect;
 		
 	}
 

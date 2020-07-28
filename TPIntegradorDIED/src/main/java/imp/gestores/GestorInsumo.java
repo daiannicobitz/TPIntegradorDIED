@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import imp.DAOs.DAOInsumo;
 import imp.DTOs.InsumoDTO;
+import imp.DTOs.InsumoDTOFiltro;
 import imp.enumerators.UM;
 import imp.primaryClasses.Insumo;
 import imp.primaryClasses.InsumoGeneral;
@@ -31,12 +32,22 @@ public class GestorInsumo {
 	
 	public static void editarInsumo(InsumoDTO insumodto) {
 
-		if(insumodto.getDensidad()==null) {
-			DAOInsumo.AltaInsumo(new InsumoGeneral(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
+		if(insumodto.getDensidad().equals("-")) {
+			
+			System.out.println(insumodto.getId());
+			System.out.println(insumodto.getCantidad());
+			System.out.println(insumodto.getCostoUnitario());
+			System.out.println(insumodto.getDensidad());
+			System.out.println(insumodto.getDescripcion());
+			System.out.println(insumodto.getPeso());
+			System.out.println(insumodto.getUnidadMedida());
+			
+			
+			DAOInsumo.EditarInsumo(new InsumoGeneral(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
 				Double.parseDouble(insumodto.getCostoUnitario()), Double.parseDouble(insumodto.getCantidad()),
 				Double.parseDouble(insumodto.getPeso())));
 		}else {
-			DAOInsumo.AltaInsumo(new InsumoLiquido(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
+			DAOInsumo.EditarInsumo(new InsumoLiquido(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
 					Double.parseDouble(insumodto.getCostoUnitario()), Double.parseDouble(insumodto.getCantidad()),
 					Double.parseDouble(insumodto.getDensidad())));
 		}
@@ -49,12 +60,12 @@ public class GestorInsumo {
 		
 	}
 	
-	public static ArrayList<InsumoDTO> visualizarInsumosGenerales(){
+	public static ArrayList<InsumoDTO> visualizarTodosLosInsumos(){
 		ArrayList<Insumo> insumos = new ArrayList<Insumo>();
 		insumos = DAOInsumo.buscarTodosLosInsumos();
 		ArrayList<InsumoDTO> insumosDTO = new ArrayList<InsumoDTO>();
-		int i=0;
-		while(insumos.get(i) != null) {
+		
+		for(int i=0;i<insumos.size();i++) {
 			
 			if(insumos.get(i) instanceof InsumoLiquido) {
 				InsumoDTO insumoDTO=new InsumoDTO(insumos.get(i).getId(), insumos.get(i).getDescripcion(), insumos.get(i).getUnidadMedida().toString(),
@@ -64,14 +75,52 @@ public class GestorInsumo {
 			}else {
 				InsumoDTO insumoDTO=new InsumoDTO(insumos.get(i).getId(), insumos.get(i).getDescripcion(), insumos.get(i).getUnidadMedida().toString(),
 						String.valueOf(insumos.get(i).getCostoUnitario()),String.valueOf(insumos.get(i).getCantidad()),
-						String.valueOf(((InsumoLiquido) insumos.get(i)).getPeso()),null);
+						String.valueOf(((InsumoGeneral) insumos.get(i)).getPeso()),"-");
 					insumosDTO.add(insumoDTO);
 			}
-			i++;
 		}
 		
 		return insumosDTO;
 		
+	}
+
+	public static ArrayList<InsumoDTO> buscarInsumosConFiltro(InsumoDTOFiltro insumoFiltro) {
+		ArrayList<Insumo> insumos = new ArrayList<Insumo>();
+		ArrayList<InsumoDTO> insumosDTO = new ArrayList<InsumoDTO>();
+		
+		if(insumoFiltro.getDescripcion().isEmpty() && insumoFiltro.getUnidadMedida().equals("SELECCIONE_UNIDAD")
+			&& insumoFiltro.getCostoUnitario().isEmpty()) {
+			
+			return visualizarTodosLosInsumos();
+		}else {
+			
+//			esta validacion se hace porque, en caso de ser vacio el costo unitario, va a tirar error al convertirlo a double
+			
+			if(insumoFiltro.getCostoUnitario().isEmpty())
+			{
+				insumos = DAOInsumo.buscarInsumosConFiltros(insumoFiltro.getDescripcion(), UM.valueOf(insumoFiltro.getUnidadMedida()), -1.0);
+			}else {
+				insumos = DAOInsumo.buscarInsumosConFiltros(insumoFiltro.getDescripcion(), UM.valueOf(insumoFiltro.getUnidadMedida()),
+						Double.parseDouble(insumoFiltro.getCostoUnitario()));
+			}
+			
+			for(int i=0; i<insumos.size();i++) {
+				
+				if(insumos.get(i) instanceof InsumoLiquido) {
+					InsumoDTO insumoDTO=new InsumoDTO(insumos.get(i).getId(), insumos.get(i).getDescripcion(), insumos.get(i).getUnidadMedida().toString(),
+						String.valueOf(insumos.get(i).getCostoUnitario()),String.valueOf(insumos.get(i).getCantidad()),
+						String.valueOf(((InsumoLiquido) insumos.get(i)).getPeso()),String.valueOf(((InsumoLiquido) insumos.get(i)).getDensidad()));
+					insumosDTO.add(insumoDTO);
+				}else {
+					InsumoDTO insumoDTO=new InsumoDTO(insumos.get(i).getId(), insumos.get(i).getDescripcion(), insumos.get(i).getUnidadMedida().toString(),
+							String.valueOf(insumos.get(i).getCostoUnitario()),String.valueOf(insumos.get(i).getCantidad()),
+							String.valueOf(((InsumoGeneral) insumos.get(i)).getPeso()),"-");
+						insumosDTO.add(insumoDTO);
+				}
+			}
+			
+			return insumosDTO;
+		}
 	}
 	
 }

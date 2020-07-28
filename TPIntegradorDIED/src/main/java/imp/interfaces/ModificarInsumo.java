@@ -10,15 +10,21 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
+import imp.DTOs.InsumoDTO;
 import imp.enumerators.Marca;
 import imp.enumerators.UM;
+import imp.gestores.GestorInsumo;
 
 public class ModificarInsumo extends JPanel {
 	
+	private InsumoDTO insumoSeleccionado=null;
+
 	public ModificarInsumo() {
 		setBackground(new Color(118, 203, 117));
 		
@@ -36,9 +42,26 @@ public class ModificarInsumo extends JPanel {
 		JLabel lbl_peso = new JLabel("PESO");
 		lbl_peso.setBounds(473, 246, 91, 14);
 		
-		JTextField txt_peso = new JTextField();
-		txt_peso.setBounds(591, 243, 168, 20);
-		txt_peso.setColumns(10);
+		JFormattedTextField ftxt_peso = new JFormattedTextField();
+		ftxt_peso.setBounds(591, 243, 168, 20);
+		ftxt_peso.setColumns(10);
+		ftxt_peso.addKeyListener(new KeyAdapter() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int max = 10;
+				char c = e.getKeyChar();
+				if((c < '0' || c > '9') && (c != '.')) e.consume();
+				else if(ftxt_peso.getText().length() > max+1) {
+					e.consume();
+					String shortened = ftxt_peso.getText().substring(0,max);
+					ftxt_peso.setText(shortened);
+				}else if(ftxt_peso.getText().length() >max) {
+					e.consume();
+				}
+			}
+		});
+		
 		
 		JFormattedTextField ftxt_descripcion = new JFormattedTextField();
 		ftxt_descripcion.setBounds(245, 94, 514, 45);
@@ -62,8 +85,9 @@ public class ModificarInsumo extends JPanel {
 		
 		
 		
-		JSpinner spinner_cantidad = new JSpinner();
+		JSpinner spinner_cantidad = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 1000000.0, 0.1));
 		spinner_cantidad.setBounds(245, 243, 160, 20);
+		
 		
 		JLabel lbl_cantidad = new JLabel("CANTIDAD");
 		lbl_cantidad.setBounds(112, 246, 135, 14);
@@ -126,7 +150,7 @@ public class ModificarInsumo extends JPanel {
 		add(lbl_peso);
 		add(lbl_costoUnitario);
 		add(ftxt_costoUnitario);
-		add(txt_peso);
+		add(ftxt_peso);
 		
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
@@ -139,6 +163,39 @@ public class ModificarInsumo extends JPanel {
 		btn_aceptar.setBackground(new Color(80, 165, 94));
 		add(btn_aceptar);
 		
+		btn_aceptar.addActionListener(e -> {
+			
+			InsumoDTO insumodtoUPDATE=null;
+			
+			if (ftxt_densidad.isEnabled()) {
+				insumodtoUPDATE = new InsumoDTO(insumoSeleccionado.getId(), ftxt_descripcion.getText(), combo_medidas.getSelectedItem().toString(),
+						ftxt_costoUnitario.getText(), spinner_cantidad.getValue().toString(), null,
+						ftxt_densidad.getText());
+				
+			} else {
+				insumodtoUPDATE = new InsumoDTO(insumoSeleccionado.getId(), ftxt_descripcion.getText(), combo_medidas.getSelectedItem().toString(),
+						ftxt_costoUnitario.getText(), spinner_cantidad.getValue().toString(), ftxt_peso.getText(),
+						"-");
+			}
+
+			if (insumodtoUPDATE.getDescripcion().isEmpty() || (combo_medidas.getSelectedIndex() == 0)
+					|| insumodtoUPDATE.getCostoUnitario().isEmpty()) {
+
+				JOptionPane.showMessageDialog(null, "Todos los campos obligatorios (*) deben estan completos.",
+						"ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
+
+			} else {
+				
+				GestorInsumo.editarInsumo(insumodtoUPDATE);
+				JOptionPane.showMessageDialog(null, "El insumo se actualizo correctamente.", "MENSAJE",
+						JOptionPane.INFORMATION_MESSAGE);
+
+			}
+			
+			
+			
+		});
+		
 		JButton btn_cancelar = new JButton("CANCELAR");
 		btn_cancelar.setBounds(661, 372, 98, 40);
 		btn_cancelar.setFont(new Font("Montserrat", Font.ITALIC, 11));
@@ -148,6 +205,10 @@ public class ModificarInsumo extends JPanel {
 		btn_cancelar.setForeground(new Color(0, 0, 0));
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
+		
+		btn_cancelar.addActionListener(e -> {
+//			FALTA IMPLEMENTAR
+		});
 		
 		JButton btn_buscarInsumo = new JButton("BUSCAR INSUMO A EDITAR");
 		btn_buscarInsumo.setForeground(Color.BLACK);
@@ -160,9 +221,17 @@ public class ModificarInsumo extends JPanel {
 		
 		btn_buscarInsumo.addActionListener(e -> {
 			
-			PopUpBuscarInsumo buscar_insumo = new PopUpBuscarInsumo();
+			PopUpBuscarInsumo buscar_insumo = new PopUpBuscarInsumo(this);
+			
 		});
 		
 		add(btn_buscarInsumo);
+		
+	
+	}
+
+	public void setInsumoDTO(InsumoDTO insumoDTOSelect) {
+		// TODO Auto-generated method stub
+		insumoSeleccionado=insumoDTOSelect;
 	}
 }
