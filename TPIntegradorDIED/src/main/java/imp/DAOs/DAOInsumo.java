@@ -73,29 +73,20 @@ public class DAOInsumo {
 		
 		try {
 			if(insumo instanceof InsumoGeneral) {
-				System.out.println("llego");
 				
-				System.out.println(insumo.getId());
-				System.out.println(insumo.getCantidad());
-				System.out.println(insumo.getCostoUnitario());
-				System.out.println(insumo.getDescripcion());
-				System.out.println(((InsumoGeneral) insumo).getPeso());
-				System.out.println(insumo.getUnidadMedida());
-				
-				consulta = "update insumo "
-						+ "SET cantidad = '"+insumo.getCantidad()+"', costo_unitario = '"+insumo.getCostoUnitario()+"',"
-						+ "descripcion = '"+insumo.getDescripcion()+"',peso = '"+((InsumoGeneral) insumo).getPeso()+"',"
-						+ "unidad_medida =  '"+insumo.getUnidadMedida().toString()+"' where id_insumo = '"+insumo.getId()+"'";
+				consulta = "UPDATE `INSUMO` "
+						+ "SET `descripcion` = '"+insumo.getDescripcion()+"', `unidad_medida` = '"+insumo.getUnidadMedida().toString()+"', "
+						+ "`costo_unitario` = '"+insumo.getCostoUnitario()+"', `peso` = '"+((InsumoGeneral) insumo).getPeso()+"',"
+						+ " `cantidad` = '"+insumo.getCantidad()+"' WHERE `INSUMO`.`id_insumo` = "+insumo.getId()+"";
 				
 			} else {
-				consulta = "update insumo"
-						+ "SET cantidad = '"+insumo.getCantidad()+"', costo_unitario = '"+insumo.getCostoUnitario()+"', "
-						+ "densidad = '"+((InsumoLiquido) insumo).getDensidad()+"',descripcion = '"+insumo.getDescripcion()+"',"
-						+ "peso = '"+((InsumoLiquido) insumo).getPeso()+"', unidad_medida = '"+insumo.getUnidadMedida().toString()+"' "
-						+ "where id_insumo = '"+insumo.getId()+"'";
+				
+				consulta = "UPDATE `INSUMO` "
+						+ "SET `descripcion` = '"+insumo.getDescripcion()+"', `unidad_medida` = '"+insumo.getUnidadMedida().toString()+"', "
+						+ "`costo_unitario` = '"+insumo.getCostoUnitario()+"', `peso` = '"+((InsumoLiquido) insumo).getPeso()+"',"
+						+ " `densidad` = '"+((InsumoLiquido) insumo).getDensidad()+"', `cantidad` = '"+insumo.getCantidad()+"' WHERE `INSUMO`.`id_insumo` = "+insumo.getId()+"";
 			}
 			Statement st = con.createStatement();
-			System.out.println(consulta);
 			int nro = st.executeUpdate(consulta);
 			st.close();
 			con.close();
