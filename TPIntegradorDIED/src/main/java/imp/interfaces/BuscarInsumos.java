@@ -39,13 +39,15 @@ public class BuscarInsumos extends JPanel {
 		scrollPane.setBounds(57, 102, 849, 233);
 		add(scrollPane);
 		
-		JTable tabla_camion = new JTable();
-		tabla_camion.setBounds(42, 313, 626, -132);
+		JTable tabla_insumo = new JTable();
+		tabla_insumo.setBounds(42, 313, 626, -132);
 		
-		DefaultTableModel model_tabla_camion = new DefaultTableModel(
-				new Object[][] {},
+		DefaultTableModel model_tabla_insumo = new DefaultTableModel(
+				new Object[][] {
+					{null, null, null, null, null, null},
+				},
 				new String[] {
-						"Id", "Descripcion", "Unidad Medida", "Costo Unitario", "Cantidad", "Peso", "Densidad", "Stock Total"
+						"Descripcion", "Unidad Medida", "Costo Unitario", "Cantidad", "Peso", "Densidad", "Stock Total"
 				}
 				){
 
@@ -57,10 +59,10 @@ public class BuscarInsumos extends JPanel {
 			}
 		};
 	
-		tabla_camion.setModel(model_tabla_camion);
-		tabla_camion.getTableHeader().setReorderingAllowed(false);
-		tabla_camion.getTableHeader().setResizingAllowed(false);
-		scrollPane.setViewportView(tabla_camion);
+		tabla_insumo.setModel(model_tabla_insumo);
+		tabla_insumo.getTableHeader().setReorderingAllowed(false);
+		tabla_insumo.getTableHeader().setResizingAllowed(false);
+		scrollPane.setViewportView(tabla_insumo);
 		
 		
 		
@@ -76,6 +78,34 @@ public class BuscarInsumos extends JPanel {
 		btn_buscar.addActionListener(e -> {
 			
 			listaInsumosBuscados=GestorInsumo.visualizarTodosLosInsumos();
+			
+			int cantInsumo=listaInsumosBuscados.size();
+			int fila=0;
+			
+			Object[][] listaMuestra = new Object[cantInsumo][6];
+			
+			for(InsumoDTO c:listaInsumosBuscados) {
+
+				listaMuestra[fila][0] = c.getDescripcion();
+				listaMuestra[fila][1] = c.getUnidadMedida();
+				listaMuestra[fila][2] = c.getCostoUnitario();
+				listaMuestra[fila][3] = c.getCantidad();
+				listaMuestra[fila][4] = c.getPeso();
+				listaMuestra[fila][5] = c.getDensidad();
+				fila++;
+			}
+			
+			DefaultTableModel modelo = new DefaultTableModel(listaMuestra,new String[] {"Descripcion", "Unidad Medida", "Costo Unitario", "Cantidad", "Peso", "Densidad"}) {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public boolean isCellEditable(int i, int i1) {
+					return false;
+				}
+			};
+			tabla_insumo.setModel(modelo);
+			
 			
 		});
 		

@@ -19,7 +19,7 @@ public class GestorInsumo {
 //		cuando creo el insumo para darlo de alta le pongo id=0 pero no va a ser tenido en cuenta a la hora de guardarlo en la bdd.
 		
 		if(insumodto.getDensidad()==null) {
-			DAOInsumo.AltaInsumo(new InsumoGeneral(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
+			DAOInsumo.AltaInsumo(new InsumoGeneral(0, insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
 				Double.parseDouble(insumodto.getCostoUnitario()), Double.parseDouble(insumodto.getCantidad()),
 				Double.parseDouble(insumodto.getPeso())));
 		}else {
@@ -32,7 +32,7 @@ public class GestorInsumo {
 	
 	public static void editarInsumo(InsumoDTO insumodto) {
 
-		if(insumodto.getDensidad()==null) {
+		if(insumodto.getDensidad().equals("-")) {
 			DAOInsumo.EditarInsumo(new InsumoGeneral(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
 				Double.parseDouble(insumodto.getCostoUnitario()), Double.parseDouble(insumodto.getCantidad()),
 				Double.parseDouble(insumodto.getPeso())));
@@ -65,7 +65,7 @@ public class GestorInsumo {
 			}else {
 				InsumoDTO insumoDTO=new InsumoDTO(insumos.get(i).getId(), insumos.get(i).getDescripcion(), insumos.get(i).getUnidadMedida().toString(),
 						String.valueOf(insumos.get(i).getCostoUnitario()),String.valueOf(insumos.get(i).getCantidad()),
-						String.valueOf(((InsumoLiquido) insumos.get(i)).getPeso()),null);
+						String.valueOf(((InsumoGeneral) insumos.get(i)).getPeso()),"-");
 					insumosDTO.add(insumoDTO);
 			}
 		}
@@ -104,7 +104,7 @@ public class GestorInsumo {
 				}else {
 					InsumoDTO insumoDTO=new InsumoDTO(insumos.get(i).getId(), insumos.get(i).getDescripcion(), insumos.get(i).getUnidadMedida().toString(),
 							String.valueOf(insumos.get(i).getCostoUnitario()),String.valueOf(insumos.get(i).getCantidad()),
-							String.valueOf(((InsumoLiquido) insumos.get(i)).getPeso()),null);
+							String.valueOf(((InsumoGeneral) insumos.get(i)).getPeso()),"-");
 						insumosDTO.add(insumoDTO);
 				}
 			}

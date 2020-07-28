@@ -73,6 +73,7 @@ public class DAOInsumo {
 		
 		try {
 			if(insumo instanceof InsumoGeneral) {
+				System.out.println("llego");
 				consulta = "update insumo "
 						+ "SET cantidad = '"+insumo.getCantidad()+"', costo_unitario = '"+insumo.getCostoUnitario()+"',"
 						+ "descripcion = '"+insumo.getDescripcion()+"',peso = '"+((InsumoGeneral) insumo).getPeso()+"',"
@@ -82,7 +83,7 @@ public class DAOInsumo {
 				consulta = "update insumo"
 						+ "SET cantidad = '"+insumo.getCantidad()+"', costo_unitario = '"+insumo.getCostoUnitario()+"', "
 						+ "densidad = '"+((InsumoLiquido) insumo).getDensidad()+"',descripcion = '"+insumo.getDescripcion()+"',"
-						+ "peso = '"+((InsumoGeneral) insumo).getPeso()+"', unidad_medida = '"+insumo.getUnidadMedida().toString()+"' "
+						+ "peso = '"+((InsumoLiquido) insumo).getPeso()+"', unidad_medida = '"+insumo.getUnidadMedida().toString()+"' "
 						+ "where id_insumo = '"+insumo.getId()+"'";
 			}
 			Statement st = con.createStatement();
@@ -116,7 +117,8 @@ public class DAOInsumo {
 			tablaInsumo = st.executeQuery(consulta);
 			
 			while(tablaInsumo.next()) {
-				if(tablaInsumo.getString("densidad").equals("null")) {
+				
+				if(tablaInsumo.getString("densidad") == null) {
 				InsumoGeneral insumo = new InsumoGeneral(tablaInsumo.getInt("id_insumo"),tablaInsumo.getString("descripcion"), 
 						UM.valueOf(tablaInsumo.getString("unidad_medida")), tablaInsumo.getDouble("costo_unitario"), 
 						tablaInsumo.getDouble("cantidad"), tablaInsumo.getDouble("peso"));
@@ -174,7 +176,7 @@ public class DAOInsumo {
 			}
 			
 			while(tablaInsumo.next()) {
-				if(tablaInsumo.getString("densidad").equals("null")) {
+				if(tablaInsumo.getString("densidad") == null) {
 				InsumoGeneral insumo = new InsumoGeneral(tablaInsumo.getInt("id_insumo"),tablaInsumo.getString("descripcion"), 
 						UM.valueOf(tablaInsumo.getString("unidad_medida")), tablaInsumo.getDouble("costo_unitario"), 
 						tablaInsumo.getDouble("cantidad"), tablaInsumo.getDouble("peso"));

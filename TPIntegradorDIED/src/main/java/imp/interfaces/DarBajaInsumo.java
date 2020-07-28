@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -103,9 +104,11 @@ public class DarBajaInsumo extends JPanel {
 		tabla_insumo.setBounds(42, 313, 626, -132);
 		
 		DefaultTableModel model_tabla_insumo = new DefaultTableModel(
-				new Object[][] {},
+				new Object[][] {
+					{null, null, null, null, null, null},
+				},
 				new String[] {
-						"Id", "Descripcion", "Unidad Medida", "Costo Unitario", "Cantidad", "Peso", "Densidad"
+						"Descripcion", "Unidad Medida", "Costo Unitario", "Cantidad", "Peso", "Densidad"
 				}
 				){
 
@@ -133,8 +136,10 @@ public class DarBajaInsumo extends JPanel {
 		add(btn_eliminar);
 		
 		btn_eliminar.addActionListener(e -> {
+			
 			int posicionSeleccionadaTablaInsumo=tabla_insumo.getSelectedRow();
 			GestorInsumo.eliminarInsumo(listaInsumosBuscados.get(posicionSeleccionadaTablaInsumo));
+			JOptionPane.showMessageDialog(null, "El insumo se ha borrado correctamente.", "MENSAJE", JOptionPane.INFORMATION_MESSAGE );
 		});
 		
 		JButton btn_buscar = new JButton("BUSCAR INSUMO");
@@ -151,6 +156,33 @@ public class DarBajaInsumo extends JPanel {
 			
 			InsumoDTOFiltro insumoFiltro = new InsumoDTOFiltro(ftxt_descripcion.getText(), combo_medidas.getSelectedItem().toString(),ftxt_costoUnitario.getText());
 			listaInsumosBuscados= GestorInsumo.buscarInsumosConFiltro(insumoFiltro);
+			
+			int cantInsumo=listaInsumosBuscados.size();
+			int fila=0;
+			
+			Object[][] listaMuestra = new Object[cantInsumo][6];
+			
+			for(InsumoDTO c:listaInsumosBuscados) {
+
+				listaMuestra[fila][0] = c.getDescripcion();
+				listaMuestra[fila][1] = c.getUnidadMedida();
+				listaMuestra[fila][2] = c.getCostoUnitario();
+				listaMuestra[fila][3] = c.getCantidad();
+				listaMuestra[fila][4] = c.getPeso();
+				listaMuestra[fila][5] = c.getDensidad();
+				fila++;
+			}
+			
+			DefaultTableModel modelo = new DefaultTableModel(listaMuestra,new String[] {"Descripcion", "Unidad Medida", "Costo Unitario", "Cantidad", "Peso", "Densidad"}) {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public boolean isCellEditable(int i, int i1) {
+					return false;
+				}
+			};
+			tabla_insumo.setModel(modelo);
 			
 		});
 		
