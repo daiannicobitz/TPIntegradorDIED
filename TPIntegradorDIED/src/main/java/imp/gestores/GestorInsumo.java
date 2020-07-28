@@ -33,6 +33,16 @@ public class GestorInsumo {
 	public static void editarInsumo(InsumoDTO insumodto) {
 
 		if(insumodto.getDensidad().equals("-")) {
+			
+			System.out.println(insumodto.getId());
+			System.out.println(insumodto.getCantidad());
+			System.out.println(insumodto.getCostoUnitario());
+			System.out.println(insumodto.getDensidad());
+			System.out.println(insumodto.getDescripcion());
+			System.out.println(insumodto.getPeso());
+			System.out.println(insumodto.getUnidadMedida());
+			
+			
 			DAOInsumo.EditarInsumo(new InsumoGeneral(insumodto.getId(), insumodto.getDescripcion(), UM.valueOf(insumodto.getUnidadMedida()), 
 				Double.parseDouble(insumodto.getCostoUnitario()), Double.parseDouble(insumodto.getCantidad()),
 				Double.parseDouble(insumodto.getPeso())));

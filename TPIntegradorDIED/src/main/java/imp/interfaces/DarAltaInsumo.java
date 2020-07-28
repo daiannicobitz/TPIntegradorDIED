@@ -222,14 +222,17 @@ public class DarAltaInsumo extends JPanel {
 
 		btn_aceptar.addActionListener(e -> {
 			InsumoDTO insumodto = null;
-			if (ftxt_densidad.isEnabled()) {
+			if (ftxt_densidad.isEnabled()) { 
 				insumodto = new InsumoDTO(0, ftxt_descripcion.getText(), combo_medidas.getSelectedItem().toString(),
 						ftxt_costoUnitario.getText(), spinner_cantidad.getValue().toString(), null,
 						ftxt_densidad.getText());
 			} else {
+				
 				insumodto = new InsumoDTO(0, ftxt_descripcion.getText(), combo_medidas.getSelectedItem().toString(),
 						ftxt_costoUnitario.getText(), spinner_cantidad.getValue().toString(), ftxt_peso.getText(),
 						"-");
+				
+				
 			}
 
 			if (insumodto.getDescripcion().isEmpty() || (combo_medidas.getSelectedIndex() == 0)

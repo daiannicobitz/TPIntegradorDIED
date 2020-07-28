@@ -186,7 +186,6 @@ public class ModificarInsumo extends JPanel {
 
 			} else {
 				
-				System.out.println(insumodtoUPDATE.getCantidad());
 				GestorInsumo.editarInsumo(insumodtoUPDATE);
 				JOptionPane.showMessageDialog(null, "El insumo se actualizo correctamente.", "MENSAJE",
 						JOptionPane.INFORMATION_MESSAGE);

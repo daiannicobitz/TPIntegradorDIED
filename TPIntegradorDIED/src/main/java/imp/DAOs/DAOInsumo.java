@@ -74,6 +74,14 @@ public class DAOInsumo {
 		try {
 			if(insumo instanceof InsumoGeneral) {
 				System.out.println("llego");
+				
+				System.out.println(insumo.getId());
+				System.out.println(insumo.getCantidad());
+				System.out.println(insumo.getCostoUnitario());
+				System.out.println(insumo.getDescripcion());
+				System.out.println(((InsumoGeneral) insumo).getPeso());
+				System.out.println(insumo.getUnidadMedida());
+				
 				consulta = "update insumo "
 						+ "SET cantidad = '"+insumo.getCantidad()+"', costo_unitario = '"+insumo.getCostoUnitario()+"',"
 						+ "descripcion = '"+insumo.getDescripcion()+"',peso = '"+((InsumoGeneral) insumo).getPeso()+"',"
@@ -87,6 +95,7 @@ public class DAOInsumo {
 						+ "where id_insumo = '"+insumo.getId()+"'";
 			}
 			Statement st = con.createStatement();
+			System.out.println(consulta);
 			int nro = st.executeUpdate(consulta);
 			st.close();
 			con.close();
