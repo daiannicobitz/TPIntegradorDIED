@@ -63,8 +63,6 @@ public class MenuPrincipalFrame extends JFrame {
 	panel_planta.setBackground(new Color(187, 238, 110));
 	panelPrincipal.add(panel_planta, "planta");
 	
-	
-	
 	MenuCamion panel_camion = new MenuCamion();
 	panelPrincipal.add(panel_camion, "camion");
 		

@@ -10,10 +10,7 @@ import imp.interfaces.MenuPrincipalFrame;
 import imp.gestores.GestorPantallas;
 
 
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
 	

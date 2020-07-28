@@ -32,7 +32,7 @@ public class DarAltaCamion extends JPanel {
 	public DarAltaCamion() {
 		setBackground(new Color(118, 203, 117));
 		
-		JLabel lbl_patente = new JLabel("PATENTE");
+		JLabel lbl_patente = new JLabel("PATENTE *");
 		lbl_patente.setBounds(125, 45, 60, 14);
 		
 		JLabel lbl_marca = new JLabel("MARCA");
@@ -78,7 +78,7 @@ public class DarAltaCamion extends JPanel {
 		JLabel lbl_kmR = new JLabel("KM RECORRIDOS");
 		lbl_kmR.setBounds(125, 208, 135, 14);
 		
-		JLabel lbl_costoKm = new JLabel("COSTO POR KM");
+		JLabel lbl_costoKm = new JLabel("COSTO POR KM **");
 		lbl_costoKm.setBounds(464, 208, 108, 14);
 		
 		JFormattedTextField ftxt_costoKm = new JFormattedTextField();
@@ -101,7 +101,7 @@ public class DarAltaCamion extends JPanel {
 			}
 		});
 		
-		JLabel lbl_costoHora = new JLabel("COSTO POR HORA");
+		JLabel lbl_costoHora = new JLabel("COSTO POR HORA **");
 		lbl_costoHora.setBounds(125, 289, 125, 14);
 		
 		JFormattedTextField ftxt_costoHora = new JFormattedTextField();
@@ -142,11 +142,13 @@ public class DarAltaCamion extends JPanel {
 		}
 		
 		fecha_compra.setSelectableDateRange(inicio, nowdate);
-
-		
-		
-		
 		fecha_compra.setBounds(595, 42, 168, 20);
+		
+		JLabel lblinfoPatente = new JLabel("* Ingrese su patente en forma LLLNNN o LLNNNLL.");
+		lblinfoPatente.setBounds(125, 397, 315, 14);
+		
+		JLabel lblinfoCosto = new JLabel("** Solo se permiten 2 decimales.");
+		lblinfoCosto.setBounds(125, 415, 315, 14);
 		
 		setLayout(null);
 		add(lbl_patente);
@@ -163,6 +165,8 @@ public class DarAltaCamion extends JPanel {
 		add(ftxt_costoKm);
 		add(txt_modelo);
 		add(fecha_compra);
+		add(lblinfoPatente);
+		add(lblinfoCosto);
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
 		btn_aceptar.setBounds(529, 397, 98, 40);
@@ -181,13 +185,18 @@ public class DarAltaCamion extends JPanel {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
 		String strDate = dateFormat.format(date);
 		
-	    Camion retorno = c1.AltaCamion(ftxt_patente.getText(), Double.parseDouble(spinner_kmR.getValue().toString()), combo_marca.getSelectedItem().toString(), txt_modelo.getText(), Double.parseDouble(ftxt_costoKm.getText()), Double.parseDouble(ftxt_costoHora.getText()), strDate);
-				//crear un popup indicando que ya existe un camion con esa patente
-	    c1 = retorno;
-				
+		String validados = validarCampos(ftxt_patente.getText().toUpperCase(), spinner_kmR.getValue().toString(), combo_marca.getSelectedItem().toString(), txt_modelo.getText(), ftxt_costoKm.getText(), ftxt_costoHora.getText());
+		
+		if(validados == "") {
 			
+	
+	    Camion retorno = c1.AltaCamion(ftxt_patente.getText().toUpperCase(), Double.parseDouble(spinner_kmR.getValue().toString()), combo_marca.getSelectedItem().toString(), txt_modelo.getText().toUpperCase(), Double.parseDouble(ftxt_costoKm.getText()), Double.parseDouble(ftxt_costoHora.getText()), strDate);
 
+	    c1 = retorno;
+		} else {
+			JOptionPane.showMessageDialog(null, "Error en los siguientes campos: \n"+ validados, "Estado camión.", JOptionPane.INFORMATION_MESSAGE);
 			
+		}
 			
 		});
 		add(btn_aceptar);
@@ -202,5 +211,36 @@ public class DarAltaCamion extends JPanel {
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
 		
+		
+	}
+
+	private String validarCampos(String patente, String kmr, String marca, String modelo, String costokm, String costohora) {
+		
+		String retorno = "";
+		
+		if(!patente.matches("[A-Z]{3}[0-9]{3}") && !patente.matches("[A-Z]{2}[0-9]{3}[A-Z]{2}")) {
+			retorno = retorno + " Patente \n";
+		}	
+		if(marca == "SELECCIONE_MARCA") {
+				
+				retorno = retorno + " Marca \n";
+		}		
+		if(modelo.isBlank()) {
+				
+			retorno = retorno + " Modelo \n";
+		}		
+		if (Double.parseDouble(kmr) < 0 ) {
+				
+			retorno = retorno + " Kilometros Recorridos \n";
+		}		
+		if(!costokm.matches("[0-9]*.[0-9]{2}")&& !costokm.matches("[0-9]*")){
+			
+			retorno = retorno + " Costo Kilometro \n";
+		}	
+		if(!costohora.matches("[0-9]*.[0-9]{2}") && !costohora.matches("[0-9]*")){
+			
+			retorno = retorno + " Costo Hora \n";
+		}
+		return retorno;
 	}
 }
