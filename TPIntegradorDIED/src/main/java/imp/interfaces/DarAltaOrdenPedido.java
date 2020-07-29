@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
@@ -30,7 +31,7 @@ public class DarAltaOrdenPedido extends JPanel {
 	private JTextField txt_nroOrden;
 	
 	public DarAltaOrdenPedido() {
-		setBackground(new Color(187, 238, 110));
+		setBackground(new Color(118, 203, 117));
 		setLayout(null);
 		
 		JLabel lbl_nroOrden = new JLabel("NUMERO DE ORDEN");
@@ -72,6 +73,7 @@ public class DarAltaOrdenPedido extends JPanel {
 		}
 		
 		fecha_solicitud.setSelectableDateRange(inicio, nowdate);
+		fecha_solicitud.setEnabled(false);
 		fecha_solicitud.setBounds(648, 23, 168, 20);
 		
 		add(fecha_solicitud);
@@ -82,19 +84,17 @@ public class DarAltaOrdenPedido extends JPanel {
 		
 		JDateChooser fecha_entrega = new JDateChooser("dd/MM/yyyy", "##/##/####", '_');
 		fecha_entrega.setDateFormatString("dd/MM/yyyy");
-		fecha_entrega.setSelectableDateRange(inicio, nowdate);
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(nowdate);
+		calendar.add(Calendar.MONTH, 3);
+		fecha_entrega.setSelectableDateRange(nowdate, calendar.getTime());
+		
 		fecha_entrega.setBounds(648, 68, 168, 20);
 		
 		add(fecha_entrega);
 		add(lbl_fechaEntrega);
 		
-		JLabel lbl_EstadoOrden = new JLabel("ESTADO DE LA ORDEN");
-		lbl_EstadoOrden.setBounds(63, 119, 128, 14);
-		add(lbl_EstadoOrden);
-		
-		JComboBox combo_estadoOrden = new JComboBox();
-		combo_estadoOrden.setBounds(226, 115, 168, 22);
-		add(combo_estadoOrden);
 		
 		JLabel lbl_detalleItems = new JLabel("DETALLES DE LOS ITEMS");
 		lbl_detalleItems.setBounds(62, 155, 186, 14);
@@ -129,42 +129,42 @@ public class DarAltaOrdenPedido extends JPanel {
 		tabla_detalleItems.getTableHeader().setResizingAllowed(false);
 		scrollPane.setViewportView(tabla_detalleItems);
 		
-		JLabel lbl_detalleEnvio = new JLabel("DETALLES DEL ENVIO");
-		lbl_detalleEnvio.setBounds(63, 300, 139, 14);
-		add(lbl_detalleEnvio);
-		
-
-		
-		JScrollPane scrollPane2 = new JScrollPane();
-		scrollPane2.setBounds(63, 320, 539, 58);
-		add(scrollPane2);
-		
-		JTable tabla_detalleEnvio = new JTable();
-		tabla_detalleEnvio.setBounds(42, 313, 626, -132);
-		
-		DefaultTableModel model_tabla_detalleEnvio = new DefaultTableModel(
-				new Object[][] {},
-				new String[] {
-						"Camion asignado", "Ruta asignada", "Costo envio"
-				}
-				){
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isCellEditable(int i, int i1) {
-				return false;
-			}
-		};
-	
-		tabla_detalleEnvio.setModel(model_tabla_detalleEnvio);
-		tabla_detalleEnvio.getTableHeader().setReorderingAllowed(false);
-		tabla_detalleEnvio.getTableHeader().setResizingAllowed(false);
-		scrollPane2.setViewportView(tabla_detalleEnvio);
+//		JLabel lbl_detalleEnvio = new JLabel("DETALLES DEL ENVIO");
+//		lbl_detalleEnvio.setBounds(63, 300, 139, 14);
+//		add(lbl_detalleEnvio);
+//		
+//
+//		
+//		JScrollPane scrollPane2 = new JScrollPane();
+//		scrollPane2.setBounds(63, 320, 539, 58);
+//		add(scrollPane2);
+//		
+//		JTable tabla_detalleEnvio = new JTable();
+//		tabla_detalleEnvio.setBounds(42, 313, 626, -132);
+//		
+//		DefaultTableModel model_tabla_detalleEnvio = new DefaultTableModel(
+//				new Object[][] {},
+//				new String[] {
+//						"Camion asignado", "Ruta asignada", "Costo envio"
+//				}
+//				){
+//
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//			public boolean isCellEditable(int i, int i1) {
+//				return false;
+//			}
+//		};
+//	
+//		tabla_detalleEnvio.setModel(model_tabla_detalleEnvio);
+//		tabla_detalleEnvio.getTableHeader().setReorderingAllowed(false);
+//		tabla_detalleEnvio.getTableHeader().setResizingAllowed(false);
+//		scrollPane2.setViewportView(tabla_detalleEnvio);
 		
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
-		btn_aceptar.setBounds(612, 395, 98, 40);
+		btn_aceptar.setBounds(612, 370, 98, 40);
 		btn_aceptar.setFont(new Font("Montserrat", Font.ITALIC, 11));
 		btn_aceptar.setBorderPainted(false);
 		btn_aceptar.setFocusPainted(false);
@@ -174,7 +174,7 @@ public class DarAltaOrdenPedido extends JPanel {
 		add(btn_aceptar);
 		
 		JButton btn_cancelar = new JButton("CANCELAR");
-		btn_cancelar.setBounds(718, 395, 98, 40);
+		btn_cancelar.setBounds(718, 370, 98, 40);
 		btn_cancelar.setFont(new Font("Montserrat", Font.ITALIC, 11));
 		btn_cancelar.setBorderPainted(false);
 		btn_cancelar.setFocusPainted(false);
@@ -183,15 +183,15 @@ public class DarAltaOrdenPedido extends JPanel {
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
 		
-		JButton btn_verRuta = new JButton("VER RUTA ASIGNADA");
-		btn_verRuta.setForeground(Color.BLACK);
-		btn_verRuta.setFont(new Font("Dialog", Font.ITALIC, 11));
-		btn_verRuta.setFocusPainted(false);
-		btn_verRuta.setContentAreaFilled(true);
-		btn_verRuta.setBorderPainted(false);
-		btn_verRuta.setBackground(new Color(80, 165, 94));
-		btn_verRuta.setBounds(648, 331, 168, 28);
-		add(btn_verRuta);
+//		JButton btn_verRuta = new JButton("VER RUTA ASIGNADA");
+//		btn_verRuta.setForeground(Color.BLACK);
+//		btn_verRuta.setFont(new Font("Dialog", Font.ITALIC, 11));
+//		btn_verRuta.setFocusPainted(false);
+//		btn_verRuta.setContentAreaFilled(true);
+//		btn_verRuta.setBorderPainted(false);
+//		btn_verRuta.setBackground(new Color(80, 165, 94));
+//		btn_verRuta.setBounds(648, 331, 168, 28);
+//		add(btn_verRuta);
 		
 	}
 }
