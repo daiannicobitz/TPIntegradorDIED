@@ -13,6 +13,7 @@ import imp.enumerators.UM;
 import imp.gestores.DBManager;
 import imp.gestores.GestorInsumo;
 import imp.interfaces.MenuPrincipalFrame;
+import imp.primaryClasses.ListaGlobalCamiones;
 import imp.gestores.GestorPantallas;
 
 
@@ -23,7 +24,8 @@ public class App
 	
     public static void main( String[] args )
     {	
-    	
+    	ListaGlobalCamiones lgc = ListaGlobalCamiones.getInstance();
+    	System.out.println(lgc.getLista());
     	EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {

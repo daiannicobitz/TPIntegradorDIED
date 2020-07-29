@@ -3,13 +3,26 @@ package imp.interfaces;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import com.toedter.calendar.JDateChooser;
 
 import imp.enumerators.Marca;
+import imp.gestores.GestorCamion;
+import imp.primaryClasses.Camion;
 
 public class PopUpBuscarCamion extends JFrame{
+	ArrayList<Camion> Lista = null;
 	
 	public PopUpBuscarCamion (){
 		
@@ -65,8 +78,22 @@ public class PopUpBuscarCamion extends JFrame{
 		JLabel lblNewLabel = new JLabel("FECHA COMPRA");
 		lblNewLabel.setBounds(426, 45, 111, 14);
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(584, 42, 168, 20);
+		JDateChooser fecha_compra = new JDateChooser("dd/MM/yyyy", "##/##/####", '_');
+		fecha_compra.setDateFormatString("dd/MM/yyyy");
+		
+		LocalDateTime now = LocalDateTime.now();  
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		Date nowdate = Date.from(now.atZone(defaultZoneId).toInstant());
+		Date inicio= null;
+		try {
+			inicio=new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1980");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		fecha_compra.setSelectableDateRange(inicio, nowdate);
+		fecha_compra.setBounds(584, 42, 168, 20);
 		panel_buscarCamion.setLayout(null);
 		
 		
@@ -107,6 +134,13 @@ public class PopUpBuscarCamion extends JFrame{
 		btn_aceptar.setContentAreaFilled(true);
 		btn_aceptar.setForeground(new Color(0, 0, 0));
 		btn_aceptar.setBackground(new Color(80, 165, 94));
+		btn_aceptar.addActionListener(e -> {
+			
+			
+			
+			
+			
+			});
 		panel_buscarCamion.add(btn_aceptar);
 		
 		JButton btn_buscar = new JButton("BUSCAR CAMION");
@@ -119,8 +153,19 @@ public class PopUpBuscarCamion extends JFrame{
 		btn_buscar.setBounds(584, 168, 168, 28);
 		
 		btn_buscar.addActionListener(e -> {
-			//TO-DO  implementar  la busqueda 
-		});
+			GestorCamion gc1 = new GestorCamion();
+			String strDate = "";
+			try {
+			Date date = fecha_compra.getDate(); 
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+			strDate = dateFormat.format(date);
+			} catch (NullPointerException e1) {
+				
+			}finally {
+			Lista = gc1.BuscarCamion(ftxt_patente.getText(), ftxt_costoHora.getText(), ftxt_costoKm.getText(), strDate, spinner_kmR.getValue().toString(), combo_marca.getSelectedItem().toString(), txt_modelo.getText());
+			tabla_camion.setModel(ActualizarTabla(Lista));
+			}
+			});
 		
 		panel_buscarCamion.add(btn_buscar);
 		
@@ -138,7 +183,7 @@ public class PopUpBuscarCamion extends JFrame{
 		panel_buscarCamion.add(lbl_costoKm);
 		panel_buscarCamion.add(ftxt_costoKm);
 		panel_buscarCamion.add(txt_modelo);
-		panel_buscarCamion.add(formattedTextField);
+		panel_buscarCamion.add(fecha_compra);
 		
 		getContentPane().add(panel_buscarCamion);
 		
@@ -146,6 +191,37 @@ public class PopUpBuscarCamion extends JFrame{
 		
 	}
 	
-	
+	private TableModel ActualizarTabla(ArrayList<Camion> lista) {
+
+		System.out.println(lista.size());
+		int cantCamiones = lista.size(); 
+		int fila =0;
+		Object[][] listaMuestra = new Object[cantCamiones][7];
+		
+		for(Camion c: lista) {
+			
+			listaMuestra[fila][0] = c.getPatente();
+			listaMuestra[fila][1] = c.getFechacompra();
+			listaMuestra[fila][2] = c.getMarca();
+			listaMuestra[fila][3] = c.getModelo();
+			listaMuestra[fila][4] = c.getKmRecorridos();
+			listaMuestra[fila][5] = c.getCostoKm();
+			listaMuestra[fila][6] = c.getCostoHora();
+			fila++;
+
+		}
+		
+		DefaultTableModel modelo = new DefaultTableModel(listaMuestra,new String[] {"Patente", "Fecha compra", "Marca", "Modelo", "Km Recorridos", "Costo por Km", "Costo por hora"}) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int i, int i1) {
+				return false;
+			}
+		};
+		
+		return modelo;
+	}
 
 }

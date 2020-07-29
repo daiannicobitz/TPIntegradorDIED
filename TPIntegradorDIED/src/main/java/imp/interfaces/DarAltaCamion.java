@@ -12,6 +12,8 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JSpinnerDateEditor;
 
 import imp.enumerators.Marca;
+import imp.gestores.DBManager;
+import imp.gestores.GestorCamion;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -57,7 +59,7 @@ public class DarAltaCamion extends JPanel {
 			
 			@Override
 			public void keyTyped(KeyEvent e) {
-				int max = 10;
+				int max = 8;
 				char c = e.getKeyChar();
 				if((c < '0' || c > '9') &&(c < 'a' || c > 'z') &&(c < 'A' || c > 'Z')) e.consume();
 				else if(ftxt_patente.getText().length() > max+1) {
@@ -178,8 +180,8 @@ public class DarAltaCamion extends JPanel {
 		btn_aceptar.setBackground(new Color(80, 165, 94));
 		btn_aceptar.addActionListener(e -> {
 			
-			//verificar que todos los campos esten completos.
-		Camion c1 = new Camion();
+
+		GestorCamion gc1 = new GestorCamion();
 
 		Date date = fecha_compra.getDate(); 
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
@@ -190,9 +192,9 @@ public class DarAltaCamion extends JPanel {
 		if(validados == "") {
 			
 	
-	    Camion retorno = c1.AltaCamion(ftxt_patente.getText().toUpperCase(), Double.parseDouble(spinner_kmR.getValue().toString()), combo_marca.getSelectedItem().toString(), txt_modelo.getText().toUpperCase(), Double.parseDouble(ftxt_costoKm.getText()), Double.parseDouble(ftxt_costoHora.getText()), strDate);
+	    Camion retorno = gc1.AltaCamion(ftxt_patente.getText().toUpperCase(), Double.parseDouble(spinner_kmR.getValue().toString()), combo_marca.getSelectedItem().toString(), txt_modelo.getText().toUpperCase(), Double.parseDouble(ftxt_costoKm.getText()), Double.parseDouble(ftxt_costoHora.getText()), strDate);
 
-	    c1 = retorno;
+	    
 		} else {
 			JOptionPane.showMessageDialog(null, "Error en los siguientes campos: \n"+ validados, "Estado camión.", JOptionPane.INFORMATION_MESSAGE);
 			

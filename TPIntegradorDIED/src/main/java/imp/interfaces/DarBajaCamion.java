@@ -2,13 +2,28 @@ package imp.interfaces;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import com.toedter.calendar.JDateChooser;
 
 import imp.enumerators.Marca;
+import imp.gestores.GestorCamion;
+import imp.primaryClasses.Camion;
+import imp.primaryClasses.ListaGlobalCamiones;
 
 public class DarBajaCamion extends JPanel {
+	
+	ArrayList<Camion> Lista = null;
 	
 	public DarBajaCamion () {
 		setBackground(new Color(118, 203, 117));
@@ -55,8 +70,23 @@ public class DarBajaCamion extends JPanel {
 		JLabel lblNewLabel = new JLabel("FECHA COMPRA");
 		lblNewLabel.setBounds(503, 45, 111, 14);
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(661, 42, 168, 20);
+		JDateChooser fecha_compra = new JDateChooser("dd/MM/yyyy", "##/##/####", '_');
+		fecha_compra.setDateFormatString("dd/MM/yyyy");
+		
+		LocalDateTime now = LocalDateTime.now();  
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		Date nowdate = Date.from(now.atZone(defaultZoneId).toInstant());
+		Date inicio= null;
+		try {
+			inicio=new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1980");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		fecha_compra.setSelectableDateRange(inicio, nowdate);
+		//fecha_compra.setBounds(595, 42, 168, 20);
+		fecha_compra.setBounds(661, 42, 168, 20);
 		setLayout(null);
 		
 		
@@ -89,18 +119,6 @@ public class DarBajaCamion extends JPanel {
 		tabla_camion.getTableHeader().setResizingAllowed(false);
 		scrollPane.setViewportView(tabla_camion);
 		
-		JButton btn_eliminar = new JButton("ELIMINAR CAMION");
-		btn_eliminar.setBounds(623, 423, 189, 40);
-		btn_eliminar.setFont(new Font("Montserrat", Font.ITALIC, 11));
-		btn_eliminar.setBorderPainted(false);
-		btn_eliminar.setFocusPainted(false);
-		btn_eliminar.setContentAreaFilled(true);
-		btn_eliminar.setForeground(new Color(0, 0, 0));
-		btn_eliminar.setBackground(new Color(80, 165, 94));
-		add(btn_eliminar);
-		
-		
-		
 		
 		add(lbl_patente);
 		add(lbl_kmR);
@@ -115,8 +133,8 @@ public class DarBajaCamion extends JPanel {
 		add(lbl_costoKm);
 		add(ftxt_costoKm);
 		add(txt_modelo);
-		add(formattedTextField);
-		
+		add(fecha_compra);
+				
 		JButton btn_buscar = new JButton("BUSCAR CAMION");
 		btn_buscar.setForeground(Color.BLACK);
 		btn_buscar.setFont(new Font("Dialog", Font.ITALIC, 11));
@@ -127,9 +145,121 @@ public class DarBajaCamion extends JPanel {
 		btn_buscar.setBounds(661, 168, 168, 28);
 		
 		btn_buscar.addActionListener(e -> {
-			//TO-DO  implementar  la busqueda 
-		});
+			GestorCamion gc1 = new GestorCamion();
+			String strDate = "";
+			try {
+			Date date = fecha_compra.getDate(); 
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+			strDate = dateFormat.format(date);
+			} catch (NullPointerException e1) {
+				
+			}finally {
+				String validados = validarCampos(ftxt_patente.getText().toUpperCase(), spinner_kmR.getValue().toString(), combo_marca.getSelectedItem().toString(), txt_modelo.getText(), ftxt_costoKm.getText(), ftxt_costoHora.getText());
+				
+				if(validados == "") {
+					
+					Lista = gc1.BuscarCamion(ftxt_patente.getText(), ftxt_costoHora.getText(), ftxt_costoKm.getText(), strDate, spinner_kmR.getValue().toString(), combo_marca.getSelectedItem().toString(), txt_modelo.getText());
+					tabla_camion.setModel(ActualizarTabla(Lista));
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "Error en los siguientes campos: \n"+ validados, "Estado camión.", JOptionPane.INFORMATION_MESSAGE);
+					
+				}
+			}
+			});
 		
 		add(btn_buscar);
+		
+		JButton btn_eliminar = new JButton("ELIMINAR CAMION");
+		btn_eliminar.setBounds(623, 423, 189, 40);
+		btn_eliminar.setFont(new Font("Montserrat", Font.ITALIC, 11));
+		btn_eliminar.setBorderPainted(false);
+		btn_eliminar.setFocusPainted(false);
+		btn_eliminar.setContentAreaFilled(true);
+		btn_eliminar.setForeground(new Color(0, 0, 0));
+		btn_eliminar.setBackground(new Color(80, 165, 94));
+		btn_eliminar.addActionListener(e -> {
+		    Camion retorno = new Camion();
+			
+		    if(tabla_camion.getSelectedRow() >=0) {
+		    	
+		    	retorno = Lista.get(tabla_camion.getSelectedRow());
+		    	retorno.BajaCamion();
+		    	tabla_camion.setModel(model_tabla_camion);
+		    	JOptionPane.showMessageDialog(null, "El Camión se eliminó correctamente" , "Estado camión.", JOptionPane.INFORMATION_MESSAGE);
+				
+		    } else {
+		    	
+		    	JOptionPane.showMessageDialog(null, "No se seleccionó un camión de la lista" , "Estado camión.", JOptionPane.INFORMATION_MESSAGE);
+				
+		    }
+		    
+		});
+		add(btn_eliminar);
+		
+	}
+
+	private String validarCampos(String patente, String kmr, String marca, String modelo, String costokm, String costohora) {
+		
+		String retorno = "";
+		
+		if(!patente.matches("[A-Z]{3}[0-9]{3}") && !patente.matches("[A-Z]{2}[0-9]{3}[A-Z]{2}")) {
+			retorno = retorno + " Patente \n";
+		}	
+		if(marca == "SELECCIONE_MARCA") {
+				
+				retorno = retorno + " Marca \n";
+		}		
+		if(modelo.isBlank()) {
+				
+			retorno = retorno + " Modelo \n";
+		}		
+		if (Double.parseDouble(kmr) < 0 ) {
+				
+			retorno = retorno + " Kilometros Recorridos \n";
+		}		
+		if(!costokm.matches("[0-9]*.[0-9]{2}")&& !costokm.matches("[0-9]*")){
+			
+			retorno = retorno + " Costo Kilometro \n";
+		}	
+		if(!costohora.matches("[0-9]*.[0-9]{2}") && !costohora.matches("[0-9]*")){
+			
+			retorno = retorno + " Costo Hora \n";
+		}
+		return retorno;
+	}
+
+	private TableModel ActualizarTabla(ArrayList<Camion> lista) {
+
+		System.out.println(lista.size());
+		int cantCamiones = lista.size(); 
+		int fila =0;
+		Object[][] listaMuestra = new Object[cantCamiones][7];
+		
+		for(Camion c: lista) {
+			
+			listaMuestra[fila][0] = c.getPatente();
+			listaMuestra[fila][1] = c.getFechacompra();
+			listaMuestra[fila][2] = c.getMarca();
+			listaMuestra[fila][3] = c.getModelo();
+			listaMuestra[fila][4] = c.getKmRecorridos();
+			listaMuestra[fila][5] = c.getCostoKm();
+			listaMuestra[fila][6] = c.getCostoHora();
+			fila++;
+
+		}
+		
+
+		DefaultTableModel modelo = new DefaultTableModel(listaMuestra,new String[] {"Patente", "Fecha compra", "Marca", "Modelo", "Km Recorridos", "Costo por Km", "Costo por hora"}) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int i, int i1) {
+				return false;
+			}
+		};
+		
+		return modelo;
 	}
 }
