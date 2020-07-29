@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class BuscarOrdenesCreadas extends JPanel {
 
 	public  BuscarOrdenesCreadas() {
-		setBackground(new Color(187, 238, 110));
+		setBackground(new Color(118, 203, 117));
 		setLayout(null);
 		
 		
