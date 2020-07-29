@@ -30,7 +30,7 @@ public class DarAltaOrdenPedido extends JPanel {
 	private JTextField txt_nroOrden;
 	
 	public DarAltaOrdenPedido() {
-		setBackground(new Color(187, 238, 110));
+		setBackground(new Color(118, 203, 117));
 		setLayout(null);
 		
 		JLabel lbl_nroOrden = new JLabel("NUMERO DE ORDEN");
