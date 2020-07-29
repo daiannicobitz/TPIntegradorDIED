@@ -41,10 +41,10 @@ public class DarAltaInsumo extends JPanel {
 		lbl_descripcion.setBounds(109, 76, 98, 14);
 
 		JLabel lbl_unidadMedida = new JLabel("UNIDAD DE MEDIDA (*)");
-		lbl_unidadMedida.setBounds(480, 140, 135, 14);
+		lbl_unidadMedida.setBounds(109, 141, 135, 14);
 
 		JComboBox combo_medidas = new JComboBox();
-		combo_medidas.setBounds(618, 137, 160, 20);
+		combo_medidas.setBounds(237, 138, 160, 20);
 		combo_medidas.setModel(new DefaultComboBoxModel(UM.values()));
 
 		JLabel lbl_densidad = new JLabel("DENSIDAD");
@@ -71,10 +71,10 @@ public class DarAltaInsumo extends JPanel {
 		});
 
 		JLabel lbl_peso = new JLabel("PESO");
-		lbl_peso.setBounds(480, 284, 91, 14);
+		lbl_peso.setBounds(478, 206, 91, 14);
 
 		JFormattedTextField ftxt_peso = new JFormattedTextField();
-		ftxt_peso.setBounds(618, 281, 168, 20);
+		ftxt_peso.setBounds(616, 203, 168, 20);
 		ftxt_peso.setColumns(10);
 		ftxt_peso.addKeyListener(new KeyAdapter() {
 
@@ -122,10 +122,10 @@ public class DarAltaInsumo extends JPanel {
 		lbl_cantidad.setBounds(109, 206, 135, 14);
 
 		JLabel lbl_costoUnitario = new JLabel("COSTO UNITARIO (*)");
-		lbl_costoUnitario.setBounds(480, 203, 128, 14);
+		lbl_costoUnitario.setBounds(478, 144, 128, 14);
 
 		JFormattedTextField ftxt_costoUnitario = new JFormattedTextField();
-		ftxt_costoUnitario.setBounds(618, 200, 168, 20);
+		ftxt_costoUnitario.setBounds(616, 141, 168, 20);
 
 		ftxt_costoUnitario.addKeyListener(new KeyAdapter() {
 
@@ -176,7 +176,7 @@ public class DarAltaInsumo extends JPanel {
 		btn_tipo_insumo_general.setForeground(new Color(0, 0, 0));
 		btn_tipo_insumo_general.setFocusPainted(false);
 
-		btn_tipo_insumo_liquido.setBounds(397, 11, 87, 29);
+		btn_tipo_insumo_liquido.setBounds(434, 11, 87, 29);
 		btn_tipo_insumo_liquido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -193,7 +193,7 @@ public class DarAltaInsumo extends JPanel {
 		});
 		add(btn_tipo_insumo_liquido);
 
-		btn_tipo_insumo_general.setBounds(484, 11, 87, 29);
+		btn_tipo_insumo_general.setBounds(521, 11, 87, 29);
 		btn_tipo_insumo_general.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -211,7 +211,7 @@ public class DarAltaInsumo extends JPanel {
 		add(btn_tipo_insumo_general);
 
 		JButton btn_aceptar = new JButton("ACEPTAR");
-		btn_aceptar.setBounds(619, 368, 98, 40);
+		btn_aceptar.setBounds(616, 342, 98, 40);
 		btn_aceptar.setFont(new Font("Montserrat", Font.ITALIC, 11));
 		btn_aceptar.setBorderPainted(false);
 		btn_aceptar.setFocusPainted(false);
@@ -252,7 +252,7 @@ public class DarAltaInsumo extends JPanel {
 		});
 
 		JButton btn_cancelar = new JButton("CANCELAR");
-		btn_cancelar.setBounds(727, 368, 98, 40);
+		btn_cancelar.setBounds(724, 342, 98, 40);
 		btn_cancelar.setFont(new Font("Montserrat", Font.ITALIC, 11));
 		btn_cancelar.setBorderPainted(false);
 		btn_cancelar.setFocusPainted(false);
@@ -267,16 +267,8 @@ public class DarAltaInsumo extends JPanel {
 			
 		});
 
-		JLabel lbl_planta = new JLabel("PLANTA");
-		lbl_planta.setBounds(109, 137, 46, 14);
-		add(lbl_planta);
-
-		JComboBox combo_planta = new JComboBox();
-		combo_planta.setBounds(237, 133, 160, 22);
-		add(combo_planta);
-
 		JLabel lbl_tipo_insumo = new JLabel("SELECCIONE EL TIPO DE INSUMO QUE DESEA GUARDAR:");
-		lbl_tipo_insumo.setBounds(109, 18, 278, 14);
+		lbl_tipo_insumo.setBounds(109, 18, 315, 14);
 		add(lbl_tipo_insumo);
 
 	}
