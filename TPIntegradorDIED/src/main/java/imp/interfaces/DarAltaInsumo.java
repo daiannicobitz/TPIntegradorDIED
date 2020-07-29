@@ -167,15 +167,23 @@ public class DarAltaInsumo extends JPanel {
 		ftxt_peso.setEnabled(false);
 
 		JButton btn_tipo_insumo_liquido = new JButton("LIQUIDO");
-		btn_tipo_insumo_liquido.setFont(new Font("Dialog", Font.ITALIC, 11));
-		btn_tipo_insumo_liquido.setForeground(new Color(0, 0, 0));
+		
+		btn_tipo_insumo_liquido.setBounds(407, 11, 98, 40);
+		btn_tipo_insumo_liquido.setFont(new Font("Montserrat", Font.ITALIC, 11));
+		btn_tipo_insumo_liquido.setBorderPainted(false);
 		btn_tipo_insumo_liquido.setFocusPainted(false);
+		btn_tipo_insumo_liquido.setContentAreaFilled(true);
+		btn_tipo_insumo_liquido.setForeground(new Color(0, 0, 0));
+		btn_tipo_insumo_liquido.setBackground(new Color(80, 165, 94));
+
 
 		JButton btn_tipo_insumo_general = new JButton("GENERAL");
-		btn_tipo_insumo_general.setFont(new Font("Dialog", Font.ITALIC, 11));
+		btn_tipo_insumo_general.setBounds(557, 11, 98, 40);
+		btn_tipo_insumo_general.setFont(new Font("Montserrat", Font.ITALIC, 11));
+		btn_tipo_insumo_general.setBorderPainted(false);
 		btn_tipo_insumo_general.setForeground(new Color(0, 0, 0));
-		btn_tipo_insumo_general.setFocusPainted(false);
-
+		btn_tipo_insumo_general.setBackground(new Color(80, 165, 94));
+		
 		btn_tipo_insumo_liquido.setBounds(434, 11, 87, 29);
 		btn_tipo_insumo_liquido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -268,7 +276,7 @@ public class DarAltaInsumo extends JPanel {
 		});
 
 		JLabel lbl_tipo_insumo = new JLabel("SELECCIONE EL TIPO DE INSUMO QUE DESEA GUARDAR:");
-		lbl_tipo_insumo.setBounds(109, 18, 315, 14);
+		lbl_tipo_insumo.setBounds(109, 18, 427, 14);
 		add(lbl_tipo_insumo);
 
 	}
