@@ -100,8 +100,6 @@ public class DAOInsumo {
 	public static ArrayList<Insumo> buscarTodosLosInsumos(){
 		
 //		Este metodo devuelve una lista con todos los insumos que hay guardados en la base de datos.
-
-//		HAY QUE PROBARLO
 		
 		DBManager dbm = DBManager.getInstance();
 		Connection con = dbm.getConn();
