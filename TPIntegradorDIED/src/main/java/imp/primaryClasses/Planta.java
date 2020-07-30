@@ -52,9 +52,7 @@ public class Planta {
 			this.setNombre(nombre);
 			this.setTipo(tipo);
 			this.listaStock = new ArrayList<Stock>();
-		}
-
-		
+		}		
 		
 		
 }
