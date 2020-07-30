@@ -1,5 +1,6 @@
 package imp.interfaces;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -8,17 +9,25 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BuscarPlantas extends JPanel {
 	
+	public CardLayout c = new CardLayout();
+	
 	public BuscarPlantas () {
 		setBackground(new Color(118, 203, 117));
-		setBackground(new Color(118, 203, 117));
-		setLayout(null);
+		setLayout(new CardLayout(0, 0));
+		
+		JPanel contenedor_buscarPlanta = new JPanel();
+		add(contenedor_buscarPlanta, "contenedor_buscarPlanta");
+		contenedor_buscarPlanta.setLayout(null);
+		contenedor_buscarPlanta.setBackground(new Color(118, 203, 117));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(91, 93, 772, 168);
-		add(scrollPane);
+		contenedor_buscarPlanta.add(scrollPane);
 		
 		JTable tabla_Plantas = new JTable();
 		tabla_Plantas.setBounds(42, 313, 626, -132);
@@ -51,7 +60,7 @@ public class BuscarPlantas extends JPanel {
 		btn_actualizarStock.setBorderPainted(false);
 		btn_actualizarStock.setBackground(new Color(80, 165, 94));
 		btn_actualizarStock.setBounds(91, 287, 338, 41);
-		add(btn_actualizarStock);
+		contenedor_buscarPlanta.add(btn_actualizarStock);
 		
 		JButton btn_verPlantasStock = new JButton("VER PLANTAS CON STOCK MENOR A PUNTO PEDIDO");
 		btn_verPlantasStock.setForeground(Color.BLACK);
@@ -61,7 +70,7 @@ public class BuscarPlantas extends JPanel {
 		btn_verPlantasStock.setBorderPainted(false);
 		btn_verPlantasStock.setBackground(new Color(80, 165, 94));
 		btn_verPlantasStock.setBounds(91, 339, 338, 41);
-		add(btn_verPlantasStock);
+		contenedor_buscarPlanta.add(btn_verPlantasStock);
 		
 		JButton btn_verPlantasPageRank = new JButton("VER PLANTAS ORDENADAS POR PAGE RANK");
 		btn_verPlantasPageRank.setForeground(Color.BLACK);
@@ -71,7 +80,7 @@ public class BuscarPlantas extends JPanel {
 		btn_verPlantasPageRank.setBorderPainted(false);
 		btn_verPlantasPageRank.setBackground(new Color(80, 165, 94));
 		btn_verPlantasPageRank.setBounds(525, 287, 338, 41);
-		add(btn_verPlantasPageRank);
+		contenedor_buscarPlanta.add(btn_verPlantasPageRank);
 		
 		JButton btn_buscarPlantas = new JButton("BUSCAR PLANTAS");
 		btn_buscarPlantas.setForeground(Color.BLACK);
@@ -81,7 +90,7 @@ public class BuscarPlantas extends JPanel {
 		btn_buscarPlantas.setBorderPainted(false);
 		btn_buscarPlantas.setBackground(new Color(80, 165, 94));
 		btn_buscarPlantas.setBounds(91, 31, 156, 41);
-		add(btn_buscarPlantas);
+		contenedor_buscarPlanta.add(btn_buscarPlantas);
 		
 		JButton btn_agregarInsumo = new JButton("AGREGAR INSUMO Y STOCK ");
 		btn_agregarInsumo.setForeground(Color.BLACK);
@@ -91,9 +100,35 @@ public class BuscarPlantas extends JPanel {
 		btn_agregarInsumo.setBorderPainted(false);
 		btn_agregarInsumo.setBackground(new Color(80, 165, 94));
 		btn_agregarInsumo.setBounds(525, 339, 338, 41);
-		add(btn_agregarInsumo);
+		contenedor_buscarPlanta.add(btn_agregarInsumo);
 
+		AgregarInsumoYStock panel_agregarInsumoYStock = new AgregarInsumoYStock (); 
+		add(panel_agregarInsumoYStock, "agregarInsumoYStock");
+		
+		PlantasStockMenorAPuntoPedido panel_plantasStockMenorPuntoPedido = new PlantasStockMenorAPuntoPedido();
+		add(panel_plantasStockMenorPuntoPedido, "plantasStockMenorPuntoPedido");
+		
+		PlantasOrdenadasPageRank panel_plantasOrdenadasPageRank = new PlantasOrdenadasPageRank();
+		add(panel_plantasOrdenadasPageRank, "plantasOrdenadasPageRank");
+		
+		btn_agregarInsumo.addActionListener(e -> {
+			c = (CardLayout)(this.getLayout());
+			c.show(this, "agregarInsumoYStock");
+			
+		});
+		btn_verPlantasStock.addActionListener(e -> {
+			c = (CardLayout)(this.getLayout());
+			c.show(this, "plantasStockMenorPuntoPedido");
+			
+		});
+		
+		btn_verPlantasPageRank.addActionListener(e -> {
+			c = (CardLayout)(this.getLayout());
+			c.show(this, "plantasOrdenadasPageRank");
+			
+		});
 
 	}
-
+	
+	
 }
