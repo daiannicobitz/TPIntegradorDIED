@@ -59,7 +59,7 @@ public class MenuPrincipalFrame extends JFrame {
 	getContentPane().add(panelPrincipal, BorderLayout.CENTER);
 	panelPrincipal.setLayout(new CardLayout(0, 0));
 	
-	JPanel panel_planta = new JPanel();
+	MenuPlanta panel_planta = new MenuPlanta();
 	panel_planta.setBackground(new Color(187, 238, 110));
 	panelPrincipal.add(panel_planta, "planta");
 	
