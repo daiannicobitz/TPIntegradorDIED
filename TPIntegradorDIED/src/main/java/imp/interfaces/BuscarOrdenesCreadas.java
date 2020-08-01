@@ -17,8 +17,6 @@ public class BuscarOrdenesCreadas extends JPanel {
 		setLayout(null);
 		
 		
-
-		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(91, 108, 772, 168);
 		add(scrollPane);

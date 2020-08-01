@@ -88,15 +88,15 @@ public class GestorInsumo {
 		ArrayList<Insumo> insumos = new ArrayList<Insumo>();
 		ArrayList<InsumoDTO> insumosDTO = new ArrayList<InsumoDTO>();
 		
-		if(insumoFiltro.getDescripcion().isEmpty() && insumoFiltro.getUnidadMedida().equals("SELECCIONE_UNIDAD")
-			&& insumoFiltro.getCostoUnitario().isEmpty()) {
+		if(insumoFiltro.getDescripcion().isBlank() && insumoFiltro.getUnidadMedida().equals("SELECCIONE_UNIDAD")
+			&& insumoFiltro.getCostoUnitario().isBlank()) {
 			
 			return visualizarTodosLosInsumos();
 		}else {
 			
 //			esta validacion se hace porque, en caso de ser vacio el costo unitario, va a tirar error al convertirlo a double
 			
-			if(insumoFiltro.getCostoUnitario().isEmpty())
+			if(insumoFiltro.getCostoUnitario().isBlank())
 			{
 				insumos = DAOInsumo.buscarInsumosConFiltros(insumoFiltro.getDescripcion(), UM.valueOf(insumoFiltro.getUnidadMedida()), -1.0);
 			}else {

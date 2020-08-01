@@ -88,8 +88,13 @@ public class DarAltaOrdenPedido extends JPanel {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(nowdate);
 		calendar.add(Calendar.MONTH, 3);
-		fecha_entrega.setSelectableDateRange(nowdate, calendar.getTime());
 		
+		Calendar calendar1 = Calendar.getInstance();
+		calendar1.setTime(nowdate);
+		calendar1.add(Calendar.DAY_OF_YEAR, 1);
+		
+		fecha_entrega.setSelectableDateRange(calendar1.getTime(), calendar.getTime());
+		fecha_entrega.setDate(calendar1.getTime());
 		fecha_entrega.setBounds(648, 68, 168, 20);
 		
 		add(fecha_entrega);
@@ -112,7 +117,7 @@ public class DarAltaOrdenPedido extends JPanel {
 		DefaultTableModel model_tabla_detalleItems = new DefaultTableModel(
 				new Object[][] {},
 				new String[] {
-						"Id insumo", "Descripcion insumo", "Costo unitario", "Cantidad solicitada"
+						 "Descripcion insumo", "Costo unitario", "Cantidad solicitada", "Costo total"
 				}
 				){
 
@@ -129,39 +134,6 @@ public class DarAltaOrdenPedido extends JPanel {
 		tabla_detalleItems.getTableHeader().setResizingAllowed(false);
 		scrollPane.setViewportView(tabla_detalleItems);
 		
-//		JLabel lbl_detalleEnvio = new JLabel("DETALLES DEL ENVIO");
-//		lbl_detalleEnvio.setBounds(63, 300, 139, 14);
-//		add(lbl_detalleEnvio);
-//		
-//
-//		
-//		JScrollPane scrollPane2 = new JScrollPane();
-//		scrollPane2.setBounds(63, 320, 539, 58);
-//		add(scrollPane2);
-//		
-//		JTable tabla_detalleEnvio = new JTable();
-//		tabla_detalleEnvio.setBounds(42, 313, 626, -132);
-//		
-//		DefaultTableModel model_tabla_detalleEnvio = new DefaultTableModel(
-//				new Object[][] {},
-//				new String[] {
-//						"Camion asignado", "Ruta asignada", "Costo envio"
-//				}
-//				){
-//
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public boolean isCellEditable(int i, int i1) {
-//				return false;
-//			}
-//		};
-//	
-//		tabla_detalleEnvio.setModel(model_tabla_detalleEnvio);
-//		tabla_detalleEnvio.getTableHeader().setReorderingAllowed(false);
-//		tabla_detalleEnvio.getTableHeader().setResizingAllowed(false);
-//		scrollPane2.setViewportView(tabla_detalleEnvio);
-		
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
 		btn_aceptar.setBounds(612, 370, 98, 40);
@@ -171,6 +143,16 @@ public class DarAltaOrdenPedido extends JPanel {
 		btn_aceptar.setContentAreaFilled(true);
 		btn_aceptar.setForeground(new Color(0, 0, 0));
 		btn_aceptar.setBackground(new Color(80, 165, 94));
+		btn_aceptar.addActionListener(e -> {
+			
+			//en caso de que la cantidad a solicitar sea mayor a la disponible en ese momento, mostrar una advertencia diciendo que 
+			//es posible que el envio no se realize
+			//crear los items necesarios
+			//mostrar el numero de orden que se generará y validad que todos los campos estén completos
+			//crear una instancia de orden de pedido y guardarla en la base de datos junto a sus items
+			//asignarle el estado CREADA
+			
+		});
 		add(btn_aceptar);
 		
 		JButton btn_cancelar = new JButton("CANCELAR");
@@ -183,15 +165,25 @@ public class DarAltaOrdenPedido extends JPanel {
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
 		
-//		JButton btn_verRuta = new JButton("VER RUTA ASIGNADA");
-//		btn_verRuta.setForeground(Color.BLACK);
-//		btn_verRuta.setFont(new Font("Dialog", Font.ITALIC, 11));
-//		btn_verRuta.setFocusPainted(false);
-//		btn_verRuta.setContentAreaFilled(true);
-//		btn_verRuta.setBorderPainted(false);
-//		btn_verRuta.setBackground(new Color(80, 165, 94));
-//		btn_verRuta.setBounds(648, 331, 168, 28);
-//		add(btn_verRuta);
+		JButton btn_agregarInsumo = new JButton("BUSCAR INSUMOS");
+		btn_agregarInsumo.setForeground(Color.BLACK);
+		btn_agregarInsumo.setFont(new Font("Dialog", Font.ITALIC, 11));
+		btn_agregarInsumo.setFocusPainted(false);
+		btn_agregarInsumo.setContentAreaFilled(true);
+		btn_agregarInsumo.setBorderPainted(false);
+		btn_agregarInsumo.setBackground(new Color(80, 165, 94));
+		btn_agregarInsumo.setBounds(612, 310, 204, 35);
+		btn_agregarInsumo.addActionListener(e -> {
+			
+			PopUpBuscarInsumoMasCantidad buscar_insumo = new PopUpBuscarInsumoMasCantidad(this);
+			
+		});
+		add(btn_agregarInsumo);
 		
 	}
+	
+	
+	
+	
+	
 }

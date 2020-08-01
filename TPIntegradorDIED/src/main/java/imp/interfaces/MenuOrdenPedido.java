@@ -47,7 +47,7 @@ public class MenuOrdenPedido extends JPanel {
 		add(btn_buscarOProcesadas);
 		
 		JPanel contenedor_ordenes = new JPanel();
-		contenedor_ordenes.setBounds(10, 61, 980, 434);
+		contenedor_ordenes.setBounds(10, 61, 960, 434);
 		
 		add(contenedor_ordenes);
 		contenedor_ordenes.setLayout(new CardLayout(0, 0));

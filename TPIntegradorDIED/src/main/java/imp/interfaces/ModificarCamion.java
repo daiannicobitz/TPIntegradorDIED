@@ -476,9 +476,8 @@ public class ModificarCamion extends JPanel {
 		
 		frame.getContentPane().add(panel_buscarCamion);
 		
-		
-		
 	}
+	
 	
 	private void actualizarCamposCamion(Camion c12) {
 		
