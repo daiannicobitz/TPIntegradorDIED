@@ -10,7 +10,7 @@ import imp.enumerators.TipoPlanta;
 import imp.gestores.DBManager;
 import imp.gestores.GestorPlanta;
 import imp.primaryClasses.Planta;
-import imp.primaryClasses.Ruta;
+import imp.structures.*;
 
 public class DAORuta {
 	
@@ -32,7 +32,7 @@ public class DAORuta {
 		
 	}
 	
-public static void AltaPlanta(Ruta ruta) {
+public static void AltaRuta(Ruta ruta) {
 		
 		
 		DBManager dbm = DBManager.getInstance();
@@ -42,7 +42,7 @@ public static void AltaPlanta(Ruta ruta) {
 		try {
 				consulta = "insert into RUTA(id_planta_origen, id_planta_destino, distancia,"
 						+ " duracion_recorrido, peso_maximo) "
-						+ "values ('"+ruta.getPlantaOrigen().getId()+"','"+ruta.getPlantaDestino().getId()+"',"
+						+ "values ('"+((Planta) ruta.getInicio().getValor()).getId()+"','"+((Planta) ruta.getFin().getValor()).getId()+"',"
 						+ "'"+ruta.getDistancia()+"','"+ruta.getDuracionRecorrido()+"','"+ruta.getPesoMaximo()+"')";
 
 			Statement st = con.createStatement();
@@ -80,7 +80,7 @@ public static ArrayList<Ruta> buscarTodasLasRutas(){
 			Planta plantaOrigen=GestorPlanta.getPlantaById(tablaRuta.getInt("id_planta_origen"));
 			Planta plantaDestino=GestorPlanta.getPlantaById(tablaRuta.getInt("id_planta_destino"));
 			
-			Ruta ruta = new Ruta(plantaOrigen, plantaDestino, tablaRuta.getDouble("distancia"),
+			Ruta ruta = new Ruta(new Vertice<Planta>(plantaOrigen), new Vertice<Planta>(plantaDestino), tablaRuta.getDouble("distancia"),
 					tablaRuta.getDouble("duracion_recorrido"), tablaRuta.getDouble("peso_maximo"));
 			listaRuta.add(ruta);		
 		}
