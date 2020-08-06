@@ -9,11 +9,14 @@ import javax.swing.JOptionPane;
 
 import imp.DTOs.InsumoDTO;
 import imp.DTOs.InsumoDTOFiltro;
+import imp.enumerators.TipoPlanta;
 import imp.enumerators.UM;
 import imp.gestores.DBManager;
 import imp.gestores.GestorInsumo;
 import imp.interfaces.MenuPrincipalFrame;
 import imp.primaryClasses.ListaGlobalCamiones;
+import imp.primaryClasses.Planta;
+import imp.structures.Grafo;
 import imp.gestores.GestorPantallas;
 
 
