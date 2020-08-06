@@ -125,4 +125,74 @@ public static Planta buscarPlantaPorId(int idPlanta) {
 	return planta;
 }
 
+public static boolean ExistePlanta(String plantaDestino) {
+
+	
+	DBManager dbm = DBManager.getInstance();
+	Connection con = dbm.getConn();
+	ResultSet plantas=null;
+	
+	Planta planta=null;
+	
+	String consulta = "select * from PLANTA where nombre='"+plantaDestino+"'";
+	
+	Statement st;
+	
+	try {
+		st = con.createStatement();
+		plantas = st.executeQuery(consulta);
+		
+		while(plantas.next()) {
+			planta = new Planta(plantas.getInt("id_planta"),plantas.getString("nombre"), 
+					TipoPlanta.valueOf(plantas.getString("tipo_planta")));
+		}
+		
+		st.close();
+		con.close();
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	if(planta == null) {
+		return false;
+	}else { 
+		return true;
+	}
+}
+
+public static int getIdPlanta(String plantaDestino) {
+	
+	DBManager dbm = DBManager.getInstance();
+	Connection con = dbm.getConn();
+	ResultSet tablaPlanta=null;
+	
+	Planta planta=null;
+	
+	String consulta = "select * from PLANTA where nombre ='"+plantaDestino+"'";
+	
+	Statement st;
+	
+	try {
+		st = con.createStatement();
+		tablaPlanta = st.executeQuery(consulta);
+		
+		while(tablaPlanta.next()) {
+			planta = new Planta(tablaPlanta.getInt("id_planta"),tablaPlanta.getString("nombre"), 
+					TipoPlanta.valueOf(tablaPlanta.getString("tipo_planta")));
+		}
+		
+		st.close();
+		con.close();
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+	return planta.getId();
+}
+
 }

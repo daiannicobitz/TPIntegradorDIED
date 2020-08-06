@@ -10,4 +10,8 @@ public class GestorPlanta {
 		return DAOPlanta.buscarPlantaPorId(idPlanta);
 	}
 
+	public static boolean ExistePlanta(String plantaDestino) {		
+	  return DAOPlanta.ExistePlanta(plantaDestino);
+	}
+
 }

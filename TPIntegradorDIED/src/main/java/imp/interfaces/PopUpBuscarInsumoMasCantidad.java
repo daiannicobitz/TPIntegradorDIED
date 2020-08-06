@@ -32,7 +32,7 @@ public class PopUpBuscarInsumoMasCantidad extends JFrame {
 	private InsumoDTO insumoDTOSelect;
 	private JTextField textFieldCantidadSolicitar;
 	
-	public PopUpBuscarInsumoMasCantidad (DarAltaOrdenPedido darAltaOrdenPedido){
+	public PopUpBuscarInsumoMasCantidad (DarAltaOrdenPedido darAltaOrdenPedido, ArrayList<Integer> idInsumos){
 		
 		
 		setLocationRelativeTo(null);
@@ -179,7 +179,7 @@ public class PopUpBuscarInsumoMasCantidad extends JFrame {
 				 costo_total = Double.parseDouble(insumoDTOSelect.getCostoUnitario()) * Integer.parseInt(textFieldCantidadSolicitar.getText());
 				 
 					model.addRow(new Object[] {insumoDTOSelect.getDescripcion() ,insumoDTOSelect.getCostoUnitario(), textFieldCantidadSolicitar.getText(), Double.toString(costo_total) });
-					
+					idInsumos.add(insumoDTOSelect.getId());
 			 }
 			 } else { 
 			 
@@ -187,6 +187,7 @@ public class PopUpBuscarInsumoMasCantidad extends JFrame {
 			 costo_total = Double.parseDouble(insumoDTOSelect.getCostoUnitario()) * Integer.parseInt(textFieldCantidadSolicitar.getText());
 			 
 			model.addRow(new Object[] {insumoDTOSelect.getDescripcion() ,insumoDTOSelect.getCostoUnitario(), textFieldCantidadSolicitar.getText(), Double.toString(costo_total) });
+			idInsumos.add(insumoDTOSelect.getId());
 			 }
 			this.setVisible(false);
 			

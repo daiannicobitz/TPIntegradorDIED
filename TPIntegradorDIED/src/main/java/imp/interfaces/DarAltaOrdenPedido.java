@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -24,11 +26,22 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
+import imp.DAOs.DAOOrdenPedido;
+import imp.enumerators.EstadoOrden;
 import imp.enumerators.UM;
+import imp.gestores.GestorPlanta;
+import imp.primaryClasses.Item;
+import imp.primaryClasses.OrdenPedido;
+import imp.primaryClasses.Planta;
+
 import javax.swing.JScrollPane;
 
 public class DarAltaOrdenPedido extends JPanel {
 	private JTextField txt_nroOrden;
+	private ArrayList<Integer> idInsumos = new ArrayList<>();
+	private ArrayList<Item> listaItems = new ArrayList<>();
+	
+	
 	
 	public DarAltaOrdenPedido() {
 		setBackground(new Color(118, 203, 117));
@@ -44,14 +57,15 @@ public class DarAltaOrdenPedido extends JPanel {
 		txt_nroOrden.setBounds(226, 26, 168, 20);
 		add(txt_nroOrden);
 		txt_nroOrden.setColumns(10);
+		txt_nroOrden.setText(Long.toString(DAOOrdenPedido.recupearUltimoOP() + 1));
 		
 		JLabel lbl_plantaDestino = new JLabel("PLANTA DE DESTINO");
 		lbl_plantaDestino.setBounds(63, 74, 128, 14);
 		add(lbl_plantaDestino);
 		
-		JComboBox combo_plantaDestino = new JComboBox();
-		combo_plantaDestino.setBounds(226, 70, 168, 22);
-		add(combo_plantaDestino);
+		JTextField plantaDestino = new JTextField();
+		plantaDestino.setBounds(226, 70, 168, 22);
+		add(plantaDestino);
 		
 
 		JLabel lbl_fechaSolicitud = new JLabel("FECHA SOLICITUD");
@@ -145,14 +159,50 @@ public class DarAltaOrdenPedido extends JPanel {
 		btn_aceptar.setBackground(new Color(80, 165, 94));
 		btn_aceptar.addActionListener(e -> {
 			
+		    String validados = validarCampos(fecha_entrega.getDate(), plantaDestino.getText().toUpperCase(), model_tabla_detalleItems.getRowCount());
+				
+		    if(validados == "") {
+		    
+			int cantidad_insumos = idInsumos.size();
+			
+			for (int i =0; i< cantidad_insumos; i++) {
+				
+				Item item = new Item(idInsumos.get(i), Double.parseDouble(model_tabla_detalleItems.getValueAt(i, 2).toString()), Integer.parseInt(txt_nroOrden.getText()));
+				
+				listaItems.add(item);
+
+			}
+			
+			
+			OrdenPedido ordenPedido = new OrdenPedido();
+			
+			ordenPedido.setFechaSolicitud(fecha_solicitud.getDate());
+			ordenPedido.setFechaEntrega(fecha_entrega.getDate());
+			ordenPedido.setNumeroOrden(Integer.parseInt(txt_nroOrden.getText()));
+			ordenPedido.setEstado(EstadoOrden.valueOf("CREADA"));
+			ordenPedido.setItems(listaItems);
+			ordenPedido.setPlantaDestino(plantaDestino.getText().toUpperCase());
+			
+			
+			DAOOrdenPedido.guardarOrden(ordenPedido);
+			
+			
+			
+		    } else {
+		    	
+				JOptionPane.showMessageDialog(null, "Error en los siguientes campos: \n"+ validados, "Estado Orden.", JOptionPane.INFORMATION_MESSAGE);
+				
+			}
+			
+			}
+		
 			//en caso de que la cantidad a solicitar sea mayor a la disponible en ese momento, mostrar una advertencia diciendo que 
 			//es posible que el envio no se realize
-			//crear los items necesarios
 			//mostrar el numero de orden que se generará y validad que todos los campos estén completos
 			//crear una instancia de orden de pedido y guardarla en la base de datos junto a sus items
 			//asignarle el estado CREADA
 			
-		});
+		);
 		add(btn_aceptar);
 		
 		JButton btn_cancelar = new JButton("CANCELAR");
@@ -175,14 +225,46 @@ public class DarAltaOrdenPedido extends JPanel {
 		btn_agregarInsumo.setBounds(612, 310, 204, 35);
 		btn_agregarInsumo.addActionListener(e -> {
 			
-			PopUpBuscarInsumoMasCantidad buscar_insumo = new PopUpBuscarInsumoMasCantidad(this);
+			PopUpBuscarInsumoMasCantidad buscar_insumo = new PopUpBuscarInsumoMasCantidad(this, idInsumos);
 			
 		});
 		add(btn_agregarInsumo);
 		
 	}
-	
-	
+
+
+	private String validarCampos(Date date, String plantaDestino, int rowCount) {
+		// TODO Auto-generated method stub
+		String retorno = "";
+		
+		LocalDateTime now = LocalDateTime.now();  
+		ZoneId defaultZoneId = ZoneId.systemDefault();
+		Date nowdate = Date.from(now.atZone(defaultZoneId).toInstant());
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(nowdate);
+		calendar.add(Calendar.MONTH, 3);
+		
+		Calendar calendar1 = Calendar.getInstance();
+		calendar1.setTime(nowdate);
+		calendar1.add(Calendar.DAY_OF_YEAR, 1);
+		
+		if(date.after(calendar.getTime()) || date.before(calendar1.getTime())) {
+			
+			retorno = retorno + " Fecha de entrega \n";
+
+	}
+		if(!GestorPlanta.ExistePlanta(plantaDestino)) {
+		
+			retorno = retorno + " Planta destino \n";
+			
+		}
+		
+		if(rowCount ==0) {
+			retorno = retorno + " Items \n";
+		}
+		return retorno;
+	}
 	
 	
 	
