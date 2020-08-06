@@ -27,7 +27,7 @@ public class MenuOrdenPedido extends JPanel {
 		add(btn_altaOrden);
 		
 		JButton btn_buscarOCreadas = new JButton("BUSCAR ORDENES CREADAS");
-		btn_buscarOCreadas.setBounds(651, 11, 226, 40);
+		btn_buscarOCreadas.setBounds(369, 11, 226, 40);
 		btn_buscarOCreadas.setFont(new Font("Montserrat", Font.ITALIC, 11));
 		btn_buscarOCreadas.setBorderPainted(false);
 		btn_buscarOCreadas.setFocusPainted(false);
@@ -37,7 +37,7 @@ public class MenuOrdenPedido extends JPanel {
 		add(btn_buscarOCreadas);
 		
 		JButton btn_buscarOProcesadas = new JButton("BUSCAR ORDENES PROCESADAS");
-		btn_buscarOProcesadas.setBounds(369, 11, 226, 40);
+		btn_buscarOProcesadas.setBounds(651, 11, 226, 40);
 		btn_buscarOProcesadas.setFont(new Font("Montserrat", Font.ITALIC, 11));
 		btn_buscarOProcesadas.setBorderPainted(false);
 		btn_buscarOProcesadas.setFocusPainted(false);

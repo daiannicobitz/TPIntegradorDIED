@@ -196,11 +196,6 @@ public class DarAltaOrdenPedido extends JPanel {
 			
 			}
 		
-			//en caso de que la cantidad a solicitar sea mayor a la disponible en ese momento, mostrar una advertencia diciendo que 
-			//es posible que el envio no se realize
-			//mostrar el numero de orden que se generará y validad que todos los campos estén completos
-			//crear una instancia de orden de pedido y guardarla en la base de datos junto a sus items
-			//asignarle el estado CREADA
 			
 		);
 		add(btn_aceptar);

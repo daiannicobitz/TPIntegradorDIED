@@ -2,6 +2,7 @@ package imp.interfaces;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import imp.DAOs.DAOOrdenPedido;
+import imp.primaryClasses.OrdenPedido;
 
 public class BuscarOrdenesCreadas extends JPanel {
 
@@ -75,6 +79,19 @@ public class BuscarOrdenesCreadas extends JPanel {
 		add(btn_verPosiblesRutas);
 		
 		JButton btn_buscarOCreadas = new JButton("BUSCAR ORDENES ");
+		
+		btn_buscarOCreadas.addActionListener(e -> {
+			
+		ArrayList<OrdenPedido> listaOrdenesCreadas = DAOOrdenPedido.buscarOrdenesCreadas();
+			
+			for(OrdenPedido orden : listaOrdenesCreadas) {
+				
+				model_tabla_ordenesCreadas.addRow(new Object[]{orden.getNumeroOrden(), orden.getPlantaDestino(), orden.getFechaSolicitud(), orden.getFechaEntrega(), orden.getEstado()});
+				
+			}
+			
+		});
+		
 		btn_buscarOCreadas.setForeground(Color.BLACK);
 		btn_buscarOCreadas.setFont(new Font("Dialog", Font.ITALIC, 11));
 		btn_buscarOCreadas.setFocusPainted(false);

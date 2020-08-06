@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -88,6 +89,14 @@ public class DAOOrdenPedido {
 			}
 		}	
 		
+	}
+
+
+
+
+	public static ArrayList<OrdenPedido> buscarOrdenesCreadas() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
