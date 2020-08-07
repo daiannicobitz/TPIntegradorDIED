@@ -33,6 +33,8 @@ import imp.enumerators.UM;
 import imp.gestores.GestorInsumo;
 
 public class DarAltaInsumo extends JPanel {
+	
+	public CardLayout c = new CardLayout();
 
 	public DarAltaInsumo() {
 		setBackground(new Color(118, 203, 117));
@@ -269,12 +271,12 @@ public class DarAltaInsumo extends JPanel {
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
 
-		btn_cancelar.addActionListener(e -> {
-
-//			falta implementar
-			
+		btn_cancelar.addActionListener(e -> { 
+			JPanel padre = (JPanel) this.getParent();
+			 c = (CardLayout)(padre.getLayout());
+				c.show(padre, "inicioInsumo");
 		});
-
+		
 		JLabel lbl_tipo_insumo = new JLabel("SELECCIONE EL TIPO DE INSUMO QUE DESEA GUARDAR:");
 		lbl_tipo_insumo.setBounds(109, 18, 427, 14);
 		add(lbl_tipo_insumo);

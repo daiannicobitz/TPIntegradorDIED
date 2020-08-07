@@ -1,5 +1,6 @@
 package imp.interfaces;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
@@ -40,7 +41,7 @@ public class DarAltaOrdenPedido extends JPanel {
 	private JTextField txt_nroOrden;
 	private ArrayList<Integer> idInsumos = new ArrayList<>();
 	private ArrayList<Item> listaItems = new ArrayList<>();
-	
+	public CardLayout c = new CardLayout();
 	
 	
 	public DarAltaOrdenPedido() {
@@ -209,6 +210,11 @@ public class DarAltaOrdenPedido extends JPanel {
 		btn_cancelar.setForeground(new Color(0, 0, 0));
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
+		btn_cancelar.addActionListener(e -> {
+			JPanel padre = (JPanel) this.getParent();
+			 c = (CardLayout)(padre.getLayout());
+				c.show(padre, "inicio_ordenes");
+		});
 		
 		JButton btn_agregarInsumo = new JButton("BUSCAR INSUMOS");
 		btn_agregarInsumo.setForeground(Color.BLACK);

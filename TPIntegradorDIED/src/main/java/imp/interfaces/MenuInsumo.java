@@ -88,8 +88,6 @@ public class MenuInsumo extends JPanel {
 	contenedor_insumo.add(inicio_insumo,"inicioInsumo");
 	inicio_insumo.setBackground(new Color(187, 238, 110));
 	
-	
-	
 	DarAltaInsumo panel_altaInsumo = new DarAltaInsumo();
 	contenedor_insumo.add(panel_altaInsumo, "altaInsumo");
 	
