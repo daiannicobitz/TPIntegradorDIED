@@ -29,9 +29,11 @@ import java.util.Date;
 import imp.primaryClasses.*;
 
 public class DarAltaCamion extends JPanel {
+	public CardLayout c = new CardLayout();
 	
 	
 	public DarAltaCamion() {
+		
 		setBackground(new Color(118, 203, 117));
 		
 		JLabel lbl_patente = new JLabel("PATENTE *");
@@ -212,6 +214,11 @@ public class DarAltaCamion extends JPanel {
 		btn_cancelar.setForeground(new Color(0, 0, 0));
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
+		btn_cancelar.addActionListener(e -> { 
+			JPanel padre = (JPanel) this.getParent();
+			 c = (CardLayout)(padre.getLayout());
+				c.show(padre, "inicioCamion");
+		});
 		
 		
 	}

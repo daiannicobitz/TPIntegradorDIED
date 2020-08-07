@@ -100,5 +100,18 @@ public class BuscarOrdenesCreadas extends JPanel {
 		btn_buscarOCreadas.setBackground(new Color(80, 165, 94));
 		btn_buscarOCreadas.setBounds(91, 31, 156, 41);
 		add(btn_buscarOCreadas);
+		
+		
+		btn_verDetalle.addActionListener(e -> {
+			
+			PopUpDetalleOrden detalle_orden = new PopUpDetalleOrden();
+			
+		});
+		btn_verPlantasStock.addActionListener(e -> {
+			
+			PopUpVerPlantasConStock plantas_con_Stock = new PopUpVerPlantasConStock();
+			
+		});
+		
 	}
 }

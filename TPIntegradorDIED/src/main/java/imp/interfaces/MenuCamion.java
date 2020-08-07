@@ -13,9 +13,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class MenuCamion extends JPanel {
 	public CardLayout c = new CardLayout();
+	
 	public MenuCamion() {
 	setBackground(new Color(187, 238, 110));
-	
 
 	JButton btn_altaCamion = new JButton("DAR DE ALTA UN CAMION");
 	btn_altaCamion.setFont(new Font("Montserrat", Font.ITALIC, 11));
@@ -74,13 +74,12 @@ public class MenuCamion extends JPanel {
 				.addComponent(contenedor_camion, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				.addContainerGap())
 	);
+	
 	contenedor_camion.setLayout(new CardLayout(0, 0));
 	
 	JPanel inicio_camion = new JPanel();
-	contenedor_camion.add(inicio_camion);
+	contenedor_camion.add(inicio_camion, "inicioCamion");
 	inicio_camion.setBackground(new Color(187, 238, 110));
-	
-	
 	
 	DarAltaCamion panel_altaCamion = new DarAltaCamion();
 	contenedor_camion.add(panel_altaCamion, "altaCamion");

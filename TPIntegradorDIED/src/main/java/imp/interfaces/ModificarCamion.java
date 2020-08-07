@@ -27,6 +27,8 @@ public class ModificarCamion extends JPanel {
 	
 	
 	
+
+	public CardLayout c = new CardLayout();
 	JComboBox combo_marca1;
 	JTextField txt_modelo1;
 	JTextField ftxt_patente1;
@@ -37,6 +39,9 @@ public class ModificarCamion extends JPanel {
 	private boolean camionSeleccionado=false;
 	
 	public ModificarCamion () {
+		
+		
+		
 		
 		setBackground(new Color(118, 203, 117));
 		
@@ -204,6 +209,11 @@ public class ModificarCamion extends JPanel {
 		btn_cancelar.setForeground(new Color(0, 0, 0));
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		add(btn_cancelar);
+		btn_cancelar.addActionListener(e -> { 
+			JPanel padre = (JPanel) this.getParent();
+			 c = (CardLayout)(padre.getLayout());
+				c.show(padre, "inicioCamion");
+		});
 		
 		JButton btn_buscarCamion = new JButton("BUSCAR CAMION A EDITAR");
 		btn_buscarCamion.setForeground(Color.BLACK);

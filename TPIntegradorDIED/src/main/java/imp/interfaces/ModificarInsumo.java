@@ -1,5 +1,6 @@
 package imp.interfaces;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
@@ -22,7 +23,7 @@ import imp.enumerators.UM;
 import imp.gestores.GestorInsumo;
 
 public class ModificarInsumo extends JPanel {
-	
+	public CardLayout c = new CardLayout();
 	private InsumoDTO insumoSeleccionado=null;
 
 	public ModificarInsumo() {
@@ -207,7 +208,9 @@ public class ModificarInsumo extends JPanel {
 		add(btn_cancelar);
 		
 		btn_cancelar.addActionListener(e -> {
-//			FALTA IMPLEMENTAR
+			JPanel padre = (JPanel) this.getParent();
+			 c = (CardLayout)(padre.getLayout());
+				c.show(padre, "inicioInsumo");
 		});
 		
 		JButton btn_buscarInsumo = new JButton("BUSCAR INSUMO A EDITAR");
