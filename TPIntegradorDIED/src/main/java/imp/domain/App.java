@@ -27,6 +27,7 @@ public class App
 	
     public static void main( String[] args )
     {	
+    	
     	ListaGlobalCamiones lgc = ListaGlobalCamiones.getInstance();
     	System.out.println(lgc.getLista());
     	EventQueue.invokeLater(new Runnable() {
@@ -38,6 +39,8 @@ public class App
                 }
             }
         });
+    	
+
     	
     }
 }
