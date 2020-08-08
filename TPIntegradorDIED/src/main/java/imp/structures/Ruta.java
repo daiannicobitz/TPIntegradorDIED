@@ -2,7 +2,7 @@ package imp.structures;
 
 import imp.primaryClasses.*;
 
-public class Ruta<Planta> {
+public class Ruta<Planta> extends Object{
 	
 	private int id;
 	protected Vertice<Planta> inicio;

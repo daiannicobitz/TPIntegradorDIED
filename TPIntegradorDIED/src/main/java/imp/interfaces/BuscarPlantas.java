@@ -9,10 +9,20 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import imp.DTOs.InsumoDTO;
+import imp.DTOs.PlantaDTO;
+import imp.gestores.GestorInsumo;
+import imp.gestores.GestorPlanta;
+import imp.primaryClasses.Planta;
+
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class BuscarPlantas extends JPanel {
+	
+	private ArrayList<PlantaDTO> listaPlantasBuscadas = new ArrayList<PlantaDTO>(); //esta definido aca para poder mostrarlo en el Jtable
 	
 	public CardLayout c = new CardLayout();
 	
@@ -33,7 +43,9 @@ public class BuscarPlantas extends JPanel {
 		tabla_Plantas.setBounds(42, 313, 626, -132);
 		
 		DefaultTableModel model_tabla_Plantas = new DefaultTableModel(
-				new Object[][] {},
+				new Object[][] {
+					{null, null},
+				},
 				new String[] {
 						"Nombre Planta", "Tipo Planta"
 				}
@@ -91,6 +103,38 @@ public class BuscarPlantas extends JPanel {
 		btn_buscarPlantas.setBackground(new Color(80, 165, 94));
 		btn_buscarPlantas.setBounds(91, 31, 156, 41);
 		contenedor_buscarPlanta.add(btn_buscarPlantas);
+		
+		btn_buscarPlantas.addActionListener(e -> {
+			
+			listaPlantasBuscadas=GestorPlanta.visualizarTodasLasPlantas();
+			
+			int cantPlantas=listaPlantasBuscadas.size();
+			int fila=0;
+			
+			Object[][] listaMuestra = new Object[cantPlantas][2];
+			
+			for(PlantaDTO c: listaPlantasBuscadas) {
+
+				listaMuestra[fila][0] = c.getNombre();
+				listaMuestra[fila][1] = c.getTipo();
+				
+				fila++;
+			}
+			
+			DefaultTableModel modelo = new DefaultTableModel(listaMuestra,new String[] {"Nombre Planta", "Tipo Planta"}) {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public boolean isCellEditable(int i, int i1) {
+					return false;
+				}
+			};
+			
+			tabla_Plantas.setModel(modelo);
+			
+			
+		});
 		
 		JButton btn_agregarInsumo = new JButton("AGREGAR INSUMO Y STOCK ");
 		btn_agregarInsumo.setForeground(Color.BLACK);

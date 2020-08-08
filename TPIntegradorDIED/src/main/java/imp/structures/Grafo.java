@@ -8,31 +8,74 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.function.Supplier;
+
 import java.util.stream.Collectors;
 
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultDirectedWeightedGraph;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.util.SupplierUtil;
+import com.google.common.graph.MutableNetwork;
+import com.google.common.graph.MutableValueGraph;
+import com.google.common.graph.NetworkBuilder;
 
+import imp.enumerators.TipoPlanta;
+import imp.gestores.GestorCamion;
+import imp.gestores.GestorPlanta;
+import imp.gestores.GestorRuta;
+import imp.primaryClasses.Camion;
+import imp.primaryClasses.ListaGlobalCamiones;
 import imp.primaryClasses.Planta;
 
 
 
 public class Grafo<Planta> {
 	
+	private static Grafo GRAFO;
+	
 	private List<Ruta<Planta>> rutas;
 	private List<Vertice<Planta>> vertices;
 
-
 	
-//	public void prueba(Planta p) {
-//
-//		DefaultDirectedWeightedGraph<Vertice<Planta>, Ruta<Planta>> grafo= new DefaultDirectedWeightedGraph<Vertice<Planta>, Ruta<Planta>>(SupplierUtil.createSupplier());
+	 public Grafo(List<Ruta<Planta>> rutas, List<Vertice<Planta>> vertices) {
+		// TODO Auto-generated constructor stub
+		 this.rutas=rutas;
+		 this.vertices=vertices;
+	}
+	
+	public  static Grafo getInstance() {
+		 
+		 if (GRAFO==null) {
+			 
+			 ArrayList<Vertice<imp.primaryClasses.Planta>> listaVertices = new ArrayList<Vertice<imp.primaryClasses.Planta>>();
+			 ArrayList<imp.primaryClasses.Planta> plantas = GestorPlanta.BuscarTodasLasPlantas();
+			 
+			 for(imp.primaryClasses.Planta p : plantas) 
+				 
+				 listaVertices.add(new Vertice<imp.primaryClasses.Planta>(p));
+			 
+			 GRAFO = new Grafo(GestorRuta.BuscarTodasLasRutas(), listaVertices);
+		 }
+		 return GRAFO;
+	}
+	
+//	LIBRERIA GUAVA
+//	public void prueba(Planta p1, Planta p2) {
 //		
-//		this.grafo.addVertex(new Vertice<Planta>(p));
-//		System.out.println(((imp.primaryClasses.Planta) this.grafo.getVertexSupplier().get().getValor()).getNombre(DefaultEdge.class));
+//    	Grafo<Planta> grafo=new Grafo<Planta>();
+//    	grafo.prueba(new Planta(0, "hola", TipoPlanta.AcopioFinal),new Planta(0, "hola2", TipoPlanta.AcopioFinal));
+//		
+//		MutableNetwork<Vertice<Planta>,Ruta<Planta>> grafo = NetworkBuilder.directed().allowsParallelEdges(false).build();
+//		Vertice<Planta> plant1 = new Vertice<Planta>(p1);
+//		Vertice<Planta> plant2 = new Vertice<Planta>(p2);
+//		Ruta<Planta> ruta12 = new Ruta<Planta>(null,null, 1.1, 1.2, 1.3);
+//		grafo.addNode(plant1);
+//		grafo.addNode(plant2);
+//		grafo.addEdge(plant1, plant2, ruta12);
+//		List<Vertice<Planta>> list = grafo.nodes().stream().collect(Collectors.toList());
+//		
+//		for(Vertice<Planta>  l : list)
+//		System.out.println(((imp.primaryClasses.Planta) l.getValor()).getNombre());
+//		
+//		Ruta<Planta> rutta= grafo.edgeConnecting(plant1, plant2).get();
+//		System.out.println(rutta.getDuracionRecorrido());
+//		
 //	}
 	
 	public Grafo(){
@@ -191,4 +234,19 @@ public class Grafo<Planta> {
         }
         return false;
     }
+    
+    
+    public void actualizarGrafo() {
+    	
+    	 ArrayList<Vertice<imp.primaryClasses.Planta>> listaVertices = new ArrayList<Vertice<imp.primaryClasses.Planta>>();
+		 ArrayList<imp.primaryClasses.Planta> plantas = GestorPlanta.BuscarTodasLasPlantas();
+		 
+		 for(imp.primaryClasses.Planta p : plantas) 
+			 
+			 listaVertices.add(new Vertice<imp.primaryClasses.Planta>(p));
+		 
+		 GRAFO = new Grafo(GestorRuta.BuscarTodasLasRutas(), listaVertices);
+    }
+    
+    
 }

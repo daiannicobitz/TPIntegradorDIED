@@ -1,6 +1,6 @@
 package imp.structures;
 
-public class Vertice<T> {
+public class Vertice<T> extends Object{
 	
 	private T valor;
 	

@@ -57,7 +57,7 @@ public static void AltaRuta(Ruta ruta) {
 		
 	}
 
-public static ArrayList<Ruta> buscarTodasLasRutas(){
+public static ArrayList<Ruta<Planta>> buscarTodasLasRutas(){
 	
 //	Este metodo devuelve una lista con todas las rutas que hay guardadas en la base de datos.
 	
@@ -65,7 +65,7 @@ public static ArrayList<Ruta> buscarTodasLasRutas(){
 	Connection con = dbm.getConn();
 	ResultSet tablaRuta=null;
 	
-	ArrayList<Ruta> listaRuta=new ArrayList<Ruta>();
+	ArrayList<Ruta<Planta>> listaRuta=new ArrayList<Ruta<Planta>>();
 	
 	String consulta = "select * from RUTA";
 	
@@ -80,7 +80,7 @@ public static ArrayList<Ruta> buscarTodasLasRutas(){
 			Planta plantaOrigen=GestorPlanta.getPlantaById(tablaRuta.getInt("id_planta_origen"));
 			Planta plantaDestino=GestorPlanta.getPlantaById(tablaRuta.getInt("id_planta_destino"));
 			
-			Ruta ruta = new Ruta(new Vertice<Planta>(plantaOrigen), new Vertice<Planta>(plantaDestino), tablaRuta.getDouble("distancia"),
+			Ruta<Planta> ruta = new Ruta(new Vertice<Planta>(plantaOrigen), new Vertice<Planta>(plantaDestino), tablaRuta.getDouble("distancia"),
 					tablaRuta.getDouble("duracion_recorrido"), tablaRuta.getDouble("peso_maximo"));
 			listaRuta.add(ruta);		
 		}
