@@ -26,6 +26,7 @@ import javax.swing.SpinnerNumberModel;
 
 import com.toedter.calendar.JDateChooser;
 
+import imp.DAOs.DAOStock;
 import imp.DTOs.InsumoDTO;
 import imp.enumerators.Marca;
 import imp.enumerators.TipoInsumo;
@@ -254,6 +255,7 @@ public class DarAltaInsumo extends JPanel {
 			} else {
 
 				GestorInsumo.darAltaInsumo(insumodto);
+				DAOStock.guardarStock(insumodto);
 				JOptionPane.showMessageDialog(null, "El insumo se ha guardado correctamente.", "MENSAJE",
 						JOptionPane.INFORMATION_MESSAGE);
 

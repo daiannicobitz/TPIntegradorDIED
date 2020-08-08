@@ -1,6 +1,7 @@
 package imp.DAOs;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -193,6 +194,32 @@ public static int getIdPlanta(String plantaDestino) {
 	
 	
 	return planta.getId();
+}
+
+public static Object[] obtenerPlantas() {
+
+	ArrayList<Planta> Plantas = new ArrayList<>();
+	ResultSet rs = null;
+	DBManager dbm = DBManager.getInstance();
+	Connection con = dbm.getConn();
+
+	try {
+
+		PreparedStatement st = con.prepareStatement("select * from `PLANTA`");
+		rs = st.executeQuery();
+		while(rs.next()) {
+
+			Planta planta = new Planta(rs.getInt(1), rs.getString(2), TipoPlanta.valueOf(rs.getString(3)));
+			Plantas.add(planta);
+		}
+		st.close();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return Plantas.toArray();
+
+
 }
 
 }

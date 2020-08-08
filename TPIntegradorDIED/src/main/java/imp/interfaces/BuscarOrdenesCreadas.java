@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,6 +17,9 @@ import imp.primaryClasses.OrdenPedido;
 
 public class BuscarOrdenesCreadas extends JPanel {
 
+	ArrayList<OrdenPedido> listaOrdenesCreadas;
+	
+	
 	public  BuscarOrdenesCreadas() {
 		setBackground(new Color(118, 203, 117));
 		setLayout(null);
@@ -82,7 +86,7 @@ public class BuscarOrdenesCreadas extends JPanel {
 		
 		btn_buscarOCreadas.addActionListener(e -> {
 			
-		ArrayList<OrdenPedido> listaOrdenesCreadas = DAOOrdenPedido.buscarOrdenesCreadas();
+			listaOrdenesCreadas = DAOOrdenPedido.buscarOrdenesCreadas();
 			
 			for(OrdenPedido orden : listaOrdenesCreadas) {
 				
@@ -104,7 +108,13 @@ public class BuscarOrdenesCreadas extends JPanel {
 		
 		btn_verDetalle.addActionListener(e -> {
 			
-			PopUpDetalleOrden detalle_orden = new PopUpDetalleOrden();
+			
+			if(tabla_ordenesCreadas.getSelectedRow() > 0) {
+				OrdenPedido op = listaOrdenesCreadas.get(tabla_ordenesCreadas.getSelectedRow()); 
+				PopUpDetalleOrden detalle_orden = new PopUpDetalleOrden(op);	
+			}else {
+				JOptionPane.showMessageDialog(null, "No se ha seleccionado una orden.", "Estado Detalle.", JOptionPane.INFORMATION_MESSAGE);
+			}
 			
 		});
 		btn_verPlantasStock.addActionListener(e -> {

@@ -2,6 +2,9 @@ package imp.interfaces;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import imp.DAOs.DAOInsumo;
+import imp.DAOs.DAOItem;
 import imp.DAOs.DAOOrdenPedido;
 import imp.enumerators.EstadoOrden;
 import imp.primaryClasses.Item;
@@ -26,8 +31,10 @@ public class PopUpDetalleOrden extends JFrame {
 	private JTextField txt_FechaEntrega;
 	private JTable table;
 	
-	public PopUpDetalleOrden(){
-
+	public PopUpDetalleOrden(OrdenPedido op){
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+		
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
@@ -59,21 +66,32 @@ public class PopUpDetalleOrden extends JFrame {
 		txt_IdOrden.setBounds(160, 53, 162, 20);
 		panel_detalleOrden.add(txt_IdOrden);
 		txt_IdOrden.setColumns(10);
+		txt_IdOrden.setText(Long.toString(op.getNumeroOrden()));
 		
 		txt_FechaPedido = new JTextField();
 		txt_FechaPedido.setColumns(10);
 		txt_FechaPedido.setBounds(160, 115, 162, 20);
 		panel_detalleOrden.add(txt_FechaPedido);
+
+		String strDateFechaSolicitud = dateFormat.format(op.getFechaSolicitud()); 
+		
+		txt_FechaPedido.setText(strDateFechaSolicitud);
 		
 		txt_PlantaDestino = new JTextField();
 		txt_PlantaDestino.setColumns(10);
 		txt_PlantaDestino.setBounds(575, 53, 162, 20);
 		panel_detalleOrden.add(txt_PlantaDestino);
 		
+		txt_PlantaDestino.setText(op.getPlantaDestino());
+		
 		txt_FechaEntrega = new JTextField();
 		txt_FechaEntrega.setColumns(10);
 		txt_FechaEntrega.setBounds(575, 115, 162, 20);
 		panel_detalleOrden.add(txt_FechaEntrega);
+		
+		String strDateFechaEntrega = dateFormat.format(op.getFechaEntrega()); 
+		
+		txt_FechaEntrega.setText(strDateFechaEntrega);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(52, 202, 685, 174);
@@ -97,6 +115,14 @@ public class PopUpDetalleOrden extends JFrame {
 			}
 		};
 	
+		ArrayList<Item> listaItems = DAOItem.recuperarItemsPorIdOrden(op);
+		
+		for(Item item : listaItems) {
+			
+			model_tabla_DetalleOrden.addRow(new Object[]{DAOInsumo.buscarNombreInsumoPorId(item.getIdInsumo()), item.getCantidadSolicitada(), DAOInsumo.getPrecioPorId(item.getIdInsumo()), DAOInsumo.CalcularPrecioTotal(item.getIdInsumo(),item.getCantidadSolicitada())});
+			
+		}
+		
 		tabla_DetalleOrden.setModel(model_tabla_DetalleOrden);
 		tabla_DetalleOrden.getTableHeader().setReorderingAllowed(false);
 		tabla_DetalleOrden.getTableHeader().setResizingAllowed(false);
@@ -114,6 +140,9 @@ public class PopUpDetalleOrden extends JFrame {
 		btn_aceptar.setContentAreaFilled(true);
 		btn_aceptar.setForeground(new Color(0, 0, 0));
 		btn_aceptar.setBackground(new Color(80, 165, 94));
+		btn_aceptar.addActionListener(e->{
+			dispose();
+		});
 		panel_detalleOrden.add(btn_aceptar);
 		
 		
