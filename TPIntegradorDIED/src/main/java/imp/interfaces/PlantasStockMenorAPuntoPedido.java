@@ -10,20 +10,26 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PlantasStockMenorAPuntoPedido extends JPanel {
 
 	public PlantasStockMenorAPuntoPedido() {
 		setBackground(new Color(118, 203, 117));
 		setLayout(null);
-		JButton btn_buscarPlantas = new JButton("BUSCAR PLANTAS");
+		JButton btn_buscarPlantas = new JButton("BUSCAR");
+		btn_buscarPlantas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btn_buscarPlantas.setForeground(Color.BLACK);
 		btn_buscarPlantas.setFont(new Font("Dialog", Font.ITALIC, 11));
 		btn_buscarPlantas.setFocusPainted(false);
 		btn_buscarPlantas.setContentAreaFilled(true);
 		btn_buscarPlantas.setBorderPainted(false);
 		btn_buscarPlantas.setBackground(new Color(80, 165, 94));
-		btn_buscarPlantas.setBounds(707, 64, 156, 41);
+		btn_buscarPlantas.setBounds(307, 72, 156, 41);
 		add(btn_buscarPlantas);
 		
 
@@ -54,21 +60,10 @@ public class PlantasStockMenorAPuntoPedido extends JPanel {
 		tabla_Plantas.getTableHeader().setResizingAllowed(false);
 		scrollPane.setViewportView(tabla_Plantas);
 		
-		JLabel lbl_planta = new JLabel("PLANTA");
-		lbl_planta.setBounds(91, 78, 46, 14);
+		JLabel lbl_planta = new JLabel("Presione buscar:");
+		lbl_planta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lbl_planta.setBounds(91, 78, 106, 27);
 		add(lbl_planta);
-		
-		JComboBox combo_planta = new JComboBox();
-		combo_planta.setBounds(157, 74, 147, 22);
-		add(combo_planta);
-		
-		JLabel lbl_insumo = new JLabel("INSUMO");
-		lbl_insumo.setBounds(412, 78, 46, 14);
-		add(lbl_insumo);
-		
-		JComboBox combo_insumo = new JComboBox();
-		combo_insumo.setBounds(496, 74, 147, 22);
-		add(combo_insumo);
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
 		btn_aceptar.setForeground(Color.BLACK);
