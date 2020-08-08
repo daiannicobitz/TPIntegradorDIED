@@ -17,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
 import imp.DAOs.DAOInsumo;
 import imp.DAOs.DAOItem;
 import imp.DAOs.DAOOrdenPedido;
+import imp.DTOs.ItemDTO;
+import imp.DTOs.OrdenPedidoDTO;
 import imp.enumerators.EstadoOrden;
 import imp.primaryClasses.Item;
 import imp.primaryClasses.OrdenPedido;
@@ -31,7 +33,7 @@ public class PopUpDetalleOrden extends JFrame {
 	private JTextField txt_FechaEntrega;
 	private JTable table;
 	
-	public PopUpDetalleOrden(OrdenPedido op){
+	public PopUpDetalleOrden(OrdenPedidoDTO op){
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
 		
@@ -66,7 +68,7 @@ public class PopUpDetalleOrden extends JFrame {
 		txt_IdOrden.setBounds(160, 53, 162, 20);
 		panel_detalleOrden.add(txt_IdOrden);
 		txt_IdOrden.setColumns(10);
-		txt_IdOrden.setText(Long.toString(op.getNumeroOrden()));
+		txt_IdOrden.setText(op.getNroOrden());
 		
 		txt_FechaPedido = new JTextField();
 		txt_FechaPedido.setColumns(10);
@@ -115,12 +117,12 @@ public class PopUpDetalleOrden extends JFrame {
 			}
 		};
 	
-		ArrayList<Item> listaItems = DAOItem.recuperarItemsPorIdOrden(op);
-		
-		for(Item item : listaItems) {
+		ArrayList<Item> listaItems = DAOItem.recuperarItemsPorIdOrden(Long.parseLong(op.getNroOrden()));
+
+		for (Item item : listaItems) {
 			
 			model_tabla_DetalleOrden.addRow(new Object[]{DAOInsumo.buscarNombreInsumoPorId(item.getIdInsumo()), item.getCantidadSolicitada(), DAOInsumo.getPrecioPorId(item.getIdInsumo()), DAOInsumo.CalcularPrecioTotal(item.getIdInsumo(),item.getCantidadSolicitada())});
-			
+
 		}
 		
 		tabla_DetalleOrden.setModel(model_tabla_DetalleOrden);

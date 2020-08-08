@@ -19,6 +19,12 @@ public class OrdenPedido {
 		
 	}
 	
+	public OrdenPedido (long nroOrden, Date fechaSolicitud, Date fechaEntrega, EstadoOrden estado) { 
+		this.estado= estado;
+		this.fechaEntrega = fechaEntrega;
+		this.fechaSolicitud = fechaSolicitud; 
+		this.numeroOrden = nroOrden; 		
+	}
 	
 	public long getNumeroOrden() {
 		return numeroOrden;

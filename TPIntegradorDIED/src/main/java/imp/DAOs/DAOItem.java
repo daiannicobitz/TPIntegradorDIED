@@ -53,9 +53,9 @@ public class DAOItem {
 		
 	}
 
-	public static ArrayList<Item> recuperarItemsPorIdOrden(OrdenPedido op) {
+	public static ArrayList<Item> recuperarItemsPorIdOrden(long idOrden) {
 		
-		long idOrden = op.getNumeroOrden();
+//		long idOrden = op.getNumeroOrden();
 		ArrayList<Item> retorno = new ArrayList<>();
 		
 		DBManager gdb = DBManager.getInstance();

@@ -13,11 +13,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import imp.DAOs.DAOOrdenPedido;
+import imp.DTOs.OrdenPedidoDTO;
+import imp.DTOs.PlantaDTO;
 import imp.primaryClasses.OrdenPedido;
 
 public class BuscarOrdenesCreadas extends JPanel {
 
-	ArrayList<OrdenPedido> listaOrdenesCreadas;
+	ArrayList<OrdenPedidoDTO> listaOrdenesCreadasDTO = new ArrayList<OrdenPedidoDTO>();;
 	
 	
 	public  BuscarOrdenesCreadas() {
@@ -82,20 +84,7 @@ public class BuscarOrdenesCreadas extends JPanel {
 		btn_verPosiblesRutas.setBounds(660, 338, 203, 41);
 		add(btn_verPosiblesRutas);
 		
-		JButton btn_buscarOCreadas = new JButton("BUSCAR ORDENES ");
-		
-		btn_buscarOCreadas.addActionListener(e -> {
-			
-			listaOrdenesCreadas = DAOOrdenPedido.buscarOrdenesCreadas();
-			
-			for(OrdenPedido orden : listaOrdenesCreadas) {
-				
-				model_tabla_ordenesCreadas.addRow(new Object[]{orden.getNumeroOrden(), orden.getPlantaDestino(), orden.getFechaSolicitud(), orden.getFechaEntrega(), orden.getEstado()});
-				
-			}
-			
-		});
-		
+		JButton btn_buscarOCreadas = new JButton("BUSCAR ORDENES ");		
 		btn_buscarOCreadas.setForeground(Color.BLACK);
 		btn_buscarOCreadas.setFont(new Font("Dialog", Font.ITALIC, 11));
 		btn_buscarOCreadas.setFocusPainted(false);
@@ -104,13 +93,30 @@ public class BuscarOrdenesCreadas extends JPanel {
 		btn_buscarOCreadas.setBackground(new Color(80, 165, 94));
 		btn_buscarOCreadas.setBounds(91, 31, 156, 41);
 		add(btn_buscarOCreadas);
+		btn_buscarOCreadas.addActionListener(e -> {
+			
+			
+			ArrayList<OrdenPedido> listaOrdenesCreadas = DAOOrdenPedido.buscarOrdenesCreadas();
+			
+			for (OrdenPedido o : listaOrdenesCreadas) {
+				OrdenPedidoDTO dto = new OrdenPedidoDTO(o);
+				listaOrdenesCreadasDTO.add(dto);
+			}
+			
+			for(OrdenPedidoDTO orden : listaOrdenesCreadasDTO) {
+				
+				model_tabla_ordenesCreadas.addRow(new Object[]{orden.getNroOrden(), orden.getPlantaDestino(), orden.getFechaSolicitud(), orden.getFechaEntrega(), orden.getEstado()});
+				
+			}
+			
+		});
 		
 		
 		btn_verDetalle.addActionListener(e -> {
 			
 			
 			if(tabla_ordenesCreadas.getSelectedRow() > 0) {
-				OrdenPedido op = listaOrdenesCreadas.get(tabla_ordenesCreadas.getSelectedRow()); 
+				OrdenPedidoDTO op = listaOrdenesCreadasDTO.get(tabla_ordenesCreadas.getSelectedRow()); 
 				PopUpDetalleOrden detalle_orden = new PopUpDetalleOrden(op);	
 			}else {
 				JOptionPane.showMessageDialog(null, "No se ha seleccionado una orden.", "Estado Detalle.", JOptionPane.INFORMATION_MESSAGE);

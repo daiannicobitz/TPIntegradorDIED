@@ -5,14 +5,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import imp.enumerators.EstadoOrden;
 import imp.enumerators.TipoPlanta;
 import imp.enumerators.UM;
 import imp.gestores.DBManager;
 import imp.primaryClasses.Insumo;
 import imp.primaryClasses.InsumoGeneral;
 import imp.primaryClasses.InsumoLiquido;
+import imp.primaryClasses.OrdenPedido;
 import imp.primaryClasses.Planta;
 
 public class DAOPlanta {
@@ -221,5 +226,38 @@ public static Object[] obtenerPlantas() {
 
 
 }
+
+public static String getNombrePlanta (int idPlanta) { 
+	
+	String nombrePlanta = null;
+	DBManager dbm = DBManager.getInstance();
+	Connection con = dbm.getConn();
+	ResultSet tablaPlanta=null;
+	String consulta = "select * from PLANTA where id_planta='"+idPlanta+"'";
+	
+	Statement st;
+	
+	try {
+		st = con.createStatement();
+		tablaPlanta = st.executeQuery(consulta);
+		
+		while(tablaPlanta.next()) {
+			
+			nombrePlanta = tablaPlanta.getString("nombre");
+		}
+		
+		st.close();
+		con.close();
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return nombrePlanta;
+	
+}
+
+
 
 }
