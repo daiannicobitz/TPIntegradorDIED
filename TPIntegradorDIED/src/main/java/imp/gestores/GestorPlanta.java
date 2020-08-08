@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import imp.DAOs.DAOPlanta;
 import imp.DTOs.PlantaDTO;
 import imp.primaryClasses.Planta;
+import imp.structures.Ruta;
+import imp.structures.Vertice;
 
 public class GestorPlanta {
 	
@@ -29,6 +31,12 @@ public class GestorPlanta {
 
 	public static boolean ExistePlanta(String plantaDestino) {		
 	  return DAOPlanta.ExistePlanta(plantaDestino);
+	}
+
+	public static ArrayList<Planta> BuscarTodasLasPlantas() {
+		
+		return DAOPlanta.buscarTodasLasPlantas();
+	
 	}
 
 }

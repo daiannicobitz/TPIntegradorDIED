@@ -8,30 +8,54 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultDirectedWeightedGraph;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.util.SupplierUtil;
+import java.util.stream.Collectors;
 
 import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.NetworkBuilder;
 
 import imp.enumerators.TipoPlanta;
+import imp.gestores.GestorCamion;
+import imp.gestores.GestorPlanta;
+import imp.gestores.GestorRuta;
+import imp.primaryClasses.Camion;
+import imp.primaryClasses.ListaGlobalCamiones;
 import imp.primaryClasses.Planta;
 
 
 
 public class Grafo<Planta> {
 	
+	private static Grafo GRAFO;
+	
 	private List<Ruta<Planta>> rutas;
 	private List<Vertice<Planta>> vertices;
 
-
 	
+	 public Grafo(List<Ruta<Planta>> rutas, List<Vertice<Planta>> vertices) {
+		// TODO Auto-generated constructor stub
+		 this.rutas=rutas;
+		 this.vertices=vertices;
+	}
+	
+	public  static Grafo getInstance() {
+		 
+		 if (GRAFO==null) {
+			 
+			 ArrayList<Vertice<imp.primaryClasses.Planta>> listaVertices = new ArrayList<Vertice<imp.primaryClasses.Planta>>();
+			 ArrayList<imp.primaryClasses.Planta> plantas = GestorPlanta.BuscarTodasLasPlantas();
+			 
+			 for(imp.primaryClasses.Planta p : plantas) 
+				 
+				 listaVertices.add(new Vertice<imp.primaryClasses.Planta>(p));
+			 
+			 GRAFO = new Grafo(GestorRuta.BuscarTodasLasRutas(), listaVertices);
+		 }
+		 return GRAFO;
+	}
+	
+//	LIBRERIA GUAVA
 //	public void prueba(Planta p1, Planta p2) {
 //		
 //    	Grafo<Planta> grafo=new Grafo<Planta>();
@@ -210,4 +234,19 @@ public class Grafo<Planta> {
         }
         return false;
     }
+    
+    
+    public void actualizarGrafo() {
+    	
+    	 ArrayList<Vertice<imp.primaryClasses.Planta>> listaVertices = new ArrayList<Vertice<imp.primaryClasses.Planta>>();
+		 ArrayList<imp.primaryClasses.Planta> plantas = GestorPlanta.BuscarTodasLasPlantas();
+		 
+		 for(imp.primaryClasses.Planta p : plantas) 
+			 
+			 listaVertices.add(new Vertice<imp.primaryClasses.Planta>(p));
+		 
+		 GRAFO = new Grafo(GestorRuta.BuscarTodasLasRutas(), listaVertices);
+    }
+    
+    
 }
