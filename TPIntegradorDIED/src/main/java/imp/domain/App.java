@@ -16,6 +16,7 @@ import imp.gestores.GestorInsumo;
 import imp.interfaces.MenuPrincipalFrame;
 import imp.primaryClasses.ListaGlobalCamiones;
 import imp.primaryClasses.Planta;
+import imp.structures.Grafo;
 import imp.gestores.GestorPantallas;
 
 
@@ -28,7 +29,11 @@ public class App
     {	
     	
     	ListaGlobalCamiones lgc = ListaGlobalCamiones.getInstance();
+    	Grafo grafo = Grafo.getInstance();
+    	
+    	
     	System.out.println(lgc.getLista());
+    	
     	EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {

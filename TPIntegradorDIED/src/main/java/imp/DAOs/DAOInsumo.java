@@ -144,6 +144,51 @@ public class DAOInsumo {
 		return listaInsumos;
 	}
 	
+	public static Insumo buscarInsumosPorID(Integer idInsumo){
+		
+//		Este metodo devuelve el insumo que tiene idInsumo
+		
+		DBManager dbm = DBManager.getInstance();
+		Connection con = dbm.getConn();
+		ResultSet tablaInsumo=null;
+		
+		Insumo retorno=null;
+		
+		String consulta = "select * from INSUMO where id_insumo = '"+idInsumo+"'";
+		
+		Statement st;
+		try {
+			st = con.createStatement();
+			tablaInsumo = st.executeQuery(consulta);
+			
+			while(tablaInsumo.next()) {
+				
+				if(tablaInsumo.getString("densidad") == null) {
+				InsumoGeneral insumo = new InsumoGeneral(tablaInsumo.getInt("id_insumo"),tablaInsumo.getString("descripcion"), 
+						UM.valueOf(tablaInsumo.getString("unidad_medida")), tablaInsumo.getDouble("costo_unitario"), 
+						tablaInsumo.getDouble("cantidad"), tablaInsumo.getDouble("peso"));
+						retorno = insumo;
+				}else {
+					
+					InsumoLiquido insumo = new InsumoLiquido(tablaInsumo.getInt("id_insumo"),tablaInsumo.getString("descripcion"), 
+					UM.valueOf(tablaInsumo.getString("unidad_medida")), tablaInsumo.getDouble("costo_unitario"), 
+					tablaInsumo.getDouble("cantidad"), tablaInsumo.getDouble("densidad"));
+					retorno = insumo;
+				}
+				
+			}
+			
+			st.close();
+			con.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return retorno;
+	}
+	
 
 	public static ArrayList<Insumo> buscarInsumosConFiltros(String descripcion, UM unidadMedida, double costoUnitario) {
 //		Este metodo busca todos los insumos que sus atributos coincidan con los parametros.

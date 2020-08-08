@@ -110,6 +110,15 @@ public class Grafo<Planta> {
 	public Vertice<Planta> getNodo(Planta valor){
 		return this.vertices.get(this.vertices.indexOf(new Vertice<Planta>(valor)));
 	}
+	
+	public Vertice<Planta> getNodo(int idPlanta){
+		Vertice<Planta> vert = new Vertice<Planta>();
+		for(Vertice<Planta> v : vertices) {
+			if(idPlanta == ((imp.primaryClasses.Planta) v.getValor()).getId())
+				return v;
+		}
+		return null;
+	}
 
 	public List<Planta> getAdyacentes(Planta valor){ 
 		Vertice<Planta> unNodo = this.getNodo(valor);

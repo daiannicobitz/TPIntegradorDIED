@@ -3,6 +3,7 @@ package imp.primaryClasses;
 public class Stock {
 		
 		private int id;
+		private int idPlanta;
 		private double cantidad;
 		private double puntoPedido;
 		private Insumo insumo;
@@ -39,13 +40,24 @@ public class Stock {
 			this.insumo = insumo;
 		}
 
-		public Stock(int id, double cantidad, double puntoPedido, Insumo insumo) {
+		public Stock(int id, int idPlanta, double cantidad, double puntoPedido, Insumo insumo) {
 			super();
 			setCantidad(cantidad);
 			setId(id);
 			setInsumo(insumo);
 			setPuntoPedido(puntoPedido);
+			setIdPlanta(idPlanta);
 		}
+
+		public int getIdPlanta() {
+			return idPlanta;
+		}
+
+		public void setIdPlanta(int idPlanta) {
+			this.idPlanta = idPlanta;
+		}
+
+
 		
 		
 		
