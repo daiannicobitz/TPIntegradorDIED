@@ -48,6 +48,13 @@ public class PopUpVerPlantasConStock extends JFrame {
 		}
 	};
 
+	
+	
+	
+	
+	
+	
+	
 	tabla_DetalleOrden.setModel(model_tabla_VerPlantaConStock);
 	tabla_DetalleOrden.getTableHeader().setReorderingAllowed(false);
 	tabla_DetalleOrden.getTableHeader().setResizingAllowed(false);

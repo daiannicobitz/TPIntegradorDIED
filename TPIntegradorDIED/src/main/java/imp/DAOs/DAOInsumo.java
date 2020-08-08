@@ -1,6 +1,7 @@
 package imp.DAOs;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 import imp.gestores.DBManager;
 import imp.enumerators.UM;
+import imp.primaryClasses.Camion;
 import imp.primaryClasses.Insumo;
 import imp.primaryClasses.InsumoGeneral;
 import imp.primaryClasses.InsumoLiquido;
@@ -200,4 +202,63 @@ public class DAOInsumo {
 		return listaInsumos;
 	}
 
+	public static Object buscarNombreInsumoPorId(int idInsumo) {
+		DBManager dbm = DBManager.getInstance();
+		Connection con = dbm.getConn();
+		String retorno= null;
+		ResultSet rs = null;
+		try {
+			String consulta = "select descripcion from `INSUMO` where id_insumo = " + idInsumo;
+
+			PreparedStatement st = con.prepareStatement(consulta);
+			rs = st.executeQuery();
+			
+			rs.next();
+			retorno = rs.getString(1);
+			
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+		return retorno;
+	}
+
+	public static int getPrecioPorId(int idInsumo) {
+		DBManager dbm = DBManager.getInstance();
+		Connection con = dbm.getConn();
+		int retorno = 0;
+		ResultSet rs = null;
+		try {
+			String consulta = "select costo_unitario from `INSUMO` where id_insumo = " + idInsumo;
+
+			PreparedStatement st = con.prepareStatement(consulta);
+			rs = st.executeQuery();
+			
+			rs.next();
+			retorno = rs.getInt(1);
+			
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+		return retorno;
+	}
+
+	public static Object CalcularPrecioTotal(int id, double cantidadSolicitada) {
+		return (cantidadSolicitada * getPrecioPorId(id));
+	}
 }

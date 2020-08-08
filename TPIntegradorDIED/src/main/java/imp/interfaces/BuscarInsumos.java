@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import imp.DAOs.DAOPlanta;
 import imp.DTOs.InsumoDTO;
 import imp.enumerators.UM;
 import imp.gestores.GestorInsumo;
@@ -118,5 +119,6 @@ public class BuscarInsumos extends JPanel {
 		JComboBox combo_plantas = new JComboBox();
 		combo_plantas.setBounds(134, 36, 168, 22);
 		add(combo_plantas);
+		combo_plantas.setModel(new DefaultComboBoxModel(DAOPlanta.obtenerPlantas()));
 	}
 }
