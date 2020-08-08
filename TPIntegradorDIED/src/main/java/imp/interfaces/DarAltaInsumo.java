@@ -30,8 +30,12 @@ import imp.DAOs.DAOStock;
 import imp.DTOs.InsumoDTO;
 import imp.enumerators.Marca;
 import imp.enumerators.TipoInsumo;
+import imp.enumerators.TipoPlanta;
 import imp.enumerators.UM;
 import imp.gestores.GestorInsumo;
+import imp.primaryClasses.Planta;
+import imp.primaryClasses.Stock;
+import imp.structures.Grafo;
 
 public class DarAltaInsumo extends JPanel {
 	
@@ -243,7 +247,6 @@ public class DarAltaInsumo extends JPanel {
 						ftxt_costoUnitario.getText(), spinner_cantidad.getValue().toString(), ftxt_peso.getText(),
 						"-");
 				
-				
 			}
 
 			if (insumodto.getDescripcion().isEmpty() || (combo_medidas.getSelectedIndex() == 0)
@@ -255,7 +258,20 @@ public class DarAltaInsumo extends JPanel {
 			} else {
 
 				GestorInsumo.darAltaInsumo(insumodto);
-				DAOStock.guardarStock(insumodto);
+				int idInsumo = GestorInsumo.obtenerIdInsumo(insumodto);
+				Stock stock = new Stock();
+				
+				stock.setCantidad(Integer.parseInt(insumodto.getCantidad()));
+				stock.setInsumo(idInsumo);
+				stock.setPuntoPedido(0);
+				stock.setidPlanta(1);
+				DAOStock.guardarStock(stock);
+				
+				Grafo plantas = Grafo.getInstance();
+				Planta planta = new Planta(1, "Puerto", TipoPlanta.valueOf("AcopioInicial"));
+				((Planta)plantas.getNodo(planta).getValor()).addStock(stock);
+				
+				
 				JOptionPane.showMessageDialog(null, "El insumo se ha guardado correctamente.", "MENSAJE",
 						JOptionPane.INFORMATION_MESSAGE);
 

@@ -112,5 +112,11 @@ public class GestorInsumo {
 			return insumosDTO;
 		}
 	}
+
+	public static int obtenerIdInsumo(InsumoDTO insumodto) {
+		// TODO Auto-generated method stub
+		
+		return DAOInsumo.getIdInsumo(insumodto);
+	}
 	
 }

@@ -5,7 +5,8 @@ public class Stock {
 		private int id;
 		private double cantidad;
 		private double puntoPedido;
-		private Insumo insumo;
+		private int idInsumo;
+		private int idPlanta;
 		
 		public int getId() {
 			return id;
@@ -31,23 +32,37 @@ public class Stock {
 			this.puntoPedido = puntoPedido;
 		}
 		
-		public Insumo getInsumo() {
-			return insumo;
+		public int getInsumo() {
+			return idInsumo;
 		}
 		
-		public void setInsumo(Insumo insumo) {
-			this.insumo = insumo;
+		public void setInsumo(int insumo) {
+			this.idInsumo = insumo;
 		}
 
-		public Stock(int id, double cantidad, double puntoPedido, Insumo insumo) {
+		public Stock(int id, double cantidad, double puntoPedido, int insumo) {
 			super();
 			setCantidad(cantidad);
 			setId(id);
 			setInsumo(insumo);
 			setPuntoPedido(puntoPedido);
 		}
+
+		public Stock() {
+
+		}
+
+		public void setidPlanta(int i) {
+
+			this.idPlanta = i;
+			
+		}
 		
-		
+		public int getIdPlanta() {
+
+			return idPlanta;
+			
+		}
 		
 		
 }
