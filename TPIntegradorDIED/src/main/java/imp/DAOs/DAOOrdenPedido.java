@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import imp.DTOs.CamionDTO;
 import imp.DTOs.OrdenPedidoDTO;
 import imp.enumerators.EstadoOrden;
 import imp.gestores.DBManager;
@@ -155,5 +157,90 @@ public class DAOOrdenPedido {
 		return retorno_orden;
 	}
 
+	
 
+	public static ArrayList<OrdenPedido> buscarOrdenesProcesadas() {
+		
+		ArrayList<OrdenPedido> retorno_orden = new ArrayList<OrdenPedido>();
+		
+		DBManager dbm = DBManager.getInstance();
+		Connection con = dbm.getConn();
+		ResultSet rs = null;
+		try {
+			String consulta = "select * from `ORDEN_PEDIDO` WHERE `ESTADO` LIKE '%PROCESADA%'";
+
+			PreparedStatement st = con.prepareStatement(consulta);
+			rs = st.executeQuery();
+			
+			while(rs.next()) {
+				long id_orden = rs.getLong(1); 
+				int id_planta = rs.getInt(2);
+				Date fSolicitud = new SimpleDateFormat("dd/MM/yyyy").parse(rs.getString(3));
+				Date fEntrega = new SimpleDateFormat("dd/MM/yyyy").parse(rs.getString(4));
+
+				
+				//seteo id, fechas y estado.
+				OrdenPedido orden1 = new OrdenPedido (id_orden, fSolicitud , fEntrega , EstadoOrden.PROCESADA); 
+				
+				//seteo nombre planta 
+				String planta = DAOPlanta.getNombrePlanta(id_planta);
+				orden1.setPlantaDestino(planta);
+				
+				//seteo Items
+				ArrayList<Item> items = DAOItem.recuperarItemsPorIdOrden(id_orden);
+				orden1.setItems(items);
+				
+				retorno_orden.add(orden1);
+				
+				
+			}
+			
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return retorno_orden;
+	}
+
+
+	public static void actualizarOrdenAEntregada(OrdenPedidoDTO orden) {
+
+		DBManager dbm = DBManager.getInstance();
+		Connection con = dbm.getConn();
+		
+		try {
+			String Consulta = "update `ORDEN_PEDIDO` set `ESTADO` = `ENTREGADA` where id_orden = " + orden.getNroOrden() + "";
+
+			Statement st = con.createStatement();
+			st.executeUpdate(Consulta);
+			JOptionPane.showMessageDialog(null, "Se ha actualizado el estado de la orden", "Estado orden.", JOptionPane.INFORMATION_MESSAGE);
+			
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		}  finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+	
+	
 }
