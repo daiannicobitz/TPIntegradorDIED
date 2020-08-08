@@ -62,6 +62,12 @@ public class Planta{
 	@Override
 	public String toString() {
 		return  this.getNombre();
+	}
+
+	public void addStock(Stock stock) {
+		
+		listaStock.add(stock);
+		
 	}	
 	
 	
