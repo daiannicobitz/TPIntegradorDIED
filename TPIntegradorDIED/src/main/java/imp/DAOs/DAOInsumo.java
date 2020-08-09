@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import imp.gestores.DBManager;
 import imp.DTOs.InsumoDTO;
 import imp.enumerators.UM;
-import imp.primaryClasses.Camion;
 import imp.primaryClasses.Insumo;
 import imp.primaryClasses.InsumoGeneral;
 import imp.primaryClasses.InsumoLiquido;
