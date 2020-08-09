@@ -37,6 +37,13 @@ public class MenuPrincipalFrame extends JFrame {
 	menu_planta.setBackground(new Color(90, 158, 101));
 	menuBar.add(menu_planta);
 	
+	JMenuItem menu_ruta = new JMenuItem("RUTA");
+	menu_ruta.setFont(new Font("Segoe UI", Font.BOLD, 12));
+	menu_ruta.setForeground(Color.BLACK);
+	menu_ruta.setBackground(new Color(90, 158, 101));
+	menuBar.add(menu_ruta);
+	
+		
 	JMenuItem menu_camion = new JMenuItem("CAMION");
 	menu_camion.setFont(new Font("Segoe UI", Font.BOLD, 12));
 	menu_camion.setForeground(Color.BLACK);
@@ -69,6 +76,9 @@ public class MenuPrincipalFrame extends JFrame {
 	MenuInsumo panel_insumos = new MenuInsumo();
 	panelPrincipal.add(panel_insumos, "insumos");
 	
+	MenuRuta panel_ruta = new MenuRuta();
+	panelPrincipal.add(panel_ruta, "ruta");
+	
 	MenuOrdenPedido panel_ordenP = new MenuOrdenPedido();
 	panel_ordenP.setBackground(new Color(187, 238, 110));
 	panelPrincipal.add(panel_ordenP, "ordenP");
@@ -77,6 +87,12 @@ public class MenuPrincipalFrame extends JFrame {
 	menu_planta.addActionListener(e -> {
 		c = (CardLayout)(panelPrincipal.getLayout());
 		c.show(panelPrincipal, "planta");
+		
+	});
+	
+	menu_ruta.addActionListener(e -> {
+		c = (CardLayout)(panelPrincipal.getLayout());
+		c.show(panelPrincipal, "ruta");
 		
 	});
 	

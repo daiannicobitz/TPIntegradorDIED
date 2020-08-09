@@ -125,7 +125,7 @@ public class DAOCamion {
 			}
 			
 		}
-		System.out.println(retorno);
+		//System.out.println(retorno);
 		return retorno;
 	}
 

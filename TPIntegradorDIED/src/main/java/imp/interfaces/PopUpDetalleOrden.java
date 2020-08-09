@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import imp.DAOs.DAOInsumo;
 import imp.DAOs.DAOItem;
 import imp.DAOs.DAOOrdenPedido;
-import imp.DTOs.ItemDTO;
+
 import imp.DTOs.OrdenPedidoDTO;
 import imp.enumerators.EstadoOrden;
 import imp.primaryClasses.Item;
