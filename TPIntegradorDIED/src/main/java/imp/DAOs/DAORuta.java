@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import imp.enumerators.TipoPlanta;
 import imp.gestores.DBManager;
 import imp.gestores.GestorPlanta;
 import imp.primaryClasses.Planta;
@@ -16,13 +15,12 @@ public class DAORuta {
 	
 	public static void EliminarRuta(int idRuta) {
 
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		
 		try {
 			String consulta = "delete from RUTA where id_ruta = '" + idRuta +"'" ;
 			Statement st = con.createStatement();
-			int nro = st.executeUpdate(consulta);
+			st.executeUpdate(consulta);
 			
 			st.close();
 			con.close();
@@ -32,11 +30,10 @@ public class DAORuta {
 		
 	}
 	
-public static void AltaRuta(Ruta ruta) {
+public static void AltaRuta(Ruta<Planta> ruta) {
 		
 		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		String consulta = null;
 		
 		try {
@@ -46,7 +43,7 @@ public static void AltaRuta(Ruta ruta) {
 						+ "'"+ruta.getDistancia()+"','"+ruta.getDuracionRecorrido()+"','"+ruta.getPesoMaximo()+"')";
 
 			Statement st = con.createStatement();
-			int nro = st.executeUpdate(consulta);
+			st.executeUpdate(consulta);
 			
 			st.close();
 			con.close();
@@ -61,8 +58,7 @@ public static ArrayList<Ruta<Planta>> buscarTodasLasRutas(){
 	
 //	Este metodo devuelve una lista con todas las rutas que hay guardadas en la base de datos.
 	
-	DBManager dbm = DBManager.getInstance();
-	Connection con = dbm.getConn();
+	Connection con = DBManager.getConn();
 	ResultSet tablaRuta=null;
 	
 	ArrayList<Ruta<Planta>> listaRuta=new ArrayList<Ruta<Planta>>();
@@ -80,7 +76,7 @@ public static ArrayList<Ruta<Planta>> buscarTodasLasRutas(){
 			Planta plantaOrigen=GestorPlanta.getPlantaById(tablaRuta.getInt("id_planta_origen"));
 			Planta plantaDestino=GestorPlanta.getPlantaById(tablaRuta.getInt("id_planta_destino"));
 			
-			Ruta<Planta> ruta = new Ruta(new Vertice<Planta>(plantaOrigen), new Vertice<Planta>(plantaDestino), tablaRuta.getDouble("distancia"),
+			Ruta<Planta> ruta = new Ruta<Planta>(new Vertice<Planta>(plantaOrigen), new Vertice<Planta>(plantaDestino), tablaRuta.getDouble("distancia"),
 					tablaRuta.getDouble("duracion_recorrido"), tablaRuta.getDouble("peso_maximo"));
 			listaRuta.add(ruta);		
 		}

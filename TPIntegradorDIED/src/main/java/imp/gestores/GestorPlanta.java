@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import imp.DAOs.DAOPlanta;
 import imp.DTOs.PlantaDTO;
 import imp.primaryClasses.Planta;
-import imp.structures.Ruta;
-import imp.structures.Vertice;
 
 public class GestorPlanta {
 	

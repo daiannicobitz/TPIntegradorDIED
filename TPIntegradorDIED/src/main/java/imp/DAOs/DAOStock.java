@@ -7,23 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import imp.DTOs.InsumoDTO;
-import imp.enumerators.UM;
 import imp.gestores.DBManager;
-import imp.primaryClasses.Insumo;
-import imp.primaryClasses.InsumoGeneral;
-import imp.primaryClasses.InsumoLiquido;
 import imp.primaryClasses.Stock;
 
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import imp.gestores.DBManager;
-import imp.primaryClasses.Stock;
 
 
 
@@ -31,8 +22,7 @@ public class DAOStock {
 
 	public static void guardarStock(Stock stock) {
 
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		try {
 			PreparedStatement st = con.prepareStatement("insert into `STOCK` (id_planta, id_insumo, cantidad, punto_pedido) values (?, ?, ?, ?)");
 			st.setInt(1, stock.getIdPlanta());
@@ -63,8 +53,7 @@ public class DAOStock {
 		
 		ArrayList<Stock> listaStock = new ArrayList<Stock>();
 		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		ResultSet tablaStock=null;
 		
 		String consulta = "select * from STOCK where cantidad < punto_pedido";

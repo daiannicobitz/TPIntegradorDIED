@@ -1,5 +1,8 @@
 package imp.DTOs;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import imp.primaryClasses.OrdenPedido;
 
 public class OrdenPedidoDTO {
@@ -23,8 +26,11 @@ public class OrdenPedidoDTO {
 	public OrdenPedidoDTO (OrdenPedido o ) {
 		this.estado = o.getEstado().toString();
 		this.plantaDestino = o.getPlantaDestino();
-		this.fechaEntrega = o.getFechaEntrega().toString();
-		this.fechaSolicitud = o.getFechaSolicitud().toString();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
+		String entrega = dateFormat.format(o.getFechaEntrega());
+		this.fechaEntrega = entrega;
+		String solicitud = dateFormat.format(o.getFechaSolicitud());
+		this.fechaSolicitud = solicitud;
 		this.nroOrden = Long.toString(o.getNumeroOrden());
 	}
 

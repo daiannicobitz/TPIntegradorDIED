@@ -1,8 +1,5 @@
 package imp.DTOs;
 
-import com.mysql.cj.util.DnsSrv.SrvRecord;
-
-import imp.primaryClasses.Insumo;
 
 public class StockDTO {
 	

@@ -16,6 +16,14 @@ public class GestorStock {
 		ArrayList<StockDTO> listaStockDTO = new ArrayList<StockDTO>();
 		Grafo grafo = Grafo.getInstance();
 		
+//		private int id;
+//		private int idPlanta;
+//		private double cantidad;
+//		private double puntoPedido;
+//		private int idInsumo;
+		
+		
+		
 		for(Stock s : listaStock) {
 			
 			Insumo insumo = GestorInsumo.buscarInsumoPorId(s.getInsumo());
@@ -23,7 +31,7 @@ public class GestorStock {
 			Planta planta = (Planta) grafo.getNodo(s.getIdPlanta()).getValor();			
 			StockDTO dto = new StockDTO(s.getId(), Double.toString(s.getCantidad()), Double.toString(s.getPuntoPedido()),
 					insumo.getDescripcion(), planta.getNombre(), Double.toString(insumo.getCantidad()));
-			
+			listaStockDTO.add(dto);
 		}
 		
 		
