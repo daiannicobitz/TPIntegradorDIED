@@ -248,7 +248,6 @@ public class DarAltaOrdenPedido extends JPanel {
 		
 		Calendar calendar1 = Calendar.getInstance();
 		calendar1.setTime(nowdate);
-		calendar1.add(Calendar.DAY_OF_YEAR, 1);
 		
 		if(date.after(calendar.getTime()) || date.before(calendar1.getTime())) {
 			

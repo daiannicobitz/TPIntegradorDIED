@@ -17,7 +17,10 @@ import javax.swing.table.DefaultTableModel;
 import imp.DAOs.DAOInsumo;
 import imp.DAOs.DAOItem;
 import imp.DAOs.DAOOrdenPedido;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6cf6a3e935d72f76329d5e4e55a6f28aa700350b
 import imp.DTOs.OrdenPedidoDTO;
 import imp.enumerators.EstadoOrden;
 import imp.primaryClasses.Item;
@@ -34,8 +37,7 @@ public class PopUpDetalleOrden extends JFrame {
 	private JTable table;
 	
 	public PopUpDetalleOrden(OrdenPedidoDTO op){
-		
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+ 
 		
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -69,31 +71,32 @@ public class PopUpDetalleOrden extends JFrame {
 		panel_detalleOrden.add(txt_IdOrden);
 		txt_IdOrden.setColumns(10);
 		txt_IdOrden.setText(op.getNroOrden());
+		txt_IdOrden.setEditable(false);
 		
 		txt_FechaPedido = new JTextField();
 		txt_FechaPedido.setColumns(10);
 		txt_FechaPedido.setBounds(160, 115, 162, 20);
 		panel_detalleOrden.add(txt_FechaPedido);
+		
+		txt_FechaPedido.setText(op.getFechaSolicitud());
+		txt_FechaPedido.setEditable(false);
+		
 
-		String strDateFechaSolicitud = dateFormat.format(op.getFechaSolicitud()); 
-		
-		txt_FechaPedido.setText(strDateFechaSolicitud);
-		
 		txt_PlantaDestino = new JTextField();
 		txt_PlantaDestino.setColumns(10);
 		txt_PlantaDestino.setBounds(575, 53, 162, 20);
 		panel_detalleOrden.add(txt_PlantaDestino);
 		
 		txt_PlantaDestino.setText(op.getPlantaDestino());
+		txt_PlantaDestino.setEditable(false);
+		
 		
 		txt_FechaEntrega = new JTextField();
 		txt_FechaEntrega.setColumns(10);
 		txt_FechaEntrega.setBounds(575, 115, 162, 20);
 		panel_detalleOrden.add(txt_FechaEntrega);
 		
-		String strDateFechaEntrega = dateFormat.format(op.getFechaEntrega()); 
-		
-		txt_FechaEntrega.setText(strDateFechaEntrega);
+		txt_FechaEntrega.setText(op.getFechaEntrega());
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(52, 202, 685, 174);
@@ -146,9 +149,6 @@ public class PopUpDetalleOrden extends JFrame {
 			dispose();
 		});
 		panel_detalleOrden.add(btn_aceptar);
-		
-		
-		
 		
 	}
 }

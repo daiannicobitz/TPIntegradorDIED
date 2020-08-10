@@ -10,17 +10,13 @@ import javax.swing.JOptionPane;
 
 import imp.gestores.DBManager;
 import imp.primaryClasses.Item;
-import imp.primaryClasses.OrdenPedido;
+
 
 public class DAOItem {
 
-	public static void guardarItems(ArrayList<Item> items) {
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+	public static void guardarItems(ArrayList<Item> items, Connection con) {
 		try {
-//			private int idInsumo;
-//			private int idOrden;
-//			private double cantidadSolicitada;
+
 			
 			
 			for (Item i : items) {
@@ -41,13 +37,6 @@ public class DAOItem {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "Ocurrio un error al guardar los items, intente nuevamente." , "Estado items.", JOptionPane.INFORMATION_MESSAGE);
-		}finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 		
@@ -58,8 +47,7 @@ public class DAOItem {
 //		long idOrden = op.getNumeroOrden();
 		ArrayList<Item> retorno = new ArrayList<>();
 		
-		DBManager gdb = DBManager.getInstance();
-		Connection con = gdb.getConn();
+		Connection con = DBManager.getConn();
 		ResultSet rs = null;
 
 		try {
@@ -74,15 +62,9 @@ public class DAOItem {
 				retorno.add(item);	
 			}
 			st.close();
+			con.close();
 		}
 		catch (SQLException e) {
-		}finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 
 		return retorno;

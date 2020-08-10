@@ -14,13 +14,11 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import imp.DTOs.CamionDTO;
+
 import imp.DTOs.OrdenPedidoDTO;
 import imp.enumerators.EstadoOrden;
 import imp.gestores.DBManager;
-import imp.primaryClasses.Camion;
 import imp.primaryClasses.Item;
-import imp.primaryClasses.ListaGlobalCamiones;
 import imp.primaryClasses.OrdenPedido;
 
 public class DAOOrdenPedido {
@@ -28,11 +26,8 @@ public class DAOOrdenPedido {
 	public static long recupearUltimoOP() {
 
 		long retorno = 0;
-		DBManager gdb = DBManager.getInstance();
-		Connection con = gdb.getConn();
+		Connection con = DBManager.getConn();
 		ResultSet rs = null;
-
-
 
 		try {
 			String Consulta = "select max(id_orden) from `ORDEN_PEDIDO`";
@@ -54,17 +49,16 @@ public class DAOOrdenPedido {
 
 	public static void guardarOrden(OrdenPedido ordenPedido) {
 		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
+		
 		try {
 			int id_planta = DAOPlanta.getIdPlanta(ordenPedido.getPlantaDestino());
 			
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
 			String dateSolicitud = dateFormat.format(ordenPedido.getFechaSolicitud());
 			String dateEntrega = dateFormat.format(ordenPedido.getFechaEntrega());
-			
-
-			PreparedStatement st = con.prepareStatement("insert into `ORDEN_PEDIDO` (id_orden, id_planta_destino, fecha_solicitud, fecha_entrega, estado) values (?, ?, ?, ?, ?, ?, ?)");
+			System.out.println(con);
+			PreparedStatement st = con.prepareStatement("insert into `ORDEN_PEDIDO` (id_orden, id_planta_destino, fecha_solicitud, fecha_entrega, estado) values (?, ?, ?, ?, ?)");
 			st.setString(1, Long.toString(ordenPedido.getNumeroOrden()));
 			st.setInt(2, id_planta);
 			st.setString(3, dateSolicitud);
@@ -75,7 +69,7 @@ public class DAOOrdenPedido {
 			st.close();
 			
 			
-			DAOItem.guardarItems(ordenPedido.getItems());
+			DAOItem.guardarItems(ordenPedido.getItems(), con);
 			
 			
 			JOptionPane.showMessageDialog(null, "La orden fue guardada en la base de datos, su estado es CREADA.", "Estado orden.", JOptionPane.INFORMATION_MESSAGE);
@@ -88,13 +82,6 @@ public class DAOOrdenPedido {
 			JOptionPane.showMessageDialog(null, "Ocurrio un error inesperado" , "Estado orden.", JOptionPane.INFORMATION_MESSAGE);
 			
 			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}	
 		
 	}
@@ -106,8 +93,7 @@ public class DAOOrdenPedido {
 		
 		ArrayList<OrdenPedido> retorno_orden = new ArrayList<OrdenPedido>();
 		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		ResultSet rs = null;
 		try {
 			String consulta = "select * from `ORDEN_PEDIDO` WHERE `ESTADO` LIKE '%CREADA%'";
@@ -139,18 +125,12 @@ public class DAOOrdenPedido {
 			}
 			
 			st.close();
+			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 		
@@ -163,8 +143,7 @@ public class DAOOrdenPedido {
 		
 		ArrayList<OrdenPedido> retorno_orden = new ArrayList<OrdenPedido>();
 		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		ResultSet rs = null;
 		try {
 			String consulta = "select * from `ORDEN_PEDIDO` WHERE `ESTADO` LIKE '%PROCESADA%'";
@@ -217,8 +196,7 @@ public class DAOOrdenPedido {
 
 	public static void actualizarOrdenAEntregada(OrdenPedidoDTO orden) {
 
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		
 		try {
 			String Consulta = "update `ORDEN_PEDIDO` set `ESTADO` = `ENTREGADA` where id_orden = " + orden.getNroOrden() + "";

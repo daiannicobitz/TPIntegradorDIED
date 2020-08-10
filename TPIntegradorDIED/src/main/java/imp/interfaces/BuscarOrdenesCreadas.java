@@ -115,7 +115,7 @@ public class BuscarOrdenesCreadas extends JPanel {
 		btn_verDetalle.addActionListener(e -> {
 			
 			
-			if(tabla_ordenesCreadas.getSelectedRow() > 0) {
+			if(tabla_ordenesCreadas.getSelectedRow() >= 0) {
 				OrdenPedidoDTO op = listaOrdenesCreadasDTO.get(tabla_ordenesCreadas.getSelectedRow()); 
 				PopUpDetalleOrden detalle_orden = new PopUpDetalleOrden(op);	
 			}else {

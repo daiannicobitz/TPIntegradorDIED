@@ -14,17 +14,7 @@ public class DBManager {
 	private static DBManager DBM;
 	
 	private DBManager() {
-		try {
-			
-			this.conn = this.crearConexion();
-			
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		DBManager.conn = DBManager.getConn();
 		
 	}
 	
@@ -37,17 +27,7 @@ public class DBManager {
 			
 			if (conn.isClosed()) {
 				
-				try {
-					
-					conn = crearConexion();
-					
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				conn = getConn();
 
 			}
 		} catch (SQLException e) {
@@ -59,22 +39,32 @@ public class DBManager {
 	}
 	
 
-	public static Connection getConn() {
-		return conn;
+//	public static Connection getConn() {
+//		return conn;
+//	}
+
+	public static Connection getConn(){
+	    try{
+	    	Class.forName("com.mysql.cj.jdbc.Driver");
+	        return DriverManager.getConnection(URL, USER, PASS);
+	    }catch(Exception ex){
+	        System.out.println(ex.getMessage());
+	        System.out.println("couldn't connect!");
+	        throw new RuntimeException(ex);
+	    }
 	}
-
-	private static Connection crearConexion() throws ClassNotFoundException, SQLException{
-
-		Class.forName("com.mysql.cj.jdbc.Driver");
-
-		Connection conexion = DriverManager.getConnection(URL, USER, PASS);
-		if (conexion != null){
-			System.out.print("Conexion establecida...");
-			return conexion;
-
-		}
-		return null;
-
-	}
+//	private static Connection crearConexion() throws ClassNotFoundException, SQLException{
+//
+//		Class.forName("com.mysql.cj.jdbc.Driver");
+//
+//		Connection conexion = DriverManager.getConnection(URL, USER, PASS);
+//		if (conexion != null){
+//			System.out.print("Conexion establecida...");
+//			return conexion;
+//
+//		}
+//		return null;
+//
+//	}
 
 }
