@@ -59,7 +59,7 @@ public class MenuPlanta extends JPanel {
 		btn_verRutasPosibles.setContentAreaFilled(true);
 		btn_verRutasPosibles.setBorderPainted(false);
 		btn_verRutasPosibles.setBackground(new Color(80, 165, 94));
-		btn_verRutasPosibles.setBounds(774, 11, 247, 37);
+		btn_verRutasPosibles.setBounds(774, 11, 197, 37);
 		add(btn_verRutasPosibles);
 		
 		JPanel contenedor_planta = new JPanel();

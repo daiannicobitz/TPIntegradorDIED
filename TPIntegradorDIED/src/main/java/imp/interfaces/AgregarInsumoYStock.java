@@ -1,5 +1,6 @@
 package imp.interfaces;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.awt.event.ActionEvent;
 
 public class AgregarInsumoYStock extends JPanel {
 	private ArrayList<InsumoDTO> listaInsumosBuscados = new ArrayList<InsumoDTO>(); //esta definido aca para poder mostrarlo en el Jtable
-	
+	public CardLayout c = new CardLayout();
 
 	public AgregarInsumoYStock() {
 
@@ -167,5 +168,12 @@ public class AgregarInsumoYStock extends JPanel {
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		btn_cancelar.setBounds(775, 400, 131, 34);
 		add(btn_cancelar);
+		
+		btn_cancelar.addActionListener(e -> { 
+			JPanel padre = (JPanel) this.getParent();
+			 c = (CardLayout)(padre.getLayout());
+				c.show(padre, "contenedor_buscarPlanta");
+		});
+		
 	}
 }

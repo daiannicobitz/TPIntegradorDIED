@@ -1,5 +1,6 @@
 package imp.interfaces;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -21,6 +22,8 @@ import java.awt.event.ActionEvent;
 
 public class PlantasStockMenorAPuntoPedido extends JPanel {
 	
+	public CardLayout c = new CardLayout();
+	
 	ArrayList<StockDTO> listaStockBajoPuntoPedido;
 	
 	public PlantasStockMenorAPuntoPedido() {
@@ -36,7 +39,7 @@ public class PlantasStockMenorAPuntoPedido extends JPanel {
 		
 		DefaultTableModel model_tabla_Plantas = new DefaultTableModel(
 				new Object[][] {
-					{null, null, null, null, null},
+					
 				},
 				new String[] {
 						"Nombre Planta", "Nombre Insumo", "Stock en planta", "Punto pedido en planta", "Stock total"
@@ -98,13 +101,13 @@ public class PlantasStockMenorAPuntoPedido extends JPanel {
 		btn_buscarPlantas.setContentAreaFilled(true);
 		btn_buscarPlantas.setBorderPainted(false);
 		btn_buscarPlantas.setBackground(new Color(80, 165, 94));
-		btn_buscarPlantas.setBounds(307, 72, 156, 41);
+		btn_buscarPlantas.setBounds(91, 75, 156, 41);
 		add(btn_buscarPlantas);
 		
 		
-		JLabel lbl_planta = new JLabel("Presione buscar:");
+		JLabel lbl_planta = new JLabel("PLANTAS CON STOCK MENOR A PUNTO PEDIDO");
 		lbl_planta.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbl_planta.setBounds(91, 78, 106, 27);
+		lbl_planta.setBounds(341, 24, 351, 27);
 		add(lbl_planta);
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
@@ -117,16 +120,12 @@ public class PlantasStockMenorAPuntoPedido extends JPanel {
 		btn_aceptar.setBounds(536, 376, 156, 41);
 		add(btn_aceptar);
 		
-		JButton btn_cancelar = new JButton("CANCELAR");
-		btn_cancelar.setForeground(Color.BLACK);
-		btn_cancelar.setFont(new Font("Dialog", Font.ITALIC, 11));
-		btn_cancelar.setFocusPainted(false);
-		btn_cancelar.setContentAreaFilled(true);
-		btn_cancelar.setBorderPainted(false);
-		btn_cancelar.setBackground(new Color(80, 165, 94));
-		btn_cancelar.setBounds(707, 376, 156, 41);
-		add(btn_cancelar);
 		
+		btn_aceptar.addActionListener(e -> { 
+			JPanel padre = (JPanel) this.getParent();
+			 c = (CardLayout)(padre.getLayout());
+				c.show(padre, "contenedor_buscarPlanta");
+		});
 		
 		
 		

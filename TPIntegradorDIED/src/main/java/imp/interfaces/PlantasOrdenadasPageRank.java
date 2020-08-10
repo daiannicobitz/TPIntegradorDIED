@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class PlantasOrdenadasPageRank extends JPanel {
 
+	
+	public CardLayout c = new CardLayout();
 	public PlantasOrdenadasPageRank () { 
 		setBackground(new Color(118, 203, 117));
 		setLayout(null);
@@ -64,15 +66,11 @@ public class PlantasOrdenadasPageRank extends JPanel {
 		btn_aceptar.setBounds(536, 376, 156, 41);
 		add(btn_aceptar);
 		
-		JButton btn_cancelar = new JButton("CANCELAR");
-		btn_cancelar.setForeground(Color.BLACK);
-		btn_cancelar.setFont(new Font("Dialog", Font.ITALIC, 11));
-		btn_cancelar.setFocusPainted(false);
-		btn_cancelar.setContentAreaFilled(true);
-		btn_cancelar.setBorderPainted(false);
-		btn_cancelar.setBackground(new Color(80, 165, 94));
-		btn_cancelar.setBounds(707, 376, 156, 41);
-		add(btn_cancelar);
+		btn_aceptar.addActionListener(e -> { 
+			JPanel padre = (JPanel) this.getParent();
+			 c = (CardLayout)(padre.getLayout());
+				c.show(padre, "contenedor_buscarPlanta");
+		});
 		
 		
 		
