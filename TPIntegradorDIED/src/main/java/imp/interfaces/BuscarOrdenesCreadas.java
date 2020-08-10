@@ -129,5 +129,10 @@ public class BuscarOrdenesCreadas extends JPanel {
 			
 		});
 		
+		btn_verPosiblesRutas.addActionListener(e -> {
+			
+			PopUpVerPosiblesRutas posiblesRutas = new PopUpVerPosiblesRutas();
+			
+		});
 	}
 }
