@@ -3,8 +3,6 @@ package imp.interfaces;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -13,14 +11,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
+
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -29,11 +25,10 @@ import com.toedter.calendar.JDateChooser;
 
 import imp.DAOs.DAOOrdenPedido;
 import imp.enumerators.EstadoOrden;
-import imp.enumerators.UM;
 import imp.gestores.GestorPlanta;
 import imp.primaryClasses.Item;
 import imp.primaryClasses.OrdenPedido;
-import imp.primaryClasses.Planta;
+
 
 import javax.swing.JScrollPane;
 
@@ -58,7 +53,7 @@ public class DarAltaOrdenPedido extends JPanel {
 		txt_nroOrden.setBounds(226, 26, 168, 20);
 		add(txt_nroOrden);
 		txt_nroOrden.setColumns(10);
-		txt_nroOrden.setText(Long.toString(DAOOrdenPedido.recupearUltimoOP() + 1));
+		txt_nroOrden.setText(Long.toString((DAOOrdenPedido.recupearUltimoOP() + 1)));
 		
 		JLabel lbl_plantaDestino = new JLabel("PLANTA DE DESTINO");
 		lbl_plantaDestino.setBounds(63, 74, 128, 14);

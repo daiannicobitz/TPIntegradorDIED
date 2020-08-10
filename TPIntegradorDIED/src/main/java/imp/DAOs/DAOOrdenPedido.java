@@ -35,9 +35,9 @@ public class DAOOrdenPedido {
 			rs = st.executeQuery();
 
 
-			while(rs.next()) {
-				retorno = rs.getLong("max");
-			}
+			rs.next();
+			retorno = rs.getLong(1);
+			
 			st.close();
 		}
 		catch (SQLException e) {
