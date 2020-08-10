@@ -1,11 +1,12 @@
 package imp.gestores;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 import imp.DAOs.DAOPlanta;
 import imp.DTOs.PlantaDTO;
 import imp.primaryClasses.Planta;
+import imp.structures.Grafo;
 import imp.structures.Ruta;
 import imp.structures.Vertice;
 
@@ -37,6 +38,19 @@ public class GestorPlanta {
 		
 		return DAOPlanta.buscarTodasLasPlantas();
 	
+	}
+
+	public static List<String> getPlantasNombres() {
+		
+		Grafo g = Grafo.getInstance();
+		
+		List<Vertice<Planta>> verticesList = g.vertices();
+		ArrayList<String> nombresPlantas = new ArrayList<String>();
+		
+		for(Vertice<Planta> c : verticesList)
+		nombresPlantas.add(c.getValor().getNombre());
+		
+		return nombresPlantas;
 	}
 
 }

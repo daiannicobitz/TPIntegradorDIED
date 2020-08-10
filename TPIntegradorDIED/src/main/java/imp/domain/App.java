@@ -30,8 +30,7 @@ public class App
     	
     	ListaGlobalCamiones lgc = ListaGlobalCamiones.getInstance();
     	Grafo grafo = Grafo.getInstance();
-    	
-    	
+    	System.out.println(grafo.vertices());
     	System.out.println(lgc.getLista());
     	
     	EventQueue.invokeLater(new Runnable() {
