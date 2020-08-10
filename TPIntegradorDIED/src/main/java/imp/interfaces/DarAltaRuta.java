@@ -3,6 +3,7 @@ package imp.interfaces;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -10,11 +11,16 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextPane;
+
+import imp.gestores.GestorPlanta;
+
 import javax.swing.JTextField;
 
 public class DarAltaRuta extends JPanel {
 	
 	public CardLayout c = new CardLayout();
+	List<String> listaNombresPlantas = GestorPlanta.getPlantasNombres();
+
 	
 	public DarAltaRuta() {
 		
@@ -88,5 +94,11 @@ public class DarAltaRuta extends JPanel {
 			 c = (CardLayout)(padre.getLayout());
 				c.show(padre, "inicio_ruta");
 		});
+		
+		for(String c : listaNombresPlantas) {
+			combo_plantaDestino.addItem(c.toString());
+			combo_plantaFinal.addItem(c.toString());
+		}
+		
 	}
 }

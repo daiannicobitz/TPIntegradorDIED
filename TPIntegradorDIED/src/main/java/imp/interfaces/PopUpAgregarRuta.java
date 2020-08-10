@@ -84,6 +84,10 @@ public class PopUpAgregarRuta extends JFrame {
 		btn_cancelar.setBackground(new Color(80, 165, 94));
 		contenedor_agregarRuta.add(btn_cancelar);
 		
+		btn_cancelar.addActionListener(e -> {
+			this.dispose();
+		});
+		
 		getContentPane().add(contenedor_agregarRuta);
 		
 		JLabel lbl_agregarRuta = new JLabel("AGREGAR RUTA");

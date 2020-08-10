@@ -5,12 +5,14 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import imp.DTOs.InsumoDTO;
+import imp.DTOs.OrdenPedidoDTO;
 import imp.DTOs.PlantaDTO;
 import imp.gestores.GestorInsumo;
 import imp.gestores.GestorPlanta;
@@ -155,20 +157,38 @@ public class BuscarPlantas extends JPanel {
 		PlantasOrdenadasPageRank panel_plantasOrdenadasPageRank = new PlantasOrdenadasPageRank();
 		add(panel_plantasOrdenadasPageRank, "plantasOrdenadasPageRank");
 		
+		ActualizarStockPlanta panel_actualizarStockPlanta = new ActualizarStockPlanta();
+		add(panel_actualizarStockPlanta, "actualizarStockPlanta");
+		
 		btn_agregarInsumo.addActionListener(e -> {
-			c = (CardLayout)(this.getLayout());
-			c.show(this, "agregarInsumoYStock");
+			if(tabla_Plantas.getSelectedRow() >= 0) {
+				PlantaDTO planta = listaPlantasBuscadas.get(tabla_Plantas.getSelectedRow()); 
+				c = (CardLayout)(this.getLayout());
+				c.show(this, "agregarInsumoYStock");
+			}else {
+				JOptionPane.showMessageDialog(null, "No se ha seleccionado una planta.", "Estado Detalle.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
 			
 		});
 		btn_verPlantasStock.addActionListener(e -> {
 			c = (CardLayout)(this.getLayout());
-			c.show(this, "plantasStockMenorPuntoPedido");
-			
+				c.show(this, "plantasStockMenorPuntoPedido");
 		});
 		
 		btn_verPlantasPageRank.addActionListener(e -> {
-			c = (CardLayout)(this.getLayout());
-			c.show(this, "plantasOrdenadasPageRank");
+				c = (CardLayout)(this.getLayout());
+				c.show(this, "plantasOrdenadasPageRank");	
+		});
+		
+		btn_actualizarStock.addActionListener(e -> {
+			if(tabla_Plantas.getSelectedRow() >= 0) {
+				PlantaDTO planta = listaPlantasBuscadas.get(tabla_Plantas.getSelectedRow()); 
+				c = (CardLayout)(this.getLayout());
+				c.show(this, "actualizarStockPlanta");
+			}else {
+				JOptionPane.showMessageDialog(null, "No se ha seleccionado una planta.", "Estado Detalle.", JOptionPane.INFORMATION_MESSAGE);
+			}
 			
 		});
 

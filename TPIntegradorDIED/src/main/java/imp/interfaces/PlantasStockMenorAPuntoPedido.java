@@ -12,12 +12,14 @@ import javax.swing.table.DefaultTableModel;
 
 import imp.DTOs.PlantaDTO;
 import imp.DTOs.StockDTO;
+import imp.gestores.GestorPlanta;
 import imp.gestores.GestorStock;
 
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class PlantasStockMenorAPuntoPedido extends JPanel {
@@ -25,6 +27,7 @@ public class PlantasStockMenorAPuntoPedido extends JPanel {
 	public CardLayout c = new CardLayout();
 	
 	ArrayList<StockDTO> listaStockBajoPuntoPedido;
+	List<String> listaNombresPlantas = GestorPlanta.getPlantasNombres();
 	
 	public PlantasStockMenorAPuntoPedido() {
 		setBackground(new Color(118, 203, 117));
@@ -51,7 +54,7 @@ public class PlantasStockMenorAPuntoPedido extends JPanel {
 			@Override
 			public boolean isCellEditable(int i, int i1) {
 				return false;
-			}
+			} 
 		};
 	
 		tabla_Plantas.setModel(model_tabla_Plantas);
@@ -142,6 +145,11 @@ public class PlantasStockMenorAPuntoPedido extends JPanel {
 			 c = (CardLayout)(padre.getLayout());
 				c.show(padre, "contenedor_buscarPlanta");
 		});
+		
+		for(String c : listaNombresPlantas) {
+			combo_planta.addItem(c.toString());
+		}
+		
 		
 		
 		
