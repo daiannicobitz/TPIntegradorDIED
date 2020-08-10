@@ -1,6 +1,5 @@
 package imp.DTOs;
 
-import imp.primaryClasses.Planta;
 
 public class RutaDTO {
 	

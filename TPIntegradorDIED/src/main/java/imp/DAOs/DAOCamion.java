@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -21,14 +19,13 @@ public class DAOCamion {
 
 	public static void EliminarCamion(Camion camion) {
 
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		
 		try {
 			String Consulta = "delete from `CAMION` where patente = '" + camion.getPatente() +"'";
 
 			Statement st = con.createStatement();
-			int nro = st.executeUpdate(Consulta);
+			st.executeUpdate(Consulta);
 			
 			 ListaGlobalCamiones lgc = ListaGlobalCamiones.getInstance();
 			 lgc.delCamion(camion);
@@ -37,13 +34,7 @@ public class DAOCamion {
 			st.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-		}  finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
 		}
 		
 	}
@@ -125,7 +116,7 @@ public class DAOCamion {
 			}
 			
 		}
-		System.out.println(retorno);
+		//System.out.println(retorno);
 		return retorno;
 	}
 
@@ -233,8 +224,7 @@ public class DAOCamion {
 	
 	public static ArrayList<Camion> BuscarCamion(CamionDTO camion) {
 		ArrayList<Camion> Camiones = new ArrayList<>();
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		ResultSet rs = null;
 		try {
 			String consulta = ArmarConsultaBuscar(camion);
@@ -253,14 +243,7 @@ public class DAOCamion {
 			st.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		} 
 		
 		return Camiones;
 	}
@@ -269,8 +252,7 @@ public class DAOCamion {
 
 	public static void GuardarCamion(Camion c1) {
 
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		try {
 			PreparedStatement st = con.prepareStatement("insert into `CAMION` (patente, km_recorridos, marca, modelo, costo_km, costo_hora, fecha_compra) values (?, ?, ?, ?, ?, ?, ?)");
 			st.setString(1, c1.getPatente());
@@ -297,21 +279,13 @@ public class DAOCamion {
 			JOptionPane.showMessageDialog(null, "Ocurrio un error inesperado" , "Estado camión.", JOptionPane.INFORMATION_MESSAGE);
 			
 			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}	
 			
 	}
 	
 	public static void actualizarCamion(CamionDTO camion) {
 
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		
 		try {
 			String Consulta = ArmarConsultaActualizar(camion);
@@ -323,14 +297,7 @@ public class DAOCamion {
 			st.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-		}  finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		} 
 		
 	}
 

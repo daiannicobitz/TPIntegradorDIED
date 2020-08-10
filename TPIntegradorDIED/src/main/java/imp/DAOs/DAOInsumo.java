@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import imp.gestores.DBManager;
 import imp.DTOs.InsumoDTO;
 import imp.enumerators.UM;
-import imp.primaryClasses.Camion;
 import imp.primaryClasses.Insumo;
 import imp.primaryClasses.InsumoGeneral;
 import imp.primaryClasses.InsumoLiquido;
@@ -19,14 +18,12 @@ public class DAOInsumo {
 	
 	public static void EliminarInsumo(int idInsumo) {
 
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		
 		try {
 			String consulta = "delete from INSUMO where id_insumo = '" + idInsumo +"'" ;
 			Statement st = con.createStatement();
-			int nro = st.executeUpdate(consulta);
-			
+			st.executeUpdate(consulta);
 			st.close();
 			con.close();
 		} catch (SQLException e) {
@@ -36,10 +33,8 @@ public class DAOInsumo {
 	}
 	
 	public static void AltaInsumo(Insumo insumo) {
-		
-		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+
+		Connection con = DBManager.getConn();
 		String consulta = null;
 		
 		try {
@@ -55,7 +50,7 @@ public class DAOInsumo {
 						+ "'"+insumo.getDescripcion()+"','"+((InsumoLiquido) insumo).getPeso()+"','"+insumo.getUnidadMedida().toString()+"')";
 			}
 			Statement st = con.createStatement();
-			int nro = st.executeUpdate(consulta);
+			st.executeUpdate(consulta);
 			
 			st.close();
 			con.close();
@@ -70,8 +65,7 @@ public class DAOInsumo {
 		
 //		este metodo es similar al de alta, nomas que busca por id en la bdd y actualiza TODAS las columnas
 		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		String consulta = null;
 		
 		try {
@@ -90,7 +84,7 @@ public class DAOInsumo {
 						+ " `densidad` = '"+((InsumoLiquido) insumo).getDensidad()+"', `cantidad` = '"+insumo.getCantidad()+"' WHERE `INSUMO`.`id_insumo` = "+insumo.getId()+"";
 			}
 			Statement st = con.createStatement();
-			int nro = st.executeUpdate(consulta);
+			st.executeUpdate(consulta);
 			st.close();
 			con.close();
 			
@@ -104,8 +98,8 @@ public class DAOInsumo {
 		
 //		Este metodo devuelve una lista con todos los insumos que hay guardados en la base de datos.
 		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+
+		Connection con = DBManager.getConn();
 		ResultSet tablaInsumo=null;
 		
 		ArrayList<Insumo> listaInsumos=new ArrayList<Insumo>();
@@ -148,9 +142,8 @@ public class DAOInsumo {
 	public static Insumo buscarInsumosPorID(Integer idInsumo){
 		
 //		Este metodo devuelve el insumo que tiene idInsumo
-		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+
+		Connection con = DBManager.getConn();
 		ResultSet tablaInsumo=null;
 		
 		Insumo retorno=null;
@@ -194,9 +187,8 @@ public class DAOInsumo {
 	public static ArrayList<Insumo> buscarInsumosConFiltros(String descripcion, UM unidadMedida, double costoUnitario) {
 //		Este metodo busca todos los insumos que sus atributos coincidan con los parametros.
 		
-		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+
+		Connection con = DBManager.getConn();
 		ResultSet tablaInsumo=null;
 		ArrayList<Insumo> listaInsumos=new ArrayList<Insumo>();
 		Statement st;
@@ -249,8 +241,7 @@ public class DAOInsumo {
 	}
 
 	public static Object buscarNombreInsumoPorId(int idInsumo) {
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		String retorno= null;
 		ResultSet rs = null;
 		try {
@@ -277,8 +268,8 @@ public class DAOInsumo {
 	}
 
 	public static int getPrecioPorId(int idInsumo) {
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+
+		Connection con = DBManager.getConn();
 		int retorno = 0;
 		ResultSet rs = null;
 		try {
@@ -310,8 +301,7 @@ public class DAOInsumo {
 
 	public static int getIdInsumo(InsumoDTO insumodto) {
 		
-		DBManager dbm = DBManager.getInstance();
-		Connection con = dbm.getConn();
+		Connection con = DBManager.getConn();
 		int retorno = 0;
 		ResultSet rs = null;
 		try {
@@ -324,15 +314,9 @@ public class DAOInsumo {
 			retorno = rs.getInt(1);
 			
 			st.close();
+			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}	
 		return retorno;
 	}
