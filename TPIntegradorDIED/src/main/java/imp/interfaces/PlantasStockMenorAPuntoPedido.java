@@ -31,7 +31,7 @@ public class PlantasStockMenorAPuntoPedido extends JPanel {
 		setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(91, 146, 772, 168);
+		scrollPane.setBounds(91, 171, 772, 168);
 		add(scrollPane);
 		
 		JTable tabla_Plantas = new JTable();
@@ -101,14 +101,14 @@ public class PlantasStockMenorAPuntoPedido extends JPanel {
 		btn_buscarPlantas.setContentAreaFilled(true);
 		btn_buscarPlantas.setBorderPainted(false);
 		btn_buscarPlantas.setBackground(new Color(80, 165, 94));
-		btn_buscarPlantas.setBounds(91, 75, 156, 41);
+		btn_buscarPlantas.setBounds(707, 106, 156, 41);
 		add(btn_buscarPlantas);
 		
 		
-		JLabel lbl_planta = new JLabel("PLANTAS CON STOCK MENOR A PUNTO PEDIDO");
-		lbl_planta.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lbl_planta.setBounds(341, 24, 351, 27);
-		add(lbl_planta);
+		JLabel lbl_titulo = new JLabel("PLANTAS CON STOCK MENOR A PUNTO PEDIDO");
+		lbl_titulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lbl_titulo.setBounds(91, 11, 351, 27);
+		add(lbl_titulo);
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
 		btn_aceptar.setForeground(Color.BLACK);
@@ -117,8 +117,24 @@ public class PlantasStockMenorAPuntoPedido extends JPanel {
 		btn_aceptar.setContentAreaFilled(true);
 		btn_aceptar.setBorderPainted(false);
 		btn_aceptar.setBackground(new Color(80, 165, 94));
-		btn_aceptar.setBounds(536, 376, 156, 41);
+		btn_aceptar.setBounds(707, 397, 156, 41);
 		add(btn_aceptar);
+		
+		JLabel lbl_planta = new JLabel("PLANTA ");
+		lbl_planta.setBounds(91, 71, 89, 14);
+		add(lbl_planta);
+		
+		JLabel lbl_insumo = new JLabel("INSUMO");
+		lbl_insumo.setBounds(443, 71, 109, 14);
+		add(lbl_insumo);
+		
+		JComboBox combo_planta = new JComboBox();
+		combo_planta.setBounds(190, 67, 168, 22);
+		add(combo_planta);
+		
+		JComboBox combo_insumo = new JComboBox();
+		combo_insumo.setBounds(562, 67, 168, 22);
+		add(combo_insumo);
 		
 		
 		btn_aceptar.addActionListener(e -> { 
