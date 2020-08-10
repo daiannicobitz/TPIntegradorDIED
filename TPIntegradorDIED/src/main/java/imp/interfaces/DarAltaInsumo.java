@@ -268,7 +268,7 @@ public class DarAltaInsumo extends JPanel {
 				DAOStock.guardarStock(stock);
 				
 				Grafo plantas = Grafo.getInstance();
-				Planta planta = new Planta(1, "Puerto", TipoPlanta.valueOf("AcopioInicial"));
+				Planta planta = new Planta(1, "PUERTO", TipoPlanta.valueOf("ACOPIOINICIAL"));
 				((Planta)plantas.getNodo(planta).getValor()).addStock(stock);
 				
 				

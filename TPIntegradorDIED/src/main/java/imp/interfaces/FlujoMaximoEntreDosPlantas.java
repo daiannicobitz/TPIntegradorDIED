@@ -2,6 +2,7 @@ package imp.interfaces;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,10 @@ import javax.swing.table.DefaultTableModel;
 import imp.gestores.GestorPlanta;
 
 import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FlujoMaximoEntreDosPlantas extends JPanel {
 	
@@ -27,7 +31,7 @@ public class FlujoMaximoEntreDosPlantas extends JPanel {
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 147, 489, 168);
+		scrollPane.setBounds(36, 149, 489, 168);
 		add(scrollPane);
 		
 		JTable tabla_recorrido = new JTable();
@@ -73,5 +77,20 @@ public class FlujoMaximoEntreDosPlantas extends JPanel {
 			comboBox_plantaOrigen.addItem(c.toString());
 			comboBox_plantaDestino.addItem(c.toString());
 		}
+		
+		JButton btn_actualizarStock = new JButton("Buscar recorridos.");
+		btn_actualizarStock.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btn_actualizarStock.setForeground(Color.BLACK);
+		btn_actualizarStock.setFont(new Font("Dialog", Font.ITALIC, 11));
+		btn_actualizarStock.setFocusPainted(false);
+		btn_actualizarStock.setContentAreaFilled(true);
+		btn_actualizarStock.setBorderPainted(false);
+		btn_actualizarStock.setBackground(new Color(80, 165, 94));
+		btn_actualizarStock.setBounds(376, 97, 149, 41);
+		add(btn_actualizarStock);
 	}
 }
