@@ -44,7 +44,6 @@ public class BuscarPlantas extends JPanel {
 		
 		DefaultTableModel model_tabla_Plantas = new DefaultTableModel(
 				new Object[][] {
-					{null, null},
 				},
 				new String[] {
 						"Nombre Planta", "Tipo Planta"

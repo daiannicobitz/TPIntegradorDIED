@@ -41,8 +41,6 @@ public class ModificarCamion extends JPanel {
 	public ModificarCamion () {
 		
 		
-		
-		
 		setBackground(new Color(118, 203, 117));
 		
 		JLabel lbl_patente = new JLabel("PATENTE");

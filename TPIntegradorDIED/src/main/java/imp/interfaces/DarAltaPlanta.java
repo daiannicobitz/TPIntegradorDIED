@@ -90,11 +90,10 @@ public class DarAltaPlanta extends JPanel {
 				JOptionPane.showMessageDialog(null, "Todos los campos obligatorios (*) deben estan completos.",
 						"ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
 			}else {
-				GestorPlanta.darAltaPlanta(plantaDTO);
+				PopUpAgregarRuta agregar_ruta = new PopUpAgregarRuta(plantaDTO);
 			}
 			
-			plantaDTO.setId(GestorPlanta.getIDPlanta(plantaDTO.getNombre()));
-			PopUpAgregarRuta agregar_ruta = new PopUpAgregarRuta(plantaDTO);
+
 			
 		});
 		
