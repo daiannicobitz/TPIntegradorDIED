@@ -14,11 +14,15 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTextPane;
+
 import javax.swing.SpinnerNumberModel;
 
 import imp.DTOs.RutaDTO;
 import imp.gestores.GestorPlanta;
 import imp.gestores.GestorRuta;
+
+
+import imp.gestores.GestorPlanta;
 
 import javax.swing.JTextField;
 
@@ -144,5 +148,6 @@ public class DarAltaRuta extends JPanel {
 			 c = (CardLayout)(padre.getLayout());
 				c.show(padre, "inicio_ruta");
 		});
+		
 	}
 }

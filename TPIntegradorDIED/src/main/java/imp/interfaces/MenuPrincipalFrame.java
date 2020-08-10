@@ -128,9 +128,9 @@ public class MenuPrincipalFrame extends JFrame {
 	protected static void close() {
 		// TODO Auto-generated method stub
 		if (JOptionPane.showConfirmDialog(null, "¿Desea salir del sistema?", "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-			
 		System.exit(0);
 		}
+		
 	}
 }
 

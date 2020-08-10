@@ -152,6 +152,10 @@ public class PopUpAgregarRuta extends JFrame {
 		});	
 		
 		
+		btn_cancelar.addActionListener(e -> {
+			this.dispose();
+		});
+		
 		getContentPane().add(contenedor_agregarRuta);
 		
 		JLabel lbl_agregarRuta = new JLabel("AGREGAR RUTA");
