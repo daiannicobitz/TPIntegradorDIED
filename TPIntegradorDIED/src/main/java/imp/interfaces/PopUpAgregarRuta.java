@@ -5,9 +5,11 @@ import java.awt.Font;
 
 import javax.swing.*;
 
+import imp.DTOs.PlantaDTO;
+
 public class PopUpAgregarRuta extends JFrame {
 	
-	public PopUpAgregarRuta () {
+	public PopUpAgregarRuta (PlantaDTO plantaDestino) {
 		
 		
 		setLocationRelativeTo(null);
