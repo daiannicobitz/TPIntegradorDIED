@@ -1,6 +1,8 @@
 package imp.primaryClasses;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 import imp.gestores.GestorCamion;
 
@@ -31,13 +33,21 @@ public class ListaGlobalCamiones {
 
 	public void delCamion(Camion retorno) {
 
-		
 		this.lista.removeIf(t -> t.getPatente().equals(retorno.getPatente()));
 		
 	}
 	
 	public ArrayList<Camion> getLista(){
+		
 		return lista;
 		
 	}
+	
+	public Camion getCamionConMenosKm() {
+		
+		Camion camion = this.lista.stream().min(Comparator.comparing(Camion::getKmRecorridos)).orElseThrow(NoSuchElementException::new);
+		
+		return camion;
+	}
+	
 }

@@ -22,8 +22,6 @@ public class GestorStock {
 //		private double puntoPedido;
 //		private int idInsumo;
 		
-		
-		
 		for(Stock s : listaStock) {
 			
 			Insumo insumo = GestorInsumo.buscarInsumoPorId(s.getInsumo());
