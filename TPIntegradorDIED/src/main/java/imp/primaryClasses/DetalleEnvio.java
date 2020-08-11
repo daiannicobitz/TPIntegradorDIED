@@ -1,5 +1,7 @@
 package imp.primaryClasses;
 
+import imp.structures.Ruta;
+
 public class DetalleEnvio {
 	
 	private double costoEnvio;

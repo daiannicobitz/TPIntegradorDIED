@@ -2,18 +2,27 @@ package imp.primaryClasses;
 
 public class Item {
 
-	private Insumo insumoSolicitado;
+	private int idInsumo;
+	private int idOrden;
 	private double cantidadSolicitada;
 	
 	
-	public Insumo getInsumoSolicitado() {
-		return insumoSolicitado;
+	public int getIdInsumo() {
+		return idInsumo;
 	}
 	
-	public void setInsumoSolicitado(Insumo insumoSolicitado) {
-		this.insumoSolicitado = insumoSolicitado;
+	public void setIdInsumo(int idInsumo) {
+		this.idInsumo = idInsumo;
 	}
 	
+	public int getIdOrden() {
+		return idOrden;
+	}
+	
+	public void setIdOrden(int idOrden) {
+		this.idOrden = idOrden;
+	}
+
 	public double getCantidadSolicitada() {
 		return cantidadSolicitada;
 	}
@@ -22,10 +31,11 @@ public class Item {
 		this.cantidadSolicitada = cantidadSolicitada;
 	}
 
-	public Item(Insumo insumoSolicitado, double cantidadSolicitada) {
+	public Item(int idInsumo, double cantidadSolicitada, int idOrden) {
 		super();
-		this.insumoSolicitado = insumoSolicitado;
+		this.idInsumo = idInsumo;
 		this.cantidadSolicitada = cantidadSolicitada;
+		this.idOrden = idOrden;
 	}
 	
 }

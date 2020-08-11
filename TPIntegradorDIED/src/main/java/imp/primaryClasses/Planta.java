@@ -5,14 +5,14 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import imp.enumerators.TipoPlanta;
+import imp.structures.Vertice;
 
-public class Planta {
+public class Planta{
 		
-	private int id;
-	private String nombre;
-	private TipoPlanta tipo;
-	private Queue<Camion> listaCamiones;
-	private ArrayList<Stock> listaStock;
+	public int id;
+	public String nombre;
+	public TipoPlanta tipo;
+	public ArrayList<Stock> listaStock;
 		
 		
 	public int getId() {
@@ -31,14 +31,6 @@ public class Planta {
 		this.nombre = nombre;
 	}
 	
-	public Queue<Camion> getListaCamiones() {
-		return this.listaCamiones;
-	}
-	
-	public void setListaCamiones(Queue<Camion> listaCamiones) {
-		this.listaCamiones = listaCamiones;
-	}
-	
 	public ArrayList<Stock> getListaStock() {
 		return this.listaStock;
 	}
@@ -55,16 +47,29 @@ public class Planta {
 		this.tipo = tipo;
 	}
 
+	public boolean equals(Object o){
+		 return (o instanceof Planta && ((Planta)o).nombre.equals(this.nombre));
+	}
+	
 	public Planta(int id, String nombre, TipoPlanta tipo) {
 			super();
 			this.setId(id);
 			this.setNombre(nombre);
-			this.setTipo(tipo); 
-			this.listaCamiones = new LinkedList<Camion>();
+			this.setTipo(tipo);
 			this.listaStock = new ArrayList<Stock>();
 		}
 
+	@Override
+	public String toString() {
+		return  this.getNombre();
+	}
+
+	public void addStock(Stock stock) {
 		
+		listaStock.add(stock);
 		
+	}	
+	
+	
 		
 }

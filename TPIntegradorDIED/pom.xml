@@ -32,6 +32,25 @@
    	  <artifactId>mysql-connector-java</artifactId>
    	  <version>8.0.20</version>
 	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/com.toedter/jcalendar -->
+	<dependency>
+	  <groupId>com.toedter</groupId>
+  	  <artifactId>jcalendar</artifactId>
+ 	  <version>1.4</version>
+	</dependency>
+	
+	<dependency>
+	  <groupId>org.jgrapht</groupId>
+	  <artifactId>jgrapht-core</artifactId>
+	  <version>1.5.0</version>
+    </dependency>
+    
+    <dependency>
+ 	  <groupId>com.google.guava</groupId>
+ 	  <artifactId>guava</artifactId>
+ 	  <version>28.0-jre</version>
+	</dependency>
     
   </dependencies>
 
