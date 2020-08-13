@@ -266,6 +266,11 @@ public class Grafo<Planta> {
     		if (v.equals(fin)) { //si es el fin 
     			camino.add(((imp.primaryClasses.Planta) inicio.getValor()).getNombre());
     			camino.add(((imp.primaryClasses.Planta) fin.getValor()).getNombre());
+    			Ruta ruta= rutaEntreDosPlantas(inicio, v);
+    			camino.add(Double.toString(ruta.getPesoMaximo()));
+    		}else {
+    			Ruta ruta= rutaEntreDosPlantas(inicio, v);
+//    			List pesoMax = pesoMaxRutaAdy();
     		}
     	}
     	
