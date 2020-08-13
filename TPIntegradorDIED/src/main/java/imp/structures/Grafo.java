@@ -125,15 +125,20 @@ public class Grafo<Planta> {
 	}
 	
 
-	protected List<Vertice<Planta>> getAdyacentes(Vertice<Planta> unNodo){ 
+	public List<Vertice<Planta>> getAdyacentes(Vertice<Planta> unNodo){  //funciona
 		List<Vertice<Planta>> salida = new ArrayList<Vertice<Planta>>();
 		for(Ruta<Planta> enlace : this.rutas){
 			if( enlace.getInicio().equals(unNodo)){
 				salida.add(enlace.getFin());
 			}
 		}
-		return salida;
+		return salida; 
 	}
+	
+	
+	
+	
+	
 	
 	public void imprimirRutas(){
 		System.out.println(this.rutas.toString());
@@ -250,5 +255,32 @@ public class Grafo<Planta> {
 		 GRAFO = new Grafo(GestorRuta.BuscarTodasLasRutas(), listaVertices);
     }
     
+    public List<List<String>> flujoMaximo (Vertice<Planta> inicio, Vertice<Planta> fin){
+    	//va a devolver los nombres de la ruta y el último elemento va a ser el flujo máximo 
+    	List<String> camino = new ArrayList<String>();
+    	List<List<String>> retorno = new ArrayList<List<String>>();
+    	
+    	List<Vertice<Planta>> aux =  this.getAdyacentes(inicio); 
+    	
+    	for(Vertice<Planta> v:aux ) {
+    		if (v.equals(fin)) { //si es el fin 
+    			camino.add(((imp.primaryClasses.Planta) inicio.getValor()).getNombre());
+    			camino.add(((imp.primaryClasses.Planta) fin.getValor()).getNombre());
+    		}
+    	}
+    	
+    	
+    	
+    	
+    	return retorno;
+    	
+    }
+    
+    public Ruta rutaEntreDosPlantas(Vertice<Planta> inicio, Vertice<Planta> fin) {
+    	for (Ruta r : this.rutas) {
+    		if (r.getInicio().equals(inicio) && r.getFin().equals(fin)) return r;
+    	}
+		return null;
+    }
     
 }

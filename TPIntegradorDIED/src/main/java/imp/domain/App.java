@@ -1,6 +1,7 @@
 package imp.domain;
 
 import java.awt.EventQueue;
+import java.util.List;
 
 import imp.primaryClasses.ListaGlobalCamiones;
 import imp.primaryClasses.Planta;
@@ -19,13 +20,14 @@ public class App
     	ListaGlobalCamiones lgc = ListaGlobalCamiones.getInstance();
     	
     	Grafo<Planta> grafo = Grafo.getInstance();
+  
     	
     	System.out.println(lgc.getLista());
     	
     	EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    GestorPantallas.inicio(); // abre la primera pantalla 
+                   GestorPantallas.inicio(); // abre la primera pantalla 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
