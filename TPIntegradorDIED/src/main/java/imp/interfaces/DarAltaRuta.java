@@ -120,7 +120,7 @@ public class DarAltaRuta extends JPanel {
 				JOptionPane.showMessageDialog(null, "Todos los campos obligatorios (*) deben estan completos.",
 						"ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
 			}else if(rutaDto.getNombrePlantaDestino().equals((rutaDto.getNombrePlantaOrigen()))){
-				JOptionPane.showMessageDialog(null, "Los nombres de las Plantas Origen y Final no deben ser iguales.",
+				JOptionPane.showMessageDialog(null, "Los nombres de las Plantas Origen y Final no pueden ser iguales.",
 						"ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
 			}else{
 				int idPlantaDestino = GestorPlanta.getIDPlanta(rutaDto.getNombrePlantaDestino());

@@ -257,31 +257,94 @@ public class Grafo<Planta> {
     
     public List<List<String>> flujoMaximo (Vertice<Planta> inicio, Vertice<Planta> fin){
     	//va a devolver los nombres de la ruta y el último elemento va a ser el flujo máximo 
-    	List<String> camino = new ArrayList<String>();
+    	
     	List<List<String>> retorno = new ArrayList<List<String>>();
     	
-    	List<Vertice<Planta>> aux =  this.getAdyacentes(inicio); 
-    	
-    	for(Vertice<Planta> v:aux ) {
-    		if (v.equals(fin)) { //si es el fin 
-    			camino.add(((imp.primaryClasses.Planta) inicio.getValor()).getNombre());
-    			camino.add(((imp.primaryClasses.Planta) fin.getValor()).getNombre());
-    			Ruta ruta= rutaEntreDosPlantas(inicio, v);
-    			camino.add(Double.toString(ruta.getPesoMaximo()));
-    		}else {
-    			Ruta ruta= rutaEntreDosPlantas(inicio, v);
-//    			List pesoMax = pesoMaxRutaAdy();
-    		}
-    	}
+    	List<Vertice<Planta>> listaAdyInicio =  this.getAdyacentes(inicio); 
     	
     	
+    	List<List<Vertice<Planta>>> recorridos = getRecorridos(listaAdyInicio,inicio, fin); 
+//    		System.out.println(recorridos.toString());
+//    		for(List<Vertice<Planta>> r : recorridos) {
+//    			System.out.println("gg");
+//    			for(Vertice<Planta> v : r) {
+//    				System.out.println("hasta aca");
+//    			System.out.println(((imp.primaryClasses.Planta) v.getValor()).getNombre());
+//    			}
+//    		}
+    		
+    		for(int i = 0; i<recorridos.size();i++) {
+    				
+    				List<String> recorridoString = new ArrayList<String>();
+    				List<Vertice<Planta>> recorrido = recorridos.get(i);
+    				
+    				for(int j = 0; j<recorrido.size();j++){
+    					
+    					if(j!= 0) {
+    						Ruta ruta= rutaEntreDosPlantas(recorrido.get(j-1), recorrido.get(j));
+    					
+    						if(recorridoString.size() == 1) {
+    							recorridoString.add(((imp.primaryClasses.Planta) recorrido.get(j).getValor()).getNombre());
+    							recorridoString.add(Double.toString(ruta.getPesoMaximo()));
+    						}else if(Double.parseDouble(recorridoString.get(recorridoString.size()-1)) > ruta.getPesoMaximo()) {
+    							recorridoString.remove(recorridoString.size()-1);
+    							recorridoString.add(((imp.primaryClasses.Planta) recorrido.get(j).getValor()).getNombre());
+    							recorridoString.add(Double.toString(ruta.getPesoMaximo()));
+    						}else {
+    							String pesoMax = recorridoString.get(recorridoString.size()-1);
+    							recorridoString.remove(recorridoString.size()-1);
+    							recorridoString.add(((imp.primaryClasses.Planta) recorrido.get(j).getValor()).getNombre());
+    							recorridoString.add(pesoMax);
+    						}
+    					}else {
+    						recorridoString.add(((imp.primaryClasses.Planta) recorrido.get(j).getValor()).getNombre());
+    					}
+    				}
+    				retorno.add(recorridoString);
+    			}    	
     	
-    	
+    	for(List<String> ls : retorno)
+    		System.out.println(ls.toString());
     	return retorno;
     	
     }
     
-    public Ruta rutaEntreDosPlantas(Vertice<Planta> inicio, Vertice<Planta> fin) {
+    private List<List<Vertice<Planta>>> getRecorridos(List<Vertice<Planta>> listaAdy, Vertice<Planta> inicio, Vertice<Planta> fin) {
+    	List<List<Vertice<Planta>>> retorno = new ArrayList<List<Vertice<Planta>>>();
+    	
+    	if(!listaAdy.isEmpty()) {
+    		
+    		for (Vertice<Planta> v : listaAdy) {
+    		
+    			if(v.equals(fin)) {
+    				
+    				List<Vertice<Planta>> recorrido = new ArrayList<Vertice<Planta>>();
+    				recorrido.add(inicio);
+    				recorrido.add(v);
+    				retorno.add(recorrido);
+    				
+    			}else {
+    				List<List<Vertice<Planta>>> listaSub = getRecorridos(this.getAdyacentes(v), v, fin);
+    				if(!listaAdy.isEmpty()) {
+    					for(List<Vertice<Planta>> ls : listaSub) {
+    						
+    						List<Vertice<Planta>> recorrido = new ArrayList<Vertice<Planta>>();
+    						
+    						recorrido.add(inicio);
+    						recorrido.addAll(ls);
+    						System.out.println(recorrido.toString());
+    						retorno.add(recorrido);
+    						
+    						
+    					}
+    				}
+    			}
+    		}
+    	}
+		return retorno;
+	}
+
+	public Ruta rutaEntreDosPlantas(Vertice<Planta> inicio, Vertice<Planta> fin) {
     	for (Ruta r : this.rutas) {
     		if (r.getInicio().equals(inicio) && r.getFin().equals(fin)) return r;
     	}

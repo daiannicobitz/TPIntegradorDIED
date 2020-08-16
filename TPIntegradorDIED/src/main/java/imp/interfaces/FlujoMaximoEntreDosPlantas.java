@@ -11,9 +11,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import imp.DTOs.PlantaDTO;
 import imp.gestores.GestorPlanta;
+import imp.primaryClasses.Planta;
+import imp.structures.Grafo;
+import imp.structures.Vertice;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
@@ -82,6 +87,46 @@ public class FlujoMaximoEntreDosPlantas extends JPanel {
 		btn_actualizarStock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				System.out.println(comboBox_plantaDestino.getSelectedItem().toString());
+				if(comboBox_plantaDestino.getSelectedItem().toString().equals(comboBox_plantaOrigen.getSelectedItem().toString())) {
+					JOptionPane.showMessageDialog(null, "Los nombres de las Plantas Origen y Final no pueden ser iguales.",
+						"ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
+				}else {
+			    	Vertice<Planta> v1 = new Vertice<Planta>(GestorPlanta.getPlantaById(
+			    							GestorPlanta.getIDPlanta(comboBox_plantaOrigen.getSelectedItem().toString())));
+			    								
+			    	Vertice<Planta> v2 = new Vertice<Planta>(GestorPlanta.getPlantaById(
+			    								GestorPlanta.getIDPlanta(comboBox_plantaDestino.getSelectedItem().toString())));
+			    	
+			    	List<List<String>> listaRecorridos = Grafo.getInstance().flujoMaximo(v1, v2);
+			    	
+			    	int cantRecorridos=listaRecorridos.size();
+					int fila=0;
+					
+					Object[][] listaMuestra = new Object[cantRecorridos][2];
+					
+					for(List<String> c: listaRecorridos) {
+						System.out.println(c.toString());
+						listaMuestra[fila][0] = c.subList(0, c.size()-1);
+						listaMuestra[fila][1] = c.subList(c.size()-1,c.size());
+						
+						fila++;
+					}
+					
+					DefaultTableModel modelo = new DefaultTableModel(listaMuestra,new String[] {"Recorrido", "Flujo maximo"}) {
+
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public boolean isCellEditable(int i, int i1) {
+							return false;
+						}
+					};
+					
+					tabla_recorrido.setModel(modelo);
+			    	
+			    	
+				}
 			}
 		});
 		btn_actualizarStock.setForeground(Color.BLACK);
