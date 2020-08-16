@@ -83,11 +83,11 @@ public class FlujoMaximoEntreDosPlantas extends JPanel {
 			comboBox_plantaDestino.addItem(c.toString());
 		}
 		
-		JButton btn_actualizarStock = new JButton("Buscar recorridos.");
-		btn_actualizarStock.addActionListener(new ActionListener() {
+		JButton btn_buscarRecorridos = new JButton("Buscar recorridos");
+		btn_buscarRecorridos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println(comboBox_plantaDestino.getSelectedItem().toString());
+				
 				if(comboBox_plantaDestino.getSelectedItem().toString().equals(comboBox_plantaOrigen.getSelectedItem().toString())) {
 					JOptionPane.showMessageDialog(null, "Los nombres de las Plantas Origen y Final no pueden ser iguales.",
 						"ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
@@ -129,13 +129,13 @@ public class FlujoMaximoEntreDosPlantas extends JPanel {
 				}
 			}
 		});
-		btn_actualizarStock.setForeground(Color.BLACK);
-		btn_actualizarStock.setFont(new Font("Dialog", Font.ITALIC, 11));
-		btn_actualizarStock.setFocusPainted(false);
-		btn_actualizarStock.setContentAreaFilled(true);
-		btn_actualizarStock.setBorderPainted(false);
-		btn_actualizarStock.setBackground(new Color(80, 165, 94));
-		btn_actualizarStock.setBounds(376, 97, 149, 41);
-		add(btn_actualizarStock);
+		btn_buscarRecorridos.setForeground(Color.BLACK);
+		btn_buscarRecorridos.setFont(new Font("Dialog", Font.ITALIC, 11));
+		btn_buscarRecorridos.setFocusPainted(false);
+		btn_buscarRecorridos.setContentAreaFilled(true);
+		btn_buscarRecorridos.setBorderPainted(false);
+		btn_buscarRecorridos.setBackground(new Color(80, 165, 94));
+		btn_buscarRecorridos.setBounds(376, 97, 149, 41);
+		add(btn_buscarRecorridos);
 	}
 }

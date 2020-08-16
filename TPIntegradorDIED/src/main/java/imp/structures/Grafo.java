@@ -264,14 +264,7 @@ public class Grafo<Planta> {
     	
     	
     	List<List<Vertice<Planta>>> recorridos = getRecorridos(listaAdyInicio,inicio, fin); 
-//    		System.out.println(recorridos.toString());
-//    		for(List<Vertice<Planta>> r : recorridos) {
-//    			System.out.println("gg");
-//    			for(Vertice<Planta> v : r) {
-//    				System.out.println("hasta aca");
-//    			System.out.println(((imp.primaryClasses.Planta) v.getValor()).getNombre());
-//    			}
-//    		}
+
     		
     		for(int i = 0; i<recorridos.size();i++) {
     				
@@ -350,5 +343,107 @@ public class Grafo<Planta> {
     	}
 		return null;
     }
+	
+	public List<String> caminoMinimoDistancia(Vertice<Planta> inicio,Vertice<Planta> fin) {
+		List<String> retorno = new ArrayList<String>();
+		
+    	List<Vertice<Planta>> listaAdyInicio =  this.getAdyacentes(inicio); 
+    	
+    	List<List<Vertice<Planta>>> caminos = getRecorridos(listaAdyInicio,inicio, fin);
+    	
+    	Double distanciaMinima=null;
+    	
+    	for(int j=0;j<caminos.size();j++) {
+    		
+    		List<Vertice<Planta>> c = caminos.get(j);
+    		Double distanciaMinimaAux = distanciaCamino(caminos.get(j));
+    		
+    		if(distanciaMinima==null) {
+    			distanciaMinima = distanciaMinimaAux;
+    			retorno = listaNombresPlantas(c);
+    			retorno.add(distanciaMinima.toString());
+    			
+    		}else if(distanciaMinima > distanciaMinimaAux){
+    			distanciaMinima = distanciaMinimaAux;
+    			retorno = listaNombresPlantas(c);
+    			retorno.add(distanciaMinima.toString());
+    		}
+    		
+    	}
+    	
+		return retorno;
+	}
+
+	public List<String> caminoMinimoDuracion(Vertice<Planta> inicio, Vertice<Planta> fin) {
+		
+		List<String> retorno = new ArrayList<String>();
+		
+    	List<Vertice<Planta>> listaAdyInicio =  this.getAdyacentes(inicio); 
+    	
+    	List<List<Vertice<Planta>>> caminos = getRecorridos(listaAdyInicio,inicio, fin);
+    	
+    	Double duracionMinima=null;
+    	for(int j=0;j<caminos.size();j++) {
+    		
+    		List<Vertice<Planta>> c = caminos.get(j);
+    		Double duracionMinimaAux = duracionCamino(caminos.get(j));
+    		
+    		if(duracionMinima==null) {
+    			duracionMinima = duracionMinimaAux;
+    			retorno = listaNombresPlantas(c);
+    			retorno.add(duracionMinima.toString());
+    			
+    		}else if(duracionMinima > duracionMinimaAux){
+    			duracionMinima = duracionMinimaAux;
+    			retorno = listaNombresPlantas(c);
+    			retorno.add(duracionMinima.toString());
+    		}
+    		
+    	}
+		
+		return retorno;
+	}
+
+	private List<String> listaNombresPlantas(List<Vertice<Planta>> listVertices) {
+		List<String> ret = new ArrayList<String>();
+		for(Vertice<Planta> v : listVertices)
+			ret.add(((imp.primaryClasses.Planta) v.getValor()).getNombre());
+		return ret;
+	}
+
+	private Double distanciaCamino(List<Vertice<Planta>> list) {
+		Double distanciaMinima=null;
+		
+		for(int i = 0; i<list.size(); i++) {
+			if(i != 0) {
+				Ruta ruta= rutaEntreDosPlantas(list.get(i-1), list.get(i));
+				if(distanciaMinima==null) {
+					distanciaMinima=ruta.getDistancia();
+				}else {
+					distanciaMinima=distanciaMinima + ruta.getDistancia();
+				}
+			}
+		}
+		
+		return distanciaMinima;
+	}
+	
+	private Double duracionCamino(List<Vertice<Planta>> list) {
+		
+		Double duracionMinima=null;
+		
+		for(int i = 0; i<list.size(); i++) {
+			if(i != 0) {
+				Ruta ruta= rutaEntreDosPlantas(list.get(i-1), list.get(i));
+				if(duracionMinima==null) {
+					duracionMinima=ruta.getDuracionRecorrido();
+				}else {
+					duracionMinima=duracionMinima + ruta.getDuracionRecorrido();
+				}
+			}
+		}
+		
+		return duracionMinima;
+	}
     
 }
