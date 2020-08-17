@@ -344,6 +344,14 @@ public class Grafo<Planta> {
 		return null;
     }
 	
+	public double getDistanciaEntrePlantas(Vertice<Planta> inicio,Vertice<Planta> fin) {
+		return rutaEntreDosPlantas(inicio, fin).getDistancia();
+	}
+	
+	public double getDuracionEntrePlantas(Vertice<Planta> inicio,Vertice<Planta> fin) {
+		return rutaEntreDosPlantas(inicio, fin).getDuracionRecorrido();
+	}
+	
 	public List<String> caminoMinimoDistancia(Vertice<Planta> inicio,Vertice<Planta> fin) {
 		List<String> retorno = new ArrayList<String>();
 		
@@ -456,6 +464,23 @@ public class Grafo<Planta> {
 		}
 
 		return pageRank;
+	}
+
+	public ArrayList<imp.DTOs.PlantaDTO> getPlantaPagerank() {
+		ArrayList<imp.DTOs.PlantaDTO> listaRetorno = new ArrayList<imp.DTOs.PlantaDTO>();
+		
+		for(Vertice<Planta> v : vertices) {
+			
+			imp.DTOs.PlantaDTO planta = new imp.DTOs.PlantaDTO(0, ((imp.primaryClasses.Planta) v.getValor()).getNombre(),
+					((imp.primaryClasses.Planta) v.getValor()).getTipo().toString());
+			
+			planta.setValorPagerank(getPageRank(v));
+			
+			listaRetorno.add(planta);
+			
+		}
+		
+		return listaRetorno;
 	}
     
 }

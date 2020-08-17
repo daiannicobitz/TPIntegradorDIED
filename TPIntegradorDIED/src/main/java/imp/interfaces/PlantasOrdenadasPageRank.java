@@ -4,13 +4,25 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class PlantasOrdenadasPageRank extends JPanel {
+import imp.DTOs.PlantaDTO;
+import imp.structures.Grafo;
+import imp.structures.SortPlantabyValorPageRank;
+
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.awt.event.ActionEvent;
+
+public class PlantasOrdenadasPageRank<PlantaDTO> extends JPanel {
 
 	
 	public CardLayout c = new CardLayout();
@@ -18,15 +30,7 @@ public class PlantasOrdenadasPageRank extends JPanel {
 		setBackground(new Color(118, 203, 117));
 		setLayout(null);
 		
-		JButton btn_buscarPlantas = new JButton("BUSCAR PLANTAS");
-		btn_buscarPlantas.setForeground(Color.BLACK);
-		btn_buscarPlantas.setFont(new Font("Dialog", Font.ITALIC, 11));
-		btn_buscarPlantas.setFocusPainted(false);
-		btn_buscarPlantas.setContentAreaFilled(true);
-		btn_buscarPlantas.setBorderPainted(false);
-		btn_buscarPlantas.setBackground(new Color(80, 165, 94));
-		btn_buscarPlantas.setBounds(91, 31, 156, 41);
-		add(btn_buscarPlantas);
+
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -55,6 +59,54 @@ public class PlantasOrdenadasPageRank extends JPanel {
 		tabla_Plantas.getTableHeader().setReorderingAllowed(false);
 		tabla_Plantas.getTableHeader().setResizingAllowed(false);
 		scrollPane.setViewportView(tabla_Plantas);
+		
+		JButton btn_buscarPlantas = new JButton("BUSCAR PLANTAS");
+		btn_buscarPlantas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ArrayList<imp.DTOs.PlantaDTO> listaDtoPlanta = Grafo.getInstance().getPlantaPagerank();
+				
+				Collections.sort(listaDtoPlanta, new SortPlantabyValorPageRank());
+				
+				int cantPlantas=listaDtoPlanta.size();
+				int fila=0;
+				
+				Object[][] listaMuestra = new Object[cantPlantas][3];
+				
+				for(imp.DTOs.PlantaDTO p : listaDtoPlanta) {
+
+					listaMuestra[fila][0] = Integer.toString(p.getValorPagerank());
+					listaMuestra[fila][1] = p.getNombre();
+					listaMuestra[fila][2] = p.getTipo();
+					
+					fila++;
+				}
+				
+				DefaultTableModel modelo = new DefaultTableModel(listaMuestra,new String[] {"Orden", "Nombre Planta", "Tipo Planta"}) {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public boolean isCellEditable(int i, int i1) {
+						return false;
+					}
+				};
+				
+				tabla_Plantas.setModel(modelo);
+				
+				
+				
+			}
+		});
+		btn_buscarPlantas.setForeground(Color.BLACK);
+		btn_buscarPlantas.setFont(new Font("Dialog", Font.ITALIC, 11));
+		btn_buscarPlantas.setFocusPainted(false);
+		btn_buscarPlantas.setContentAreaFilled(true);
+		btn_buscarPlantas.setBorderPainted(false);
+		btn_buscarPlantas.setBackground(new Color(80, 165, 94));
+		btn_buscarPlantas.setBounds(91, 31, 156, 41);
+		add(btn_buscarPlantas);
+		
 		
 		JButton btn_aceptar = new JButton("ACEPTAR");
 		btn_aceptar.setForeground(Color.BLACK);

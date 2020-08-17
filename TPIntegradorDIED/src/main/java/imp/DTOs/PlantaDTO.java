@@ -2,9 +2,10 @@ package imp.DTOs;
 
 public class PlantaDTO {
 	
-	private int id;
-	private String nombre;
-	private String tipo;
+	public int id;
+	public String nombre;
+	public String tipo;
+	public int valorPagerank;
 	
 	public int getId() {
 		return id;
@@ -35,6 +36,14 @@ public class PlantaDTO {
 		this.id = id;
 		this.nombre = nombre;
 		this.tipo = tipo;
+	}
+
+	public int getValorPagerank() {
+		return valorPagerank;
+	}
+
+	public void setValorPagerank(int valorPagerank) {
+		this.valorPagerank = valorPagerank;
 	}
 	
 	

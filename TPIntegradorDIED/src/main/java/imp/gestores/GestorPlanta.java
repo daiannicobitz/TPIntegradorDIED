@@ -61,6 +61,7 @@ public class GestorPlanta {
 	public static void darAltaPlanta(PlantaDTO plantaDTO) {
 		
 		DAOPlanta.AltaPlanta(new Planta(plantaDTO.getId(), plantaDTO.getNombre(), TipoPlanta.valueOf(plantaDTO.getTipo())));
+		Grafo.getInstance().actualizarGrafo();
 		
 	}
 
