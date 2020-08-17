@@ -445,5 +445,17 @@ public class Grafo<Planta> {
 		
 		return duracionMinima;
 	}
+	
+	public int getPageRank(Vertice<Planta> v) {
+		int pageRank = 0;
+
+		for (Ruta r : rutas) {
+			if (r.getFin().equals(v) ) {
+				pageRank++;
+			}
+		}
+
+		return pageRank;
+	}
     
 }
