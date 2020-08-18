@@ -47,11 +47,6 @@ public class PopUpVerPlantasConStock extends JFrame {
 			return false;
 		}
 	};
-
-	
-	
-	
-	
 	
 	
 	
