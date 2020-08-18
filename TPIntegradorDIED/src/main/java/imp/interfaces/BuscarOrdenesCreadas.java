@@ -16,10 +16,11 @@ import imp.DAOs.DAOOrdenPedido;
 import imp.DTOs.OrdenPedidoDTO;
 import imp.DTOs.PlantaDTO;
 import imp.primaryClasses.OrdenPedido;
+import imp.primaryClasses.*;
 
 public class BuscarOrdenesCreadas extends JPanel {
 
-	ArrayList<OrdenPedidoDTO> listaOrdenesCreadasDTO = new ArrayList<OrdenPedidoDTO>();;
+	ArrayList<OrdenPedidoDTO> listaOrdenesCreadasDTO = new ArrayList<OrdenPedidoDTO>();
 	
 	
 	public  BuscarOrdenesCreadas() {
@@ -127,11 +128,15 @@ public class BuscarOrdenesCreadas extends JPanel {
 			
 			PopUpVerPlantasConStock plantas_con_Stock = new PopUpVerPlantasConStock();
 			
+			//obtener todos los items
 		});
 		
 		btn_verPosiblesRutas.addActionListener(e -> {
 			
-			PopUpVerPosiblesRutas posiblesRutas = new PopUpVerPosiblesRutas();
+//			inicializar las siguientes variables con la funcion creada en GestorStock.buscarPlantaConStock y 
+//			con el nombre de la planta destino del renglon de la tabla seleccionado
+
+			PopUpVerPosiblesRutas posiblesRutas = new PopUpVerPosiblesRutas(this.listaOrdenesCreadasDTO.get(tabla_ordenesCreadas.getSelectedRow()));
 			
 		});
 	}

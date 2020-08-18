@@ -50,7 +50,7 @@ public class GestorPlanta {
 		Grafo g = Grafo.getInstance();
 		
 		List<Vertice<Planta>> verticesList = g.vertices();
-		ArrayList<String> nombresPlantas = new ArrayList<String>();
+		List<String> nombresPlantas = new ArrayList<String>();
 		
 		for(Vertice<Planta> c : verticesList)
 		nombresPlantas.add(c.getValor().getNombre());

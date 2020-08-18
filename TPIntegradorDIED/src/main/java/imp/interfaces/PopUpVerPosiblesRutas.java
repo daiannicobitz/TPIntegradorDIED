@@ -2,6 +2,8 @@ package imp.interfaces;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,18 +11,39 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import imp.DAOs.DAOItem;
+import imp.DTOs.OrdenPedidoDTO;
+import imp.DTOs.PlantaDTO;
+import imp.gestores.GestorPlanta;
+import imp.gestores.GestorStock;
+import imp.primaryClasses.OrdenPedido;
+import imp.primaryClasses.Planta;
+import imp.structures.Grafo;
+import imp.structures.Vertice;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class PopUpVerPosiblesRutas extends JFrame {
 	private JTextField txt_camionAsignado;
 
-	public PopUpVerPosiblesRutas () {
+	public PopUpVerPosiblesRutas (OrdenPedidoDTO ordenPedido) {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		setBounds(200, 200, 942, 540);
 		setResizable(false);
+		
+		
+		ArrayList<Planta> plantasConStock=GestorStock.buscarPlantaConStock(DAOItem.recuperarItemsPorIdOrden(Long.parseLong(ordenPedido.getNroOrden())));
+		
+		Planta plantaDestino=GestorPlanta.getPlantaById(GestorPlanta.getIDPlanta(ordenPedido.getPlantaDestino()));
+		Vertice<Planta> verticeFin = new Vertice<Planta>(plantaDestino);
+		
+		List<List<String>> rutasDistanciaAMostrar=new ArrayList<List<String>>();
+		List<List<String>> rutasDuracionAMostrar=new ArrayList<List<String>>();
+		
 		
 		JPanel panel_verPosiblesRutas = new JPanel();
 		panel_verPosiblesRutas.setBackground(new Color(118, 203, 117));
@@ -37,7 +60,7 @@ public class PopUpVerPosiblesRutas extends JFrame {
 		DefaultTableModel model_tabla_recorridoKm = new DefaultTableModel(
 				new Object[][] {},
 				new String[] {
-						"Producto", "Recorrido", "Km"
+						"Recorrido", "Km"
 				}
 				){
 
@@ -48,13 +71,15 @@ public class PopUpVerPosiblesRutas extends JFrame {
 				return false;
 			}
 		};
-
+		
+		
 		tabla_recorridoKm.setModel(model_tabla_recorridoKm);
 		tabla_recorridoKm.getTableHeader().setReorderingAllowed(false);
 		tabla_recorridoKm.getTableHeader().setResizingAllowed(false);
 		scrollPane.setViewportView(tabla_recorridoKm);
 		
-
+		
+		
 		JScrollPane scrollPane2 = new JScrollPane();
 		scrollPane2.setBounds(487, 132, 429, 230);
 		panel_verPosiblesRutas.add(scrollPane2);
@@ -65,7 +90,7 @@ public class PopUpVerPosiblesRutas extends JFrame {
 		DefaultTableModel model_tabla_recorridoTiempo = new DefaultTableModel(
 				new Object[][] {},
 				new String[] {
-						"Producto", "Recorrido", "Horas"
+						"Recorrido", "Horas"
 				}
 				){
 
@@ -81,6 +106,21 @@ public class PopUpVerPosiblesRutas extends JFrame {
 		tabla_recorridoTiempo.getTableHeader().setReorderingAllowed(false);
 		tabla_recorridoTiempo.getTableHeader().setResizingAllowed(false);
 		scrollPane2.setViewportView(tabla_recorridoTiempo);
+		
+		for(Planta p : plantasConStock) {
+			Vertice<Planta> verticeInicio = new Vertice<Planta>(p);
+			
+			
+			List<List<String>> rutasDistancia = Grafo.getInstance().caminoMinimoDistancia(verticeInicio, verticeFin);
+			List<List<String>> rutasDuracion = Grafo.getInstance().caminoMinimoDuracion(verticeInicio, verticeFin);
+			
+			rutasDistanciaAMostrar.addAll(rutasDistancia);
+			rutasDuracionAMostrar.addAll(rutasDuracion);
+			
+		}
+		
+		llenarTablaDistancia(tabla_recorridoKm, rutasDistanciaAMostrar);
+		llenarTablaDistancia(tabla_recorridoTiempo, rutasDuracionAMostrar);
 		
 		JLabel lbl_recorridoKm = new JLabel("RECORRIDO MAS CORTO EN KM");
 		lbl_recorridoKm.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -120,6 +160,64 @@ public class PopUpVerPosiblesRutas extends JFrame {
 		txt_camionAsignado.setBounds(166, 383, 258, 20);
 		panel_verPosiblesRutas.add(txt_camionAsignado);
 		txt_camionAsignado.setColumns(10);
+		
+	}
+	
+	public void llenarTablaDistancia(JTable tabla_recorridoKm, List<List<String>> rutasDistancia) {
+		
+		int cantPlantas=rutasDistancia.size();
+		int fila=0;
+		
+		Object[][] listaMuestra = new Object[cantPlantas][2];
+		
+		for(List<String> r: rutasDistancia) {
+
+			listaMuestra[fila][0] = r.subList(0, (r.size()-1)).toString();
+			listaMuestra[fila][1] = Double.parseDouble(r.subList((r.size()-1), r.size()).toString());
+			
+			fila++;
+		}
+		
+		DefaultTableModel modelo = new DefaultTableModel(listaMuestra,new String[] {"Recorrido", "Km"}) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int i, int i1) {
+				return false;
+			}
+		};
+		
+		tabla_recorridoKm.setModel(modelo);
+		
+	}
+	
+public void llenarTablaDuracion(JTable tabla_recorridoTiempo, List<List<String>> rutasDuracion) {
+		
+		int cantPlantas=rutasDuracion.size();
+		int fila=0;
+		
+		Object[][] listaMuestra = new Object[cantPlantas][2];
+		
+		for(List<String> r: rutasDuracion) {
+
+			listaMuestra[fila][0] = r.subList(0, (r.size()-1)).toString();
+			listaMuestra[fila][1] = Double.parseDouble(r.subList((r.size()-1), r.size()).toString());
+			
+			fila++;
+		}
+		
+		DefaultTableModel modelo = new DefaultTableModel(listaMuestra,new String[] {"Recorrido", "Horas"}) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int i, int i1) {
+				return false;
+			}
+		};
+		
+		tabla_recorridoTiempo.setModel(modelo);
 		
 	}
 }

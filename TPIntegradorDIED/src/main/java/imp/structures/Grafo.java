@@ -318,8 +318,8 @@ public class Grafo<Planta> {
 		return null;
     }
 	
-	public List<String> caminoMinimoDistancia(Vertice<Planta> inicio,Vertice<Planta> fin) {
-		List<String> retorno = new ArrayList<String>();
+	public List<List<String>> caminoMinimoDistancia(Vertice<Planta> inicio,Vertice<Planta> fin) {
+		List<List<String>> retorno = new ArrayList<List<String>>();
 		
     	List<Vertice<Planta>> listaAdyInicio =  this.getAdyacentes(inicio); 
     	
@@ -331,16 +331,23 @@ public class Grafo<Planta> {
     		
     		List<Vertice<Planta>> c = caminos.get(j);
     		Double distanciaMinimaAux = distanciaCamino(caminos.get(j));
+    		List<String> caminoString = new ArrayList<String>();
     		
     		if(distanciaMinima==null) {
     			distanciaMinima = distanciaMinimaAux;
-    			retorno = listaNombresPlantas(c);
-    			retorno.add(distanciaMinima.toString());
+    			caminoString.addAll(listaNombresPlantas(c));
+    			caminoString.add(distanciaMinima.toString());
+    			retorno.add(caminoString);
     			
     		}else if(distanciaMinima > distanciaMinimaAux){
     			distanciaMinima = distanciaMinimaAux;
-    			retorno = listaNombresPlantas(c);
-    			retorno.add(distanciaMinima.toString());
+    			caminoString.addAll(listaNombresPlantas(c));
+    			caminoString.add(distanciaMinima.toString());
+    			retorno.add(caminoString);
+    		}else if(distanciaMinima == distanciaMinimaAux){
+    			caminoString.addAll(listaNombresPlantas(c));
+    			caminoString.add(distanciaMinima.toString());
+    			retorno.add(caminoString);
     		}
     		
     	}
@@ -348,9 +355,9 @@ public class Grafo<Planta> {
 		return retorno;
 	}
 
-	public List<String> caminoMinimoDuracion(Vertice<Planta> inicio, Vertice<Planta> fin) {
+	public List<List<String>> caminoMinimoDuracion(Vertice<Planta> inicio, Vertice<Planta> fin) {
 		
-		List<String> retorno = new ArrayList<String>();
+		List<List<String>> retorno = new ArrayList<List<String>>();
 		
     	List<Vertice<Planta>> listaAdyInicio =  this.getAdyacentes(inicio); 
     	
@@ -361,16 +368,24 @@ public class Grafo<Planta> {
     		
     		List<Vertice<Planta>> c = caminos.get(j);
     		Double duracionMinimaAux = duracionCamino(caminos.get(j));
+    		List<String> caminoString = new ArrayList<String>();
     		
     		if(duracionMinima==null) {
     			duracionMinima = duracionMinimaAux;
-    			retorno = listaNombresPlantas(c);
-    			retorno.add(duracionMinima.toString());
+    			caminoString.addAll(listaNombresPlantas(c));
+    			caminoString.add(duracionMinima.toString());
+    			retorno.add(caminoString);
     			
     		}else if(duracionMinima > duracionMinimaAux){
     			duracionMinima = duracionMinimaAux;
-    			retorno = listaNombresPlantas(c);
-    			retorno.add(duracionMinima.toString());
+    			caminoString.addAll(listaNombresPlantas(c));
+    			caminoString.add(duracionMinima.toString());
+    			retorno.clear();
+    			retorno.add(caminoString);
+    		}else if(duracionMinima == duracionMinimaAux){
+    			caminoString.addAll(listaNombresPlantas(c));
+    			caminoString.add(duracionMinima.toString());
+    			retorno.add(caminoString);
     		}
     		
     	}
@@ -378,7 +393,7 @@ public class Grafo<Planta> {
 		return retorno;
 	}
 
-	private List<String> listaNombresPlantas(List<Vertice<Planta>> listVertices) {
+	public List<String> listaNombresPlantas(List<Vertice<Planta>> listVertices) {
 		List<String> ret = new ArrayList<String>();
 		for(Vertice<Planta> v : listVertices)
 			ret.add(((imp.primaryClasses.Planta) v.getValor()).getNombre());
@@ -461,8 +476,7 @@ public class Grafo<Planta> {
 		
 		return plantas;
 		
-	}
-    
+	}    
 	
 	public double getDistanciaEntrePlantas(Vertice<Planta> inicio,Vertice<Planta> fin) {
 		return rutaEntreDosPlantas(inicio, fin).getDistancia();
@@ -470,5 +484,47 @@ public class Grafo<Planta> {
 	
 	public double getDuracionEntrePlantas(Vertice<Planta> inicio,Vertice<Planta> fin) {
 		return rutaEntreDosPlantas(inicio, fin).getDuracionRecorrido();
+	}
+	
+	public List<Double> getValoresDistanciaConDemasVertices(Vertice<Planta> vertice){
+		
+		List<Double> retorno = new ArrayList<Double>();
+		
+		for(Vertice<Planta> v : vertices) {
+			if(v.equals(vertice)) {
+				retorno.add(0.0);
+			}else {
+				Ruta ruta = rutaEntreDosPlantas(vertice, v);
+				if(ruta == null) {
+					retorno.add(0.0);
+				}else {
+					retorno.add(ruta.getDistancia());
+				}
+				
+			}
+		}
+		
+		return retorno;
+	}
+	
+	public List<Double> getValoresDuracionConDemasVertices(Vertice<Planta> vertice){
+		
+		List<Double> retorno = new ArrayList<Double>();
+		
+		for(Vertice<Planta> v : vertices) {
+			if(v.equals(vertice)) {
+				retorno.add(0.0);
+			}else {
+				Ruta ruta = rutaEntreDosPlantas(vertice, v);
+				if(ruta == null) {
+					retorno.add(0.0);
+				}else {
+					retorno.add(ruta.getDuracionRecorrido());
+				}
+				
+			}
+		}
+		
+		return retorno;
 	}
 }
