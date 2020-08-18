@@ -344,14 +344,6 @@ public class Grafo<Planta> {
 		return null;
     }
 	
-	public double getDistanciaEntrePlantas(Vertice<Planta> inicio,Vertice<Planta> fin) {
-		return rutaEntreDosPlantas(inicio, fin).getDistancia();
-	}
-	
-	public double getDuracionEntrePlantas(Vertice<Planta> inicio,Vertice<Planta> fin) {
-		return rutaEntreDosPlantas(inicio, fin).getDuracionRecorrido();
-	}
-	
 	public List<String> caminoMinimoDistancia(Vertice<Planta> inicio,Vertice<Planta> fin) {
 		List<String> retorno = new ArrayList<String>();
 		
@@ -483,4 +475,12 @@ public class Grafo<Planta> {
 		return listaRetorno;
 	}
     
+	
+	public double getDistanciaEntrePlantas(Vertice<Planta> inicio,Vertice<Planta> fin) {
+		return rutaEntreDosPlantas(inicio, fin).getDistancia();
+	}
+	
+	public double getDuracionEntrePlantas(Vertice<Planta> inicio,Vertice<Planta> fin) {
+		return rutaEntreDosPlantas(inicio, fin).getDuracionRecorrido();
+	}
 }
