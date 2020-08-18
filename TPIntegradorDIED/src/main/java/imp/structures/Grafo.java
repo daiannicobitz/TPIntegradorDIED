@@ -48,28 +48,6 @@ public class Grafo<Planta> {
 		 return GRAFO;
 	}
 	
-//	LIBRERIA GUAVA
-//	public void prueba(Planta p1, Planta p2) {
-//		
-//    	Grafo<Planta> grafo=new Grafo<Planta>();
-//    	grafo.prueba(new Planta(0, "hola", TipoPlanta.AcopioFinal),new Planta(0, "hola2", TipoPlanta.AcopioFinal));
-//		
-//		MutableNetwork<Vertice<Planta>,Ruta<Planta>> grafo = NetworkBuilder.directed().allowsParallelEdges(false).build();
-//		Vertice<Planta> plant1 = new Vertice<Planta>(p1);
-//		Vertice<Planta> plant2 = new Vertice<Planta>(p2);
-//		Ruta<Planta> ruta12 = new Ruta<Planta>(null,null, 1.1, 1.2, 1.3);
-//		grafo.addNode(plant1);
-//		grafo.addNode(plant2);
-//		grafo.addEdge(plant1, plant2, ruta12);
-//		List<Vertice<Planta>> list = grafo.nodes().stream().collect(Collectors.toList());
-//		
-//		for(Vertice<Planta>  l : list)
-//		System.out.println(((imp.primaryClasses.Planta) l.getValor()).getNombre());
-//		
-//		Ruta<Planta> rutta= grafo.edgeConnecting(plant1, plant2).get();
-//		System.out.println(rutta.getDuracionRecorrido());
-//		
-//	}
 	
 	public Grafo(){
 		this.rutas = new ArrayList<Ruta<Planta>>();
@@ -134,10 +112,6 @@ public class Grafo<Planta> {
 		}
 		return salida; 
 	}
-	
-	
-	
-	
 	
 	
 	public void imprimirRutas(){
@@ -481,6 +455,20 @@ public class Grafo<Planta> {
 		}
 		
 		return listaRetorno;
+	}
+	
+	public ArrayList<Planta> getPlantas(){
+		
+		ArrayList<Planta> plantas = new ArrayList<>();
+		
+		for(Vertice<Planta> v : this.vertices) {
+			
+			plantas.add(v.getValor());
+			
+		}
+		
+		return plantas;
+		
 	}
     
 }
