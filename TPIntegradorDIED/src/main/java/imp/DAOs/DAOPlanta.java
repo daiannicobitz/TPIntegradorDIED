@@ -72,7 +72,15 @@ public static ArrayList<Planta> buscarTodasLasPlantas(){
 		while(tablaPlanta.next()) {
 			Planta planta = new Planta(tablaPlanta.getInt("id_planta"),tablaPlanta.getString("nombre"), 
 					TipoPlanta.valueOf(tablaPlanta.getString("tipo_planta")));
+			
+			
+			
+			
 			listaPlanta.add(planta);		
+		}
+		
+		for( Planta p : listaPlanta) {
+			p.setListaStock(DAOStock.getListaStockPorIdPlanta(p.getId()));
 		}
 		
 		st.close();

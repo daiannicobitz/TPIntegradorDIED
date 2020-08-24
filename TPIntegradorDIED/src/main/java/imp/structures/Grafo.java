@@ -229,13 +229,28 @@ public class Grafo<Planta> {
 		 GRAFO = new Grafo(GestorRuta.BuscarTodasLasRutas(), listaVertices);
     }
     
+    
+    public ArrayList<Double> flujoMaximoValor(Planta inicio, Planta fin) {
+    	ArrayList<Double> retorno = new ArrayList<Double>();
+    	List<List<String>> recorridos = flujoMaximo( inicio, fin);
+    	
+    	for(List<String> ls : recorridos) {
+    		retorno.add(Double.parseDouble(ls.subList(ls.size()-1, ls.size()).get(0)));
+    	}
+    	
+    	return retorno;
+    }
+    
+    public List<List<String>> flujoMaximo (Planta inicio, Planta fin){
+    return this.flujoMaximo(new Vertice<Planta>(inicio), new Vertice<Planta>(fin));
+    }
+    
     public List<List<String>> flujoMaximo (Vertice<Planta> inicio, Vertice<Planta> fin){
     	//va a devolver los nombres de la ruta y el último elemento va a ser el flujo máximo 
     	
     	List<List<String>> retorno = new ArrayList<List<String>>();
     	
     	List<Vertice<Planta>> listaAdyInicio =  this.getAdyacentes(inicio); 
-    	
     	
     	List<List<Vertice<Planta>>> recorridos = getRecorridos(listaAdyInicio,inicio, fin); 
 
@@ -270,11 +285,10 @@ public class Grafo<Planta> {
     				retorno.add(recorridoString);
     			}    	
     	
-    	for(List<String> ls : retorno)
-    		System.out.println(ls.toString());
     	return retorno;
     	
     }
+    
     
     private List<List<Vertice<Planta>>> getRecorridos(List<Vertice<Planta>> listaAdy, Vertice<Planta> inicio, Vertice<Planta> fin) {
     	List<List<Vertice<Planta>>> retorno = new ArrayList<List<Vertice<Planta>>>();
@@ -299,7 +313,6 @@ public class Grafo<Planta> {
     						
     						recorrido.add(inicio);
     						recorrido.addAll(ls);
-    						System.out.println(recorrido.toString());
     						retorno.add(recorrido);
     						
     						
@@ -317,6 +330,13 @@ public class Grafo<Planta> {
     	}
 		return null;
     }
+	
+	public List<List<String>> caminoMinimoDistancia(Planta inicio,Planta fin){
+		List<List<String>> retorno = this.caminoMinimoDistancia(new Vertice<Planta>(inicio), new Vertice<Planta>(fin));
+		
+		return retorno;
+	}
+	
 	
 	public List<List<String>> caminoMinimoDistancia(Vertice<Planta> inicio,Vertice<Planta> fin) {
 		List<List<String>> retorno = new ArrayList<List<String>>();
@@ -340,6 +360,7 @@ public class Grafo<Planta> {
     			retorno.add(caminoString);
     			
     		}else if(distanciaMinima > distanciaMinimaAux){
+    			retorno.clear();
     			distanciaMinima = distanciaMinimaAux;
     			caminoString.addAll(listaNombresPlantas(c));
     			caminoString.add(distanciaMinima.toString());
@@ -348,6 +369,8 @@ public class Grafo<Planta> {
     			caminoString.addAll(listaNombresPlantas(c));
     			caminoString.add(distanciaMinima.toString());
     			retorno.add(caminoString);
+    		} else if(distanciaMinima < distanciaMinimaAux) {
+    			
     		}
     		
     	}
@@ -355,6 +378,10 @@ public class Grafo<Planta> {
 		return retorno;
 	}
 
+	public List<List<String>> caminoMinimoDuracion(Planta inicio,Planta fin){
+		List<List<String>> retorno = this.caminoMinimoDuracion(new Vertice<Planta>(inicio), new Vertice<Planta>(fin));
+		return retorno;
+	}
 	public List<List<String>> caminoMinimoDuracion(Vertice<Planta> inicio, Vertice<Planta> fin) {
 		
 		List<List<String>> retorno = new ArrayList<List<String>>();
@@ -433,6 +460,10 @@ public class Grafo<Planta> {
 		}
 		
 		return duracionMinima;
+	}
+	
+	public int getPageRank(Planta nodo){
+		return this.getPageRank(new Vertice<Planta>(nodo));
 	}
 	
 	public int getPageRank(Vertice<Planta> v) {

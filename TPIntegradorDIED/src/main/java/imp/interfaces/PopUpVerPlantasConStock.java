@@ -2,6 +2,7 @@ package imp.interfaces;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,11 +10,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import imp.DAOs.DAOInsumo;
+import imp.gestores.GestorStock;
+import imp.primaryClasses.Item;
+import imp.primaryClasses.Planta;
+
 import javax.swing.JLabel;
 
 public class PopUpVerPlantasConStock extends JFrame {
 
-	public PopUpVerPlantasConStock() {
+	public PopUpVerPlantasConStock(ArrayList<Item> listaItems) {
 
 	setLocationRelativeTo(null);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -36,7 +43,7 @@ public class PopUpVerPlantasConStock extends JFrame {
 	DefaultTableModel model_tabla_VerPlantaConStock = new DefaultTableModel(
 			new Object[][] {},
 			new String[] {
-					"Nombre planta", "Insumo", "Stock"
+					"Nombre planta", "Stock"
 			}
 			){
 
@@ -48,7 +55,13 @@ public class PopUpVerPlantasConStock extends JFrame {
 		}
 	};
 	
+	ArrayList<Planta> listaPlantas = GestorStock.buscarPlantaConStock(listaItems);
 	
+	for(Planta p: listaPlantas) {
+		
+		model_tabla_VerPlantaConStock.addRow(new Object[]{p.getNombre(), "Tiene Stock"});
+		
+	}
 	
 	tabla_DetalleOrden.setModel(model_tabla_VerPlantaConStock);
 	tabla_DetalleOrden.getTableHeader().setReorderingAllowed(false);

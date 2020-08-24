@@ -173,7 +173,7 @@ public class PopUpVerPosiblesRutas extends JFrame {
 		for(List<String> r: rutasDistancia) {
 
 			listaMuestra[fila][0] = r.subList(0, (r.size()-1)).toString();
-			listaMuestra[fila][1] = Double.parseDouble(r.subList((r.size()-1), r.size()).toString());
+			listaMuestra[fila][1] = Double.parseDouble(r.subList((r.size()-1), r.size()).get(0));
 			
 			fila++;
 		}

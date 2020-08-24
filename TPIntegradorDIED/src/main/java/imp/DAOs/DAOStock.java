@@ -88,4 +88,43 @@ public class DAOStock {
 		
 	}
 
+	public static ArrayList<Stock> getListaStockPorIdPlanta(int id) {
+
+
+ArrayList<Stock> listaStock = new ArrayList<Stock>();
+		
+		Connection con = DBManager.getConn();
+		ResultSet tablaStock=null;
+		
+		String consulta = "select * from STOCK where id_planta = " + Integer.toString(id);
+		
+		Statement st;
+		
+		try {
+			st = con.createStatement();
+			tablaStock = st.executeQuery(consulta);
+			
+			while(tablaStock.next()) {
+				
+				Stock stock = new Stock(tablaStock.getInt("id_stock"), tablaStock.getInt("id_planta"), tablaStock.getDouble("cantidad"), 
+						tablaStock.getDouble("punto_pedido"), tablaStock.getInt("id_insumo"));
+				
+				listaStock.add(stock);
+				
+			}
+			
+			st.close();
+			con.close();
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+		return listaStock;
+		
+
+	}
+
 }

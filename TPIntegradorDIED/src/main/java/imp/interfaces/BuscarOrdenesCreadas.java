@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import imp.DAOs.DAOItem;
 import imp.DAOs.DAOOrdenPedido;
 import imp.DTOs.OrdenPedidoDTO;
 import imp.DTOs.PlantaDTO;
@@ -20,10 +21,11 @@ import imp.primaryClasses.*;
 
 public class BuscarOrdenesCreadas extends JPanel {
 
-	ArrayList<OrdenPedidoDTO> listaOrdenesCreadasDTO = new ArrayList<OrdenPedidoDTO>();
+	ArrayList<OrdenPedidoDTO> listaOrdenesCreadasDTO;
 	
 	
 	public  BuscarOrdenesCreadas() {
+		listaOrdenesCreadasDTO = new ArrayList<OrdenPedidoDTO>();
 		setBackground(new Color(118, 203, 117));
 		setLayout(null);
 		
@@ -125,8 +127,9 @@ public class BuscarOrdenesCreadas extends JPanel {
 			
 		});
 		btn_verPlantasStock.addActionListener(e -> {
+			OrdenPedidoDTO op = listaOrdenesCreadasDTO.get(tabla_ordenesCreadas.getSelectedRow());
 			
-			PopUpVerPlantasConStock plantas_con_Stock = new PopUpVerPlantasConStock();
+			PopUpVerPlantasConStock plantas_con_Stock = new PopUpVerPlantasConStock(DAOItem.recuperarItemsPorIdOrden(Long.parseLong(op.getNroOrden())));
 			
 			//obtener todos los items
 		});
